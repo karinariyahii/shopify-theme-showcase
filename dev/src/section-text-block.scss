@@ -1,0 +1,45 @@
+.s-text-block {
+  display: block;
+  background-clip: content-box;
+  
+  &__container {
+    padding-inline: 16px;
+  }
+
+  &__quote {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    &--desktop {
+      display: none;
+    }
+
+    @media screen and (min-width: 768px) {
+      &--desktop {
+        display: block;
+      }
+
+      &--mobile {
+        display: none;
+      }
+    }
+  }
+
+  &__description {
+    &--desktop {
+      display: none;
+    }
+
+    @media screen and (min-width: 768px) {
+      &--desktop {
+        display: block;
+      }
+
+      &--mobile {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "shopify-theme-gulp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp",
+    "build": "gulp build --prod"
+  },
+  "author": "Volodymyr Hlushko",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.20.2",
+    "browserify": "^17.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-buffer": "^0.0.2",
+    "gulp-cached": "^1.1.1",
+    "gulp-if": "^3.0.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-tap": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
+    "sass": "^1.60.0",
+    "yargs": "^17.7.1"
+  },
+  "dependencies": {
+    "@ungap/custom-elements": "^1.2.0",
+    "lazysizes": "^5.3.2",
+    "normalize.css": "^8.0.1",
+    "swiper": "^11.1.4"
+  }
+}
