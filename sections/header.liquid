@@ -1,0 +1,302 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-header {
+    padding-top: {{ section.settings.padding_top_mobile | append: 'px' }};
+    padding-bottom: {{ section.settings.padding_bottom_mobile | append: 'px' }};
+    background: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header.bg-filled {
+    background: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header__item,
+  #shopify-section-{{ section.id }} .s-header__item span,
+  #shopify-section-{{ section.id }} .s-header__nav a,
+  #shopify-section-{{ section.id }} .s-header__nav a span,
+  #shopify-section-{{ section.id }} .s-header__nav button,
+  #shopify-section-{{ section.id }} .s-header__nav button span,
+  #shopify-section-{{ section.id }} .s-header__logo-wrapper {
+    color: {{ section.settings.header_text_color_scrolled }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header__item svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header__nav a svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header__nav button svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header__logo-wrapper svg path[fill]:not([fill="none"]) {
+    fill: {{ section.settings.header_icon_color_scrolled }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header__item svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header__nav a svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header__nav button svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header__logo-wrapper svg path[stroke]:not([stroke="none"]) {
+    stroke: {{ section.settings.header_icon_color_scrolled }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) {
+    background: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__item,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__item span,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav a,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav a span,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav button,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav button span,
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__logo-wrapper {
+    color: {{ section.settings.header_text_color_default }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__item svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav a svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav button svg path[fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__logo-wrapper svg path[fill]:not([fill="none"]) {
+    fill: {{ section.settings.header_icon_color_default }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__item svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav a svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__nav button svg path[stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .s-header__logo-wrapper svg path[stroke]:not([stroke="none"]) {
+    stroke: {{ section.settings.header_icon_color_default }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage .s-header__nav a span.s-header__cart-counter,
+  #shopify-section-{{ section.id }} .s-header--homepage .s-header__nav button span.s-header__cart-counter {
+    background-color: {{ section.settings.counter_bg_color }};
+    color: {{ section.settings.counter_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header--homepage.bg-filled .s-header__nav a span.s-header__cart-counter,
+  #shopify-section-{{ section.id }} .s-header--homepage.bg-filled .s-header__nav button span.s-header__cart-counter {
+    background-color: {{ section.settings.counter_bg_color_scrolled }};
+    color: {{ section.settings.counter_text_color_scrolled }};
+  }
+
+  #shopify-section-{{ section.id }} .s-header:not(.s-header--homepage) .s-header__nav a span.s-header__cart-counter,
+  #shopify-section-{{ section.id }} .s-header:not(.s-header--homepage) .s-header__nav button span.s-header__cart-counter {
+    background-color: {{ section.settings.counter_bg_color_scrolled }};
+    color: {{ section.settings.counter_text_color_scrolled }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .s-header {
+      padding-top: {{ section.settings.padding_top_desktop | append: 'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .c-language-switcher__item:has(input:checked) {
+      background-color: {{ section.settings.button_bg_color_transparent }};
+    }
+
+    #shopify-section-{{ section.id }} .s-header--homepage:not(.bg-filled) .c-language-switcher__item:has(input:checked) .c-language-switcher__label-desktop {
+      color: {{ section.settings.button_text_color_tansparent }};
+    }
+
+    #shopify-section-{{ section.id }} .s-header--homepage.bg-filled .c-language-switcher__item:has(input:checked) {
+      background-color: {{ section.settings.button_bg_color_regular }};
+    }
+
+    #shopify-section-{{ section.id }} .s-header--homepage.bg-filled .c-language-switcher__item:has(input:checked) .c-language-switcher__label-desktop {
+      color: {{ section.settings.button_text_color_regular }};
+    }
+  }
+{% endstyle %}
+
+<script src="{{ 'section-header.js' | asset_url }}" defer></script>
+
+<s-header class="s-header {% if template.name == 'index' %}s-header--homepage{% endif %} transition-disable {% unless section.settings.sticky_header %} hide {% endunless %}" data-sticky-header="{{ section.settings.sticky_header }}">
+  <div class="s-header__container">
+    <div class="s-header__nav s-header__left">
+      <div class="s-header__item js-header__menu-button">{% render 'icon-burger' %} <span class="hide-mobile">{{ 'sections.header.shop' | t }}</span></div>
+      <div class="s-header__item js-header__search-button">{% render 'icon-search' %} <span class=" hide-mobile">{{ 'sections.header.search' | t }}</span></div>
+    </div>
+    <a href="{{ routes.root_url }}" class="s-header__logo-wrapper">
+      <div class="s-header__logo js-header__logo">{{ section.settings.logo_full }}</div>
+      <div class="s-header__monogram js-header__monogram">{{ section.settings.logo_monogram }}</div>
+    </a>
+    <div class="s-header__nav s-header__right">
+      <a href="{{ routes.root_url }}pages/store-locator" class="s-header__locator-button hide-mobile"> {% render 'icon-locator' %}</a>
+      
+      <div 
+        class="s-header__country-selector hide-mobile">
+        <img
+          src="{{ localization.country.iso_code | downcase | append: '.svg' | asset_url }}"
+          alt="{{ localization.country.name }}"
+          class="s-header__country-flag js-header__open-country-selector"
+          width="24"
+          height="24"
+          loading="lazy"
+        >
+      </div>
+
+      <a href="{{ routes.root_url }}pages/wishlist" class="s-header__wishlist s-header__cart-button hide-mobile">
+        {% render 'icon-wishlist-2' %}
+        <span class="s-header__cart-counter js-header__wishlist-count"></span>
+      </a>
+      {% if customer %}
+        <a href="{{ routes.account_url }}" class="hide-mobile">{% render 'icon-account' %}</a>
+      {% else %}
+        <button class="s-header__account-button js-header__account-button">
+          {% render 'icon-account' %}
+        </button>
+      {% endif %}
+      <button class="s-header__cart-button js-header__cart-button">
+        {% render 'icon-cart' %}
+        <span class="s-header__cart-counter js-header__cart-count"></span>
+      </button>
+    </div>
+  </div>
+</s-header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Section Paddings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Padding Top (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Padding Bottom (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Padding Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Padding Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Transparent Header Settings"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color_default",
+      "label": "Texts Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_icon_color_default",
+      "label": "Icons Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "counter_bg_color",
+      "label": "Counter Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "counter_text_color",
+      "label": "Counter Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Static Header Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "These settings also apply to the scrolled header on the Home Page"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color_scrolled",
+      "label": "Texts Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "header_icon_color_scrolled",
+      "label": "Icons Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "counter_bg_color_scrolled",
+      "label": "Counter Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "counter_text_color_scrolled",
+      "label": "Counter Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "html",
+      "id": "logo_full",
+      "label": "Logo Full",
+      "info": "Image Recommended: svg code"
+    },
+    {
+      "type": "html",
+      "id": "logo_monogram",
+      "label": "Logo Monogram",
+      "info": "Image Recommended: svg code"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}

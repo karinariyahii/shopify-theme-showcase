@@ -1,0 +1,571 @@
+{{ 'section-article-links.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-article-links {
+    margin-top: {{ section.settings.margin_top_mobile | append: 'px' }};
+    margin-bottom: {{ section.settings.margin_bottom_mobile | append: 'px' }};
+  }
+
+  #shopify-section-{{ section.id }} .s-article-links__wrapper {
+  	padding-top: {{ section.settings.padding_top_mobile | append: 'px' }};
+  	padding-bottom: {{ section.settings.padding_bottom_mobile | append: 'px' }};
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-article-links__title {
+    font-size: {{ section.settings.title_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.title_font_weight_mobile }};
+    font-style: {{ section.settings.title_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.title_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.title_text_transform_mobile }};
+    color: {{ section.settings.title_color_mobile }};
+    {% if section.settings.title_max_width_mobile > 0 %}
+      max-width: {{ section.settings.title_max_width_mobile | append: 'px' }};
+    {% endif %}
+    font-family: {{ section.settings.title_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-article-links__button {
+    font-size: {{ section.settings.button_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.button_font_weight_mobile }};
+    color: {{ section.settings.button_color_mobile }};
+    text-decoration-color: {{ section.settings.button_decoration_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-article-links__link {
+    font-size: {{ section.settings.article_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.article_font_weight_mobile }};
+    color: {{ section.settings.article_color_mobile }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .s-article-links {
+      margin-top: {{ section.settings.margin_top_desktop | append: 'px' }};
+      margin-bottom: {{ section.settings.margin_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-article-links__wrapper {
+      padding-top: {{ section.settings.padding_top_desktop | append: 'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-article-links__title {
+      font-size: {{ section.settings.title_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.title_font_weight_desktop }};
+      font-style: {{ section.settings.title_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.title_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.title_text_transform_desktop }};
+      color: {{ section.settings.title_color_desktop }};
+      {% if section.settings.title_max_width_desktop > 0 %}
+        max-width: {{ section.settings.title_max_width_desktop | append: 'px' }};
+      {% else %}
+        max-width: unset;
+      {% endif %}
+      font-family: {{ section.settings.title_font_family }};
+    }
+
+    #shopify-section-{{ section.id }} .s-article-links__button {
+      font-size: {{ section.settings.button_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.button_font_weight_desktop }};
+      color: {{ section.settings.button_color_desktop }};
+      text-decoration-color: {{ section.settings.button_decoration_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-article-links__button:hover {
+      color: {{ section.settings.button_hover_color_desktop }};
+      text-decoration-color: {{ section.settings.button_hover_decoration_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-article-links__link {
+      font-size: {{ section.settings.article_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.article_font_weight_desktop }};
+      color: {{ section.settings.article_color_desktop }};
+    }
+  }
+{% endstyle %}
+
+<s-article-links class="s-article-links">
+  <div class="s-article-links__wrapper">
+    <div class="s-article-links__container">
+      <div class="s-article-links__title-wrapper">
+        {% if section.settings.section_title != blank %}
+          <h2 class="s-article-links__title">
+            {{ section.settings.section_title }}
+          </h2>
+
+          {% if section.settings.button_link != blank and section.settings.button_text != blank %}
+            <a href="{{ section.settings.button_link }}" class="s-article-links__button">
+              {{- section.settings.button_text -}}
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% if section.blocks.size > 0 %}
+        <div class="s-article-links__links-list">
+          {% for block in section.blocks %}
+            {% liquid
+              assign article = block.settings.article
+              assign article_title = block.settings.custom_text | default: article.title
+              assign article_url = block.settings.custom_url | default: article.url
+            %}
+            <a href="{{ article_url }}" class="s-article-links__link">
+              <h3 class="s-article-links__link-text">
+                {{ article_title }}
+              </h3>
+
+              <span class="s-article-links__link-icon">
+                {% render 'icon-arrow-right' %}
+              </span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</s-article-links>
+
+{% schema %}
+{
+  "name": "Article Links",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Margins"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margin Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margin Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Paddings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Latest Articles"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-heading)"
+    },
+    {
+      "type": "header",
+      "content": "Title Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "title_max_width_desktop",
+      "label": "Max Width",
+      "min": 0,
+      "max": 900,
+      "step": 20,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "title_underline_desktop",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color_desktop",
+      "label": "Title Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Title Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "title_max_width_mobile",
+      "label": "Max Width",
+      "min": 0,
+      "max": 900,
+      "step": 20,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "title_underline_mobile",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color_mobile",
+      "label": "Title Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "button_color_desktop",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_decoration_color_desktop",
+      "label": "Decoration Color",
+      "default": "rgba(21, 12, 6, 0.24)"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Hover Settings"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color_desktop",
+      "label": "Color (Hover)",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_decoration_color_desktop",
+      "label": "Decoration Color (Hover)",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "button_color_mobile",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_decoration_color_mobile",
+      "label": "Decoration Color",
+      "default": "rgba(21, 12, 6, 0.24)"
+    },
+    {
+      "type": "header",
+      "content": "Article Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "article_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "article_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "article_color_desktop",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Article Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "article_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "article_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "article_color_mobile",
+      "label": "Color",
+      "default": "#150c06"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article_link",
+      "name": "Article Link",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Select Article"
+        },
+        {
+          "type": "text",
+          "id": "custom_text",
+          "label": "Custom Link Text (optional)"
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom Link URL (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article Links",
+      "category": "Support Hub"
+    }
+  ]
+}
+{% endschema %}

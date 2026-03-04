@@ -1,0 +1,525 @@
+{{ 'section-support-hub-header.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-support-hub-header {
+    background-color: {{ section.settings.background_color }};
+    margin-top: {{ section.settings.margin_top_mobile | append: 'px' }};
+    margin-bottom: {{ section.settings.margin_bottom_mobile | append: 'px' }};
+  }
+
+  #shopify-section-{{ section.id }} .s-support-hub-header__container {
+  	padding-top: {{ section.settings.padding_top_mobile | append: 'px' }};
+  	padding-bottom: {{ section.settings.padding_bottom_mobile | append: 'px' }};
+  }
+
+  #shopify-section-{{ section.id }} .s-support-hub-header__breadcrumb {
+    font-size: {{ section.settings.link_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.link_font_weight_mobile }};
+    font-style: {{ section.settings.link_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.link_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.link_text_transform_mobile }};
+    color: {{ section.settings.link_color_mobile }};
+    font-family: {{ section.settings.breadcrumb_font_family }};
+    text-decoration-color: {{ section.settings.link_decoration_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-support-hub-header__breadcrumb.is-active {
+    font-size: {{ section.settings.active_link_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.active_link_font_weight_mobile }};
+    font-style: {{ section.settings.active_link_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.active_link_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.active_link_text_transform_mobile }};
+    color: {{ section.settings.active_link_color_mobile }};
+    font-family: {{ section.settings.breadcrumb_font_family }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .s-support-hub-header {
+      margin-top: {{ section.settings.margin_top_desktop | append: 'px' }};
+      margin-bottom: {{ section.settings.margin_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-support-hub-header__container {
+      padding-top: {{ section.settings.padding_top_desktop | append: 'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-support-hub-header__breadcrumb {
+      font-size: {{ section.settings.link_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.link_font_weight_desktop }};
+      font-style: {{ section.settings.link_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.link_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.link_text_transform_desktop }};
+      color: {{ section.settings.link_color_desktop }};
+      font-family: {{ section.settings.breadcrumb_font_family }};
+      text-decoration-color: {{ section.settings.link_decoration_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-support-hub-header__breadcrumb:hover {
+      text-decoration-color: {{ section.settings.link_hover_decoration_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-support-hub-header__breadcrumb.is-active {
+      font-size: {{ section.settings.active_link_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.active_link_font_weight_desktop }};
+      font-style: {{ section.settings.active_link_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.active_link_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.active_link_text_transform_desktop }};
+      color: {{ section.settings.active_link_color_desktop }};
+      font-family: {{ section.settings.breadcrumb_font_family }};
+    }
+  }
+{% endstyle %}
+
+<script src="{{ 'section-support-hub-header.js' | asset_url }}" defer></script>
+
+{% assign faq_categories = metaobjects.faq_groups.values %}
+
+{% assign current_category = null %}
+
+{% for category in faq_categories %}
+  {% assign faqs_list = category.category_items.value %}
+
+  {% for faq in faqs_list %}
+    {% if faq.system.id == metaobject.system.id %}
+      {% assign current_category = category %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if current_category %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<s-support-hub-header class="s-support-hub-header" data-search-page-url="{{ section.settings.search_page }}">
+  <div class="s-support-hub-header__container">
+    <div class="s-support-hub-header__wrapper">
+      <div class="s-support-hub-header__breadcrumbs">
+        {% for block in section.blocks %}
+          {% if block.type == 'breadcrumb' %}
+            <a href="{{ block.settings.link }}" class="s-support-hub-header__breadcrumb">{{ block.settings.label }}</a>
+            <span class="s-support-hub-header__breadcrumb-separator">/</span>
+          {% endif %}
+        {% endfor %}
+        <span class="s-support-hub-header__breadcrumb is-active">
+          {% if current_category.category_title %}
+            {{ current_category.category_title }}
+          {% else %}
+            {{ page.title }}
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="s-support-hub-header__search js-support-hub-header__search">
+        <input
+          type="text"
+          class="s-support-hub-header__input js-support-hub-header__input"
+          placeholder="{{ 'sections.support-hub-header.search_placeholder' | t }}"
+          name="search"
+        >
+        <button type="button" class="s-support-hub-header__search-icon js-support-hub-header__button">
+          {% render 'icon-search' %}
+        </button>
+        <button class="s-support-hub-header__clear-search-icon js-support-hub-header__clear-search">
+          {% render 'icon-close' %}
+        </button>
+      </div>
+    </div>
+  </div>
+</s-support-hub-header>
+
+{% schema %}
+{
+  "name": "Support Hub Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Margins"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margin Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margin Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Paddings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F9F8F4"
+    },
+    {
+      "type": "header",
+      "content": "Search Settings"
+    },
+    {
+      "type": "url",
+      "id": "search_page",
+      "label": "Search Page URL"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumbs Settings"
+    },
+    {
+      "type": "select",
+      "id": "breadcrumb_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb Link Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "link_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "link_underline_desktop",
+      "label": "Underline",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "link_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "link_color_desktop",
+      "label": "Text Color",
+      "default": "#39210b"
+    },
+    {
+      "type": "color",
+      "id": "link_decoration_color_desktop",
+      "label": "Underline Color",
+      "default": "#c7c5c3"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Hover Settings"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_decoration_color_desktop",
+      "label": "Underline Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb Link Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "link_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "link_underline_mobile",
+      "label": "Underline",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "link_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "link_color_mobile",
+      "label": "Text Color",
+      "default": "#39210b"
+    },
+    {
+      "type": "color",
+      "id": "link_decoration_color_mobile",
+      "label": "Underline Color",
+      "default": "#c7c5c3"
+    },
+    {
+      "type": "header",
+      "content": "Active Link Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "active_link_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "active_link_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "active_link_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "active_link_underline_desktop",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "active_link_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "active_link_color_desktop",
+      "label": "Text Color",
+      "default": "#39210b"
+    },
+    {
+      "type": "header",
+      "content": "Active Link Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "active_link_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "active_link_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "active_link_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "active_link_underline_mobile",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "active_link_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "active_link_color_mobile",
+      "label": "Text Color",
+      "default": "#39210b"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "breadcrumb",
+      "name": "Breadcrumb",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Support Hub"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL",
+          "default": "/"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Support Hub Header",
+      "category": "Support Hub"
+    }
+  ]
+}
+{% endschema %}

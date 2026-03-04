@@ -1,0 +1,1578 @@
+{{ 'section-contact-us.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-contact-us {
+    padding-top: {{ section.settings.padding_top_mobile | append: 'px' }};
+    padding-bottom: {{ section.settings.padding_bottom_mobile | append: 'px' }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__title {
+    font-weight: {{ section.settings.title_font_weight_mobile }};
+    font-size: {{ section.settings.title_font_size_mobile | append: 'px' }};
+    font-style: {{ section.settings.title_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.title_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.title_text_transform_mobile }};
+    color: {{ section.settings.title_color_mobile }};
+    font-family: {{ section.settings.title_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__block-title {
+    font-weight: {{ section.settings.info_title_font_weight_mobile }};
+    font-size: {{ section.settings.info_title_font_size_mobile | append: 'px' }};
+    font-style: {{ section.settings.info_title_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.info_title_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.info_title_text_transform_mobile }};
+    color: {{ section.settings.info_title_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__description :where(p, h1, h2, h3, h4, h5, h6) {
+    font-weight: {{ section.settings.description_font_weight_mobile }};
+    font-size: {{ section.settings.description_font_size_mobile | append: 'px' }};
+    font-style: {{ section.settings.description_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-transform: {{ section.settings.description_text_transform_mobile }};
+    color: {{ section.settings.description_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__block-content :where(p, h1, h2, h3, h4, h5, h6) {
+    font-weight: {{ section.settings.info_description_font_weight_mobile }};
+    font-size: {{ section.settings.info_description_font_size_mobile | append: 'px' }};
+    font-style: {{ section.settings.info_description_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-transform: {{ section.settings.info_description_text_transform_mobile }};
+    color: {{ section.settings.info_description_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__label {
+    font-size: {{ section.settings.label_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.label_font_weight_mobile }};
+    font-style: {{ section.settings.label_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-transform: {{ section.settings.label_text_transform_mobile }};
+    color: {{ section.settings.label_color_mobile }};
+    font-family: {{ section.settings.label_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__input,
+  #shopify-section-{{ section.id }} .s-contact-us__textarea {
+    font-size: {{ section.settings.input_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.input_font_weight_mobile }};
+    font-style: {{ section.settings.input_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-transform: {{ section.settings.input_text_transform_mobile }};
+    color: {{ section.settings.input_color_mobile }};
+    font-family: {{ section.settings.input_font_family }};
+    border-color: {{ section.settings.input_border_color_mobile }};
+    background-color: {{ section.settings.input_background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__input:focus,
+  #shopify-section-{{ section.id }} .s-contact-us__textarea:focus {
+    color: {{ section.settings.input_focus_color_mobile }};
+    border-color: {{ section.settings.input_focus_border_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__input:focus + .s-contact-us__label,
+  #shopify-section-{{ section.id }} .s-contact-us__textarea:focus + .s-contact-us__label,
+  #shopify-section-{{ section.id }} .s-contact-us__input-wrapper.filled .s-contact-us__label {
+    color: {{ section.settings.label_focus_color_mobile }};
+    background-color: {{ section.settings.label_focus_background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__input-error,
+  #shopify-section-{{ section.id }} .s-contact-us__textarea-error,
+  #shopify-section-{{ section.id }} .s-contact-us__textarea-length-error,
+  #shopify-section-{{ section.id }} .s-contact-us__form-error {
+    font-size: {{ section.settings.error_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.error_font_weight_mobile }};
+    font-style: {{ section.settings.error_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    color: {{ section.settings.error_color_mobile }};
+    font-family: {{ section.settings.error_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__form-success {
+    font-size: {{ section.settings.success_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.success_font_weight_mobile }};
+    font-style: {{ section.settings.success_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    color: {{ section.settings.success_color_mobile }};
+    font-family: {{ section.settings.success_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-contact-us__submit {
+    font-size: {{ section.settings.button_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.button_font_weight_mobile }};
+    font-style: {{ section.settings.button_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-decoration: {{ section.settings.button_underline_mobile | replace: 'true', 'underline' | replace: 'false', 'none' }};
+    text-transform: {{ section.settings.button_text_transform_mobile }};
+    color: {{ section.settings.button_text_color_mobile }};
+    background-color: {{ section.settings.button_background_color_mobile }};
+    border: 1px solid {{ section.settings.button_border_color_mobile }};
+    font-family: {{ section.settings.button_font_family }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .s-contact-us {
+      padding-top: {{ section.settings.padding_top | append: 'px' }};
+      padding-bottom: {{ section.settings.padding_bottom | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__title {
+      font-size: {{ section.settings.title_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.title_font_weight_desktop }};
+      font-style: {{ section.settings.title_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.title_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.title_text_transform_desktop }};
+      color: {{ section.settings.title_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__block-title {
+      font-size: {{ section.settings.info_title_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.info_title_font_weight_desktop }};
+      font-style: {{ section.settings.info_title_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.info_title_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.info_title_text_transform_desktop }};
+      color: {{ section.settings.info_title_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__description :where(p, h1, h2, h3, h4, h5, h6) {
+      font-size: {{ section.settings.description_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.description_font_weight_desktop }};
+      font-style: {{ section.settings.description_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.description_text_transform_desktop }};
+      color: {{ section.settings.description_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__block-content :where(p, h1, h2, h3, h4, h5, h6) {
+      font-size: {{ section.settings.info_description_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.info_description_font_weight_desktop }};
+      font-style: {{ section.settings.info_description_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.info_description_text_transform_desktop }};
+      color: {{ section.settings.info_description_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__label {
+      font-size: {{ section.settings.label_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.label_font_weight_desktop }};
+      font-style: {{ section.settings.label_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.label_text_transform_desktop }};
+      color: {{ section.settings.label_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__input,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea {
+      font-size: {{ section.settings.input_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.input_font_weight_desktop }};
+      font-style: {{ section.settings.input_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.input_text_transform_desktop }};
+      color: {{ section.settings.input_color_desktop }};
+      border-color: {{ section.settings.input_border_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__input:hover,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea:hover {
+      border-color: {{ section.settings.input_hover_border_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__input:focus,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea:focus {
+      color: {{ section.settings.input_focus_color_desktop }};
+      border-color: {{ section.settings.input_focus_border_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__input:focus + .s-contact-us__label,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea:focus + .s-contact-us__label,
+    #shopify-section-{{ section.id }} .s-contact-us__input-wrapper.filled .s-contact-us__label {
+      color: {{ section.settings.label_focus_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__input-error,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea-error,
+    #shopify-section-{{ section.id }} .s-contact-us__textarea-length-error,
+    #shopify-section-{{ section.id }} .s-contact-us__form-error {
+      font-size: {{ section.settings.error_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.error_font_weight_desktop }};
+      font-style: {{ section.settings.error_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      color: {{ section.settings.error_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__form-success {
+      font-size: {{ section.settings.success_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.success_font_weight_desktop }};
+      font-style: {{ section.settings.success_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      color: {{ section.settings.success_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__submit {
+      font-size: {{ section.settings.button_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.button_font_weight_desktop }};
+      font-style: {{ section.settings.button_italic_desktop | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-decoration: {{ section.settings.button_underline_desktop | replace: 'true', 'underline' | replace: 'false', 'none' }};
+      text-transform: {{ section.settings.button_text_transform_desktop }};
+      color: {{ section.settings.button_text_color_desktop }};
+      background-color: {{ section.settings.button_background_color_desktop }};
+      border-color: {{ section.settings.button_border_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-contact-us__submit:hover {
+      color: {{ section.settings.button_text_color_hover }};
+      background-color: {{ section.settings.button_background_color_hover }};
+      border-color: {{ section.settings.button_border_color_hover }};
+    }
+  }
+{% endstyle %}
+
+<script src="{{ 'section-contact-us.js' | asset_url }}" defer></script>
+
+<s-contact-us class="s-contact-us">
+  <div class="s-contact-us__container">
+    <div class="s-contact-us__wrapper">
+      {% form 'contact', class: 's-contact-us__form js-contact-us__form', novalidate: 'novalidate' %}
+        {% if section.settings.title != blank %}
+          <h1 class="s-contact-us__title">
+            {{ section.settings.title }}
+          </h1>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="s-contact-us__description">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+        <div class="s-contact-us__content">
+          {% comment %} Full Name {% endcomment %}
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--fullname js-contact-us__input-wrapper">
+            <input
+              id="fullname"
+              class="s-contact-us__input js-contact-us__input"
+              name="contact[full_name]"
+              type="text"
+              value="
+                {%- if customer -%}
+                  {{- customer.name -}}
+                {%- endif -%}
+              "
+            >
+            <label class="s-contact-us__label" for="fullname">
+              {{- 'sections.contact-us.placeholders.full_name' | t -}}
+            </label>
+
+            <p class="s-contact-us__input-error js-contact-us__input-error">
+              {{ 'sections.contact-us.errors.full_name' | t }}
+            </p>
+          </div>
+
+          {% comment %} Email {% endcomment %}
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--email js-contact-us__input-wrapper">
+            <input
+              id="email"
+              class="s-contact-us__input js-contact-us__input"
+              autocapitalize="off"
+              autocomplete="off"
+              name="contact[email]"
+              spellcheck="false"
+              type="email"
+              value="
+                {%- if form.email -%}
+                  {{- form.email -}}
+                {%- elsif customer -%}
+                  {{- customer.email -}}
+                {%- endif -%}
+              "
+            >
+            <label class="s-contact-us__label" for="email">
+              {{- 'sections.contact-us.placeholders.email' | t -}}
+            </label>
+            <p class="s-contact-us__input-error">{{ 'sections.contact-us.errors.email' | t }}</p>
+          </div>
+
+          {% comment %} Subject {% endcomment %}
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--subject js-contact-us__input-wrapper">
+            <input
+              id="subject"
+              class="s-contact-us__input js-contact-us__input"
+              name="contact[subject]"
+              type="text"
+              value="{% if form.subject %}{{ form.subject }}{% endif %}"
+            >
+
+            <label class="s-contact-us__label" for="subject">
+              {{- 'sections.contact-us.placeholders.subject' | t -}}
+            </label>
+
+            <p class="s-contact-us__input-error js-contact-us__input-error">
+              {{ 'sections.contact-us.errors.subject' | t }}
+            </p>
+          </div>
+
+          {% comment %} Order Number {% endcomment %}
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--order-number js-contact-us__input-wrapper">
+            <input
+              id="order_number"
+              class="s-contact-us__input js-contact-us__input"
+              name="contact[order_number]"
+              type="text"
+              value="{% if form.order_number %}{{ form.order_number }}{% endif %}"
+            >
+
+            <label class="s-contact-us__label" for="order_number">
+              {{- 'sections.contact-us.placeholders.order_number' | t -}}
+            </label>
+          </div>
+
+          {% comment %} Message {% endcomment %}
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--message js-contact-us__input-wrapper">
+            <textarea
+              id="message"
+              class="s-contact-us__textarea js-contact-us__textarea"
+              name="contact[body]"
+              rows="3"
+            >
+              {%- if form.body -%}
+                {{- form.body -}}
+              {%- endif -%}
+            </textarea>
+
+            <label class="s-contact-us__label" for="message">
+              {{- 'sections.contact-us.placeholders.message' | t -}}
+            </label>
+
+            <div class="s-contact-us__textarea-wrapper">
+              <p class="s-contact-us__textarea-error js-contact-us__textarea-error">
+                {{ 'sections.contact-us.errors.message' | t }}
+              </p>
+            </div>
+          </div>
+
+          <div class="s-contact-us__input-wrapper s-contact-us__input-wrapper--submit js-contact-us__input-wrapper">
+            <button
+              type="submit"
+              class="s-contact-us__submit js-contact-us__submit"
+            >
+              {{ 'sections.contact-us.placeholders.send' | t }}
+            </button>
+
+            <p class="s-contact-us__form-error js-contact-us__form-error">
+              {{ 'sections.contact-us.errors.form' | t }}
+            </p>
+
+            {% if form.posted_successfully? %}
+              <p class="s-contact-us__form-success js-contact-us__form-success">
+                {{ 'sections.contact-us.post_success' | t }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      {% endform %}
+
+      <div class="s-contact-us__additional-info">
+        {% if section.settings.customer_support_info != blank and section.settings.customer_support_title != blank %}
+          <div class="s-contact-us__block">
+            <h5 class="s-contact-us__block-title">
+              {{ section.settings.customer_support_title }}
+            </h5>
+
+            <div class="s-contact-us__block-content">
+              {{ section.settings.customer_support_info }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.address_info != blank and section.settings.address_title != blank %}
+          <div class="s-contact-us__block">
+            <h5 class="s-contact-us__block-title">
+              {{ section.settings.address_title }}
+            </h5>
+
+            <div class="s-contact-us__block-content">
+              {{ section.settings.address_info }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</s-contact-us>
+
+{% schema %}
+{
+  "name": "Contact Us",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Paddings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title Text"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-heading)"
+    },
+    {
+      "type": "header",
+      "content": "Title Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "title_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "title_underline_desktop",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color_desktop",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Title Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "title_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "title_underline_mobile",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color_mobile",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Description Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description Text"
+    },
+    {
+      "type": "header",
+      "content": "Description Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "description_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "description_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "description_color_desktop",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Description Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "description_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "description_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "description_color_mobile",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Customer Support Settings"
+    },
+    {
+      "type": "text",
+      "id": "customer_support_title",
+      "label": "Customer Support Title",
+      "default": "Customer Support"
+    },
+    {
+      "type": "richtext",
+      "id": "customer_support_info",
+      "label": "Customer Support Info"
+    },
+    {
+      "type": "header",
+      "content": "Address Settings"
+    },
+    {
+      "type": "text",
+      "id": "address_title",
+      "label": "Address Title",
+      "default": "Address"
+    },
+    {
+      "type": "richtext",
+      "id": "address_info",
+      "label": "Address Info"
+    },
+    {
+      "type": "header",
+      "content": "Info Title Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "info_title_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "info_title_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "info_title_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "info_title_underline_desktop",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "info_title_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "info_title_color_desktop",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Info Title Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "info_title_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "info_title_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "info_title_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "info_title_underline_mobile",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "info_title_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "info_title_color_mobile",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Info Description Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "info_description_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "info_description_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "info_description_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "info_description_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "info_description_color_desktop",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Info Description Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "info_description_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "info_description_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "info_description_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "info_description_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "info_description_color_mobile",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Form Label Settings"
+    },
+    {
+      "type": "select",
+      "id": "label_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "header",
+      "content": "Form Label Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "label_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "label_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "label_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "label_color_desktop",
+      "label": "Text Color",
+      "default": "rgba(21, 12, 6, 0.54)"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Focus Settings"
+    },
+    {
+      "type": "color",
+      "id": "label_focus_color_desktop",
+      "label": "Focus Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "color",
+      "id": "label_focus_background_color",
+      "label": "Focus Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Form Label Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "label_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "label_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "label_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "label_color_mobile",
+      "label": "Text Color",
+      "default": "rgba(21, 12, 6, 0.54)"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Focus Settings"
+    },
+    {
+      "type": "color",
+      "id": "label_focus_color_mobile",
+      "label": "Focus Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Form Input Settings"
+    },
+    {
+      "type": "select",
+      "id": "input_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Form Input Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "input_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "input_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "input_color_desktop",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color_desktop",
+      "label": "Border Color",
+      "default": "rgba(21, 12, 6, 0.24)"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Hover Settings (Desktop Only)"
+    },
+    {
+      "type": "color",
+      "id": "input_hover_border_color_desktop",
+      "label": "Hover Border Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Focus Settings"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_color_desktop",
+      "label": "Focus Text Color",
+      "default": "#0B0A0A"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_border_color_desktop",
+      "label": "Focus Border Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Form Input Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "input_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "input_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "input_color_mobile",
+      "label": "Text Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color_mobile",
+      "label": "Border Color",
+      "default": "rgba(21, 12, 6, 0.24)"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Focus Settings"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_color_mobile",
+      "label": "Focus Text Color",
+      "default": "#0B0A0A"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_border_color_mobile",
+      "label": "Focus Border Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "header",
+      "content": "Error Message Settings"
+    },
+    {
+      "type": "select",
+      "id": "error_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "header",
+      "content": "Error Message Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "error_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "error_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "error_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "error_color_desktop",
+      "label": "Text Color",
+      "default": "#D71313"
+    },
+    {
+      "type": "header",
+      "content": "Error Message Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "error_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "error_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "error_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "error_color_mobile",
+      "label": "Text Color",
+      "default": "#D71313"
+    },
+    {
+      "type": "header",
+      "content": "Success Message Settings"
+    },
+    {
+      "type": "select",
+      "id": "success_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "header",
+      "content": "Success Message Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "success_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "success_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "success_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "success_color_desktop",
+      "label": "Text Color",
+      "default": "#28A745"
+    },
+    {
+      "type": "header",
+      "content": "Success Message Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "success_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "success_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "success_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "success_color_mobile",
+      "label": "Text Color",
+      "default": "#28A745"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "checkbox",
+      "id": "button_italic_desktop",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_underline_desktop",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform_desktop",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_desktop",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color_desktop",
+      "label": "Background Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_desktop",
+      "label": "Border Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Hover Settings (Desktop Only)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_hover",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color_hover",
+      "label": "Background Color",
+      "default": "#39210B"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_hover",
+      "label": "Border Color",
+      "default": "#39210B"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Font Size",
+      "min": 8,
+      "max": 100,
+      "unit": "px",
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "checkbox",
+      "id": "button_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_underline_mobile",
+      "label": "Underline",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_mobile",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color_mobile",
+      "label": "Background Color",
+      "default": "#150C06"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_mobile",
+      "label": "Border Color",
+      "default": "#150C06"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us",
+      "category": "Forms"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,155 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "support_hub_header_7Ndzkt": {
+      "type": "support-hub-header",
+      "blocks": {
+        "breadcrumb_HT8kXK": {
+          "type": "breadcrumb",
+          "settings": {
+            "label": "Support Hub",
+            "link": "shopify://pages/support-hub"
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumb_HT8kXK"
+      ],
+      "name": "Support Hub Header",
+      "settings": {
+        "margin_top_desktop": 82,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 82,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 14,
+        "padding_bottom_desktop": 14,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14,
+        "background_color": "#f6f5f0",
+        "search_page": "shopify://pages/search-results",
+        "breadcrumb_font_family": "var(--font-body)",
+        "link_font_size_desktop": 16,
+        "link_font_weight_desktop": 400,
+        "link_italic_desktop": false,
+        "link_underline_desktop": true,
+        "link_text_transform_desktop": "none",
+        "link_color_desktop": "#39210b",
+        "link_decoration_color_desktop": "#c7c5c3",
+        "link_hover_decoration_color_desktop": "#150c06",
+        "link_font_size_mobile": 14,
+        "link_font_weight_mobile": 400,
+        "link_italic_mobile": false,
+        "link_underline_mobile": true,
+        "link_text_transform_mobile": "none",
+        "link_color_mobile": "#39210b",
+        "link_decoration_color_mobile": "#c7c5c3",
+        "active_link_font_size_desktop": 16,
+        "active_link_font_weight_desktop": 400,
+        "active_link_italic_desktop": false,
+        "active_link_underline_desktop": false,
+        "active_link_text_transform_desktop": "none",
+        "active_link_color_desktop": "#39210b",
+        "active_link_font_size_mobile": 14,
+        "active_link_font_weight_mobile": 400,
+        "active_link_italic_mobile": false,
+        "active_link_underline_mobile": false,
+        "active_link_text_transform_mobile": "none",
+        "active_link_color_mobile": "#39210b"
+      }
+    },
+    "faqs_blocks_aKBe3z": {
+      "type": "faqs-blocks",
+      "blocks": {
+        "faqs_block_76kyPp": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "popular-fa-qs"
+          }
+        },
+        "faqs_block_yLzwj8": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "orders"
+          }
+        },
+        "faqs_block_N3GbkY": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "shipping-delivery"
+          }
+        },
+        "faqs_block_FR8F8e": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "returns-exchanges"
+          }
+        },
+        "faqs_block_WYF6GL": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "payments"
+          }
+        },
+        "faqs_block_64k7An": {
+          "type": "faqs_block",
+          "settings": {
+            "faqs_metaobject": "account"
+          }
+        }
+      },
+      "block_order": [
+        "faqs_block_76kyPp",
+        "faqs_block_yLzwj8",
+        "faqs_block_N3GbkY",
+        "faqs_block_FR8F8e",
+        "faqs_block_WYF6GL",
+        "faqs_block_64k7An"
+      ],
+      "name": "FAQs Blocks",
+      "settings": {
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "enable_container": true,
+        "container_max_width": 32,
+        "background_color": "#ffffff",
+        "title_font_family": "var(--font-heading)",
+        "title_font_size": 26,
+        "title_font_weight": 400,
+        "title_color": "#150c06",
+        "title_text_transform": "none",
+        "title_italic": false,
+        "title_align": "left",
+        "title_font_size_m": 24,
+        "title_font_weight_m": 400,
+        "title_color_m": "#150c06",
+        "title_text_transform_m": "none",
+        "title_italic_m": false,
+        "title_align_m": "left",
+        "faq_question_font_size": 16,
+        "faq_question_font_weight": 400,
+        "faq_question_color": "#150c06",
+        "faq_question_text_transform": "none",
+        "faq_question_italic": false,
+        "faq_question_font_size_m": 16,
+        "faq_question_font_weight_m": 400,
+        "faq_question_color_m": "#150c06",
+        "faq_question_text_transform_m": "none",
+        "faq_question_italic_m": false
+      }
+    }
+  },
+  "order": [
+    "support_hub_header_7Ndzkt",
+    "faqs_blocks_aKBe3z"
+  ]
+}

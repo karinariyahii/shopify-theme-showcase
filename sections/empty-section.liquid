@@ -1,0 +1,26 @@
+{% if template == 'password' %}
+	{% form 'storefront_password' %}
+		{{ form.errors | default_errors }}
+
+		<div class="password">
+			<label for="password">Password</label>
+			<input type="password" name="password">
+		</div>
+
+		<div class="submit">
+			<input type="submit" value="Sign in">
+		</div>
+	{% endform %}
+{% else %}
+	{% comment %} {{ template }} {% endcomment %}
+  <div style="height: 1400px; background-color: #717171">
+
+  </div>
+{% endif %}
+
+{% schema %}
+{
+	"name": "Empty section",
+	"settings": []
+}
+{% endschema %}

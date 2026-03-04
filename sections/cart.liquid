@@ -1,0 +1,1542 @@
+{{ 'section-cart.css' | asset_url | stylesheet_tag }}
+{{ 'lazy-video.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ "lazy-video.js" | asset_url }}" defer></script>
+<script src="{{ 'section-cart.js' | asset_url }}" defer></script>
+<script src="{{ 'component-product-card.js' | asset_url }}" defer></script>
+
+{% if section.settings.empty_cart_animation != blank %}
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js" defer></script>
+{% endif %}
+
+{% liquid
+  assign currency_list = section.settings.delivery_prices | split: ','
+  for currency_item in currency_list
+    assign currency_item_arr = currency_item | split: ':'
+    if localization.country.currency.iso_code == currency_item_arr[0]
+      assign free_delivery_value = currency_item_arr[1] | times: 1.0
+    endif
+  endfor
+
+  assign promo_currency_list = section.settings.promo_currency_amount | split: ','
+  assign promo_currency_value = ''
+  for promo_currency_item in promo_currency_list
+    assign promo_currency_item_arr = promo_currency_item | split: ':'
+    if localization.country.currency.iso_code == promo_currency_item_arr[0]
+      assign promo_currency_value = promo_currency_item_arr[1] | prepend: localization.country.currency.symbol
+    endif
+  endfor
+%}
+
+{% assign one_percent_for_free_delivery = free_delivery_value | divided_by: 100 %}
+{% assign cart_total_price = cart.total_price | divided_by: 100 %}
+{% assign percent_for_free_delivery = cart_total_price | divided_by: one_percent_for_free_delivery %}
+{% assign money_left_for_free_delivery = free_delivery_value
+  | minus: cart_total_price
+  | times: 100
+  | money_without_trailing_zeros
+%}
+{% assign icon_free_delivery = section.settings.icon_variable | default: '' %}
+
+{% assign free_shipping_progress_tpl = section.settings.free_shipping_text
+  | replace: '{icon}', icon_free_delivery
+  | replace: '{gift}', promo_currency_value
+%}
+
+{% assign free_shipping_complete_tpl = section.settings.free_shipping_complete_text
+  | replace: '{gift}', promo_currency_value
+%}
+
+{% style %}
+  {% if section.settings.enable_free_delivery %}
+    #shopify-section-{{ section.id }} .s-cart__free-delivery-bgd {
+      width: {% if percent_for_free_delivery >= 100 %}100{% else %}{{percent_for_free_delivery}}{% endif %}%;
+    }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .s-cart,
+  #shopify-section-{{ section.id }} .s-cart__container,
+  #shopify-section-{{ section.id }} .s-cart__footer {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__container {
+    padding-top: {{ section.settings.padding_top_mobile | append: 'px' }};
+    padding-bottom: {{ section.settings.padding_bottom_mobile | append: 'px' }};
+
+    {% if section.settings.enable_max_width %}
+      max-width: {{ section.settings.max_width | append: 'px' }};
+      margin: 0 auto;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__heading-start {
+    font-family: {{ section.settings.heading_font_family_mobile }};
+    font-size: {{ section.settings.heading_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.heading_font_weight_mobile }};
+    color: {{ section.settings.heading_font_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__heading-start svg circle {
+    fill: {{ section.settings.heading_dot_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__delivery-wrapper {
+    padding-top: {{ section.settings.progress_bar_padding_top_mobile | append: 'px' }};
+    padding-bottom: {{ section.settings.progress_bar_padding_bottom_mobile | append: 'px' }};
+    background-color: {{ section.settings.progress_bar_background_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__free-delivery-text {
+    font-family: {{ section.settings.progress_bar_font_family_mobile }};
+    font-size: {{ section.settings.progress_bar_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.progress_bar_font_weight_mobile }};
+    color: {{ section.settings.progress_bar_font_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__free-delivery-bgd {
+    background-color: {{ section.settings.progress_bar_bgd_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__progress-track {
+    background-color: {{ section.settings.progress_bar_track_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__button-checkout {
+    font-family: {{ section.settings.button_font_family_mobile }};
+    font-size: {{ section.settings.button_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.button_font_weight_mobile }};
+    color: {{ section.settings.button_font_color_mobile }};
+    background-color: {{ section.settings.button_bg_color_mobile }};
+    border: 1px solid {{ section.settings.button_border_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__button-checkout svg path {
+    fill: {{ section.settings.button_font_color_mobile }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__cart-content,
+  #shopify-section-{{ section.id }} .s-cart__item {
+    background-color: {{ section.settings.cart_item_background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-cart__footer-wrapper {
+    background-color: {{ section.settings.checkout_form_background_color }};
+  }
+
+  @media screen and (min-width: 1080px) {
+    #shopify-section-{{ section.id }} .s-cart__heading-start {
+      font-family: {{ section.settings.heading_font_family_desktop }};
+      font-size: {{ section.settings.heading_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.heading_font_weight_desktop }};
+      color: {{ section.settings.heading_font_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__heading-start svg circle {
+      fill: {{ section.settings.heading_dot_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__container {
+      padding-top: {{ section.settings.padding_top_desktop | append: 'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_desktop | append: 'px' }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__delivery-wrapper {
+      padding-top: {{ section.settings.progress_bar_padding_top_desktop | append: 'px' }};
+      padding-bottom: {{ section.settings.progress_bar_padding_bottom_desktop | append: 'px' }};
+      background-color: {{ section.settings.progress_bar_background_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__free-delivery-text {
+      font-family: {{ section.settings.progress_bar_font_family_desktop }};
+      font-size: {{ section.settings.progress_bar_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.progress_bar_font_weight_desktop }};
+      color: {{ section.settings.progress_bar_font_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__free-delivery-bgd {
+      background-color: {{ section.settings.progress_bar_bgd_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__progress-track {
+      background-color: {{ section.settings.progress_bar_track_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__button-checkout {
+      font-family: {{ section.settings.button_font_family_desktop }};
+      font-size: {{ section.settings.button_font_size_desktop | append: 'px' }};
+      font-weight: {{ section.settings.button_font_weight_desktop }};
+      color: {{ section.settings.button_font_color_desktop }};
+      background-color: {{ section.settings.button_bg_color_desktop }};
+      border: 1px solid {{ section.settings.button_border_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__button-checkout svg path {
+      fill: {{ section.settings.button_font_color_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__button-checkout:hover {
+      background-color: {{ section.settings.button_bg_color_hover_desktop }};
+      border-color: {{ section.settings.button_border_color_hover_desktop }};
+      color: {{ section.settings.button_font_color_hover_desktop }};
+    }
+
+    #shopify-section-{{ section.id }} .s-cart__button-checkout:hover svg path {
+      fill: {{ section.settings.button_font_color_hover_desktop }};
+    }
+  }
+{% endstyle %}
+
+{% assign total_discount = 0 %}
+
+{% for item in cart.items %}
+  {%- comment -%}
+    Sale discount (compare_at_price)
+  {%- endcomment -%}
+  {% if item.variant.compare_at_price > item.variant.price %}
+    {% assign sale_original = item.variant.compare_at_price | times: item.quantity %}
+    {% assign sale_final = item.variant.price | times: item.quantity %}
+    {% assign sale_diff = sale_original | minus: sale_final %}
+    {% assign total_discount = total_discount | plus: sale_diff %}
+  {% endif %}
+
+  {%- comment -%}
+    Cart discount (codes, automatic, etc.)
+  {%- endcomment -%}
+  {% assign cart_diff = item.original_line_price | minus: item.final_line_price %}
+  {% assign total_discount = total_discount | plus: cart_diff %}
+{% endfor %}
+
+{% assign subtotal = 0 %}
+{% for item in cart.items %}
+  {% if item.variant.compare_at_price > item.variant.price %}
+    {% assign price = item.variant.compare_at_price | times: item.quantity %}
+  {% else %}
+    {% assign price = item.original_line_price %}
+  {% endif %}
+  {% assign subtotal = subtotal | plus: price %}
+{% endfor %}
+
+{% assign discount_codes = '' %}
+{% assign discount_list = '' %}
+{% for discount_application in cart.cart_level_discount_applications %}
+  {% if discount_application.type == 'discount_code' %}
+    {% assign discount_codes = discount_codes | append: ',' | append: discount_application.title %}
+  {% endif %}
+  {% assign discount_list = discount_list | append: ',' | append: discount_application.title %}
+{% endfor %}
+
+{% for item in cart.items %}
+  {% if item.line_level_discount_allocations.size %}
+    {% for line_discount in item.line_level_discount_allocations %}
+      {% if line_discount.discount_application.type == 'discount_code' %}
+        {% assign discount_codes = discount_codes | append: ',' | append: line_discount.discount_application.title %}
+      {% endif %}
+      {% assign discount_list = discount_list | append: ',' | append: line_discount.discount_application.title %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+<s-cart
+  class="s-cart{% if section.settings.product_slider == blank or cart.items.size < 1 %} s-cart--single{% endif %}"
+  data-section-id="shopify-section-{{ section.id }}"
+  data-cart-empty="{{ cart.empty? }}"
+  data-money-format="{{ shop.money_format }}"
+  data-enable-trailing-zeros="{{ section.settings.enable_trailing_zeros }}"
+  data-has-discount-code="{% if discount_codes != blank %}true{% else %}false{% endif %}"
+>
+  <div class="s-cart__container">
+    <div class="s-cart__outer-wrapper">
+      <div class="s-cart__wrapper-heading">
+        <div class="s-cart__heading-start js-cart__heading-start{% if cart.item_count == 0 %} is-empty{% endif %}">
+          {{ 'sections.cart.cart' | t }}
+          {% render 'icon-cart-divider-dot' %}
+          <span class="s-cart__counter js-cart__counter">
+            {{ cart.item_count }}
+          </span>
+        </div>
+      </div>
+      <div class="s-cart__wrapper js-cart__wrapper">
+        <div class="s-cart__body js-cart__body">
+          {% if section.settings.enable_free_delivery %}
+            {% assign free_shipping_text_html = section.settings.free_shipping_text
+              | replace: '{money}', money_left_for_free_delivery
+              | replace: '{icon}', icon_free_delivery
+              | replace: '{gift}', promo_currency_value
+            %}
+            {% assign free_shipping_complete_text = section.settings.free_shipping_complete_text
+              | replace: '{gift}', promo_currency_value
+            %}
+            <div
+              class="s-cart__delivery-wrapper js-cart__delivery-wrapper"
+              data-free-delivery="{{ free_delivery_value | times: 100 }}"
+            >
+              <div class="s-cart__free-delivery">
+                <span class="s-cart__free-delivery-text js-cart__free-delivery-text">
+                  {% if cart_total_price >= free_delivery_value %}
+                    {{ free_shipping_complete_text }}
+                  {% else %}
+                    {{ free_shipping_text_html }}
+                  {% endif %}
+                </span>
+
+                <div class="s-cart__free-delivery-bgd"></div>
+                <div class="s-cart__progress-track"></div>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="s-cart__cart-content-wrapper js-cart__cart-content-wrapper{% if cart.item_count == 0 %} is-empty{% endif %}">
+            <div class="s-cart__loader"></div>
+            <div class="s-cart__cart-content js-cart__cart-content">
+              {% if cart.item_count > 0 %}
+                {% for item in cart.items %}
+                  {% render 'cart-item', item: item %}
+                {% endfor %}
+              {% endif %}
+
+              {% if cart.item_count > 1 %}
+                <button class="s-cart__remove-all js-cart__remove-all">
+                  {{ 'sections.cart.remove_all' | t }}
+                  {% render 'icon-delete' %}
+                </button>
+              {% endif %}
+
+              <div class="s-cart__empty-text">
+                <div class="s-cart__empty-text-wrapper">
+                  <p>
+                    {{ 'sections.cart.empty_text' | t }}
+                  </p>
+
+                  {% if section.settings.browse_products_link != blank %}
+                    <a href="{{ section.settings.browse_products_link }}">
+                      {{ 'sections.cart.browse_products' | t }}
+                    </a>
+                  {% endif %}
+
+                  {% if section.settings.empty_cart_animation != blank %}
+                    <dotlottie-player
+                      src="{{ section.settings.empty_cart_animation }}"
+                      background="transparent"
+                      speed="1"
+                      class="s-cart__empty-text-animation"
+                      loop
+                      autoplay
+                    >
+                    </dotlottie-player>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="s-cart__footer js-cart__footer">
+          <div class="s-cart__footer-wrapper">
+            <div class="s-cart__footer-loader-container js-cart__footer-loader-container">
+              <div class="s-cart__footer-loader"></div>
+            </div>
+
+            <div class="s-cart__footer-content js-cart__footer-content">
+              <div class="s-cart__discount-container js-cart__discount-container">
+                {% if discount_codes == blank and cart.items.size > 0 %}
+                  <button class="s-cart__discount-toggle js-cart__discount-toggle" type="button">
+                    {{ 'sections.cart.open_discount_form' | t }}
+                  </button>
+                  <form class="s-cart__discount-wrap js-cart__discount-wrap">
+                    <div class="s-cart__discount-input-container">
+                      <input
+                        type="text"
+                        placeholder="{{ 'sections.cart.discount_placeholder' | t }}"
+                        class="s-cart__discount-input js-cart__discount-input"
+                      >
+                      <button class="s-cart__discount-submit-btn js-cart__discount-submit-btn" type="button">
+                        {% render 'icon-arrow-line' %}
+                      </button>
+                    </div>
+                    <div class="s-cart__discount-error s-cart__discount-error--not-valid">
+                      {{ 'sections.cart.discount_is_not_valid' | t }}
+                    </div>
+                  </form>
+                {% endif %}
+
+                {% assign discount_codes = discount_codes | remove_first: ',' | split: ',' | uniq | join: ',' %}
+                {% assign discount_list = discount_list | remove_first: ',' | split: ',' | uniq | join: ',' %}
+                {% if discount_codes != blank and cart.items.size > 0 %}
+                  <div class="s-cart__discounts-applied-container">
+                    <div class="s-cart__discounts-percent">
+                      {% assign cart_price_percent = cart.total_price
+                        | times: 100
+                        | divided_by: cart.original_total_price
+                      %}
+                      {% assign discount_percent = 100 | minus: cart_price_percent %}
+                      {{ 'sections.cart.percent_discount' | t: percent: discount_percent }}
+                    </div>
+                    <ul
+                      class="s-cart__discounts-list js-cart__discounts-list"
+                      data-codes="{{ discount_codes }}"
+                    >
+                      {% assign codes = discount_list | split: ',' %}
+                      {% for code in codes %}
+                        {% if discount_codes contains code %}
+                          <li class="s-cart__discount">
+                            <span class="s-cart__discount-text">{{ code | escape }}</span>
+                            <span
+                              class="s-cart__discount-remove js-cart__discount-remove"
+                              data-code="{{ code }}"
+                            >
+                              {%- render 'icon-close' -%}
+                            </span>
+                          </li>
+                        {% else %}
+                          <li class="s-cart__discount js-cart__discount" data-code="{{ code }}">
+                            <span>{{ code | escape }}</span>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="js-cart__summary-container">
+              <div class="s-cart__summary-row">
+                <p class="s-cart__summary-subtitle">
+                  {{ 'sections.cart.subtotal' | t }}
+                </p>
+                <p class="s-cart__summary-value js-summary-subtotal">
+                  {% if section.settings.enable_trailing_zeros %}
+                    {{ subtotal | money }}
+                  {% else %}
+                    {{ subtotal | money_without_trailing_zeros }}
+                  {% endif %}
+                </p>
+              </div>
+
+              <div class="s-cart__summary-row">
+                <p class="s-cart__summary-subtitle">
+                  {{ 'sections.cart.standard_delivery' | t }}
+                </p>
+                <p class="s-cart__summary-value js-summary-subtotal">
+                  {{ 'sections.cart.shipping_value' | t }}
+                </p>
+              </div>
+
+              {% if total_discount > 0 %}
+                <div class="s-cart__summary-row">
+                  <p class="s-cart__summary-subtitle s-cart__summary-subtitle--red">
+                    {{ 'sections.cart.discounts' | t }}
+                  </p>
+                  <p class="s-cart__summary-value s-cart__summary-value--red">
+                    {% if section.settings.enable_trailing_zeros %}
+                      {{ total_discount | money | prepend: '-' }}
+                    {% else %}
+                      {{ total_discount | money_without_trailing_zeros | prepend: '-' }}
+                    {% endif %}
+                  </p>
+                </div>
+              {% endif %}
+
+              <div class="s-cart__summary-row s-cart__summary-row--total">
+                <p class="s-cart__summary-subtitle">{{ 'sections.cart.total' | t }}</p>
+                <p class="s-cart__summary-value js-summary-total">
+                  {% if section.settings.enable_trailing_zeros %}
+                    {{ cart.total_price | money }}
+                  {% else %}
+                    {{ cart.total_price | money_without_trailing_zeros }}
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+            <div class="s-cart__summary-info">
+              {{ 'sections.cart.taxes_value' | t }}
+            </div>
+
+            <a
+              href="{{ shop.url }}{{ routes.root_url }}/checkout"
+              class="s-cart__button-checkout js-cart__button-checkout{% if cart.empty? %} is-disabled{% endif %}"
+            >
+              {% render 'icon-secure' %}
+
+              {{ 'sections.cart.checkout' | t }}
+            </a>
+
+            <div class="s-cart__payment-row">
+              {% for block in section.blocks %}
+                {% if block.settings.svg != blank %}
+                  <div class="s-cart__payment-icon">
+                    {{ block.settings.svg }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if section.settings.product_slider == blank or section.settings.product_slider.products.size > 0 %}
+        <div class="s-cart__recommendations-slider-wrapper">
+          <div class="s-cart__recommendations-slider js-cart__recommendations-slider is-hidden">
+            <div class="s-cart__slider-head">
+              <h4 class="s-cart__slider-title">
+                {{ 'sections.cart.slider_title' | t }}
+              </h4>
+
+              <div class="s-cart__slider-buttons js-cart__slider-buttons is-hidden-mobile is-hidden-desktop">
+                <button class="s-cart__swiper-button s-cart__swiper-button--prev">
+                  {% render 'icon-slider-arrow-prev' %}
+                </button>
+                <button class="s-cart__swiper-button s-cart__swiper-button--next">
+                  {% render 'icon-slider-arrow-next' %}
+                </button>
+              </div>
+            </div>
+            <div class="s-cart__slider-render-container js-cart__slider-render-container{% if section.settings.product_slider != blank %} is-static {% endif %}">
+              <swiper-container
+                class="s-cart__slider js-cart__slider"
+                slides-per-view="2"
+                space-between="16"
+                speed="500"
+                loop="true"
+                navigation="true"
+                navigation-prev-el=".s-cart__swiper-button--prev"
+                navigation-next-el=".s-cart__swiper-button--next"
+                breakpoints='
+                  {
+                    "1080": {
+                      "slidesPerView": 4
+                    }
+                  }
+                '
+              >
+                {% for product in section.settings.product_slider.products limit: 10 %}
+                  <swiper-slide class="s-cart__slide js-cart__slide">
+                    {% render 'product-card',
+                      product: product,
+                      media_type: 'image',
+                      display_wishlist: true,
+                      display_sold_out_badge: true,
+                      display_tag_badge: true,
+                      display_discount_badge: true,
+                      display_low_stock_badge: true,
+                      display_simple_color_swatch: true,
+                      display_add_to_cart: true,
+                      display_product_type: true
+                    %}
+                  </swiper-slide>
+                {% endfor %}
+              </swiper-container>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <template class="t-cart__body">
+    <div class="s-cart__body js-cart__body">
+      {% if section.settings.enable_free_delivery %}
+        {% assign free_shipping_text_html = section.settings.free_shipping_text
+          | replace: '{money}', money_left_for_free_delivery
+          | replace: '{icon}', icon_free_delivery
+          | replace: '{gift}', promo_currency_value
+        %}
+        {% assign free_shipping_complete_text = section.settings.free_shipping_complete_text
+          | replace: '{gift}', promo_currency_value
+        %}
+        <div
+          class="s-cart__delivery-wrapper js-cart__delivery-wrapper"
+          data-free-delivery="{{ free_delivery_value | times: 100 }}"
+        >
+          <div class="s-cart__free-delivery">
+            <span class="s-cart__free-delivery-text js-cart__free-delivery-text">
+              {% if cart_total_price >= free_delivery_value %}
+                {{ free_shipping_complete_text }}
+              {% else %}
+                {{ free_shipping_text_html }}
+              {% endif %}
+            </span>
+
+            <div class="s-cart__free-delivery-bgd"></div>
+            <div class="s-cart__progress-track"></div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="s-cart__cart-content-wrapper js-cart__cart-content-wrapper{% if cart.item_count == 0 %} is-empty{% endif %}">
+        <div class="s-cart__loader"></div>
+        <div class="s-cart__cart-content js-cart__cart-content">
+          {% if cart.item_count > 0 %}
+            {% for item in cart.items %}
+              {% render 'cart-item', item: item %}
+            {% endfor %}
+          {% endif %}
+
+          {% if cart.item_count > 1 %}
+            <button class="s-cart__remove-all js-cart__remove-all">
+              {{ 'sections.cart.remove_all' | t }}
+              {% render 'icon-delete' %}
+            </button>
+          {% endif %}
+
+          <div class="s-cart__empty-text">
+            <div class="s-cart__empty-text-wrapper">
+              <p>
+                {{ 'sections.cart.empty_text' | t }}
+              </p>
+
+              {% if section.settings.browse_products_link != blank %}
+                <a href="{{ section.settings.browse_products_link }}">
+                  {{ 'sections.cart.browse_products' | t }}
+                </a>
+              {% endif %}
+
+              {% if section.settings.empty_cart_animation != blank %}
+                <dotlottie-player
+                  src="{{ section.settings.empty_cart_animation }}"
+                  background="transparent"
+                  speed="1"
+                  class="s-cart__empty-text-animation"
+                  loop
+                  autoplay
+                >
+                </dotlottie-player>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template class="t-cart__footer">
+    <div class="s-cart__footer js-cart__footer">
+      <div class="s-cart__footer-wrapper">
+        <div class="s-cart__footer-loader-container js-cart__footer-loader-container">
+          <div class="s-cart__footer-loader"></div>
+        </div>
+
+        <div class="s-cart__footer-content js-cart__footer-content">
+          <div class="s-cart__discount-container js-cart__discount-container">
+            {% if discount_codes == blank and cart.items.size > 0 %}
+              <button class="s-cart__discount-toggle js-cart__discount-toggle" type="button">
+                {{ 'sections.cart.open_discount_form' | t }}
+              </button>
+              <form class="s-cart__discount-wrap js-cart__discount-wrap">
+                <div class="s-cart__discount-input-container">
+                  <input
+                    type="text"
+                    placeholder="{{ 'sections.cart.discount_placeholder' | t }}"
+                    class="s-cart__discount-input js-cart__discount-input"
+                  >
+                  <button class="s-cart__discount-submit-btn js-cart__discount-submit-btn" type="button">
+                    {% render 'icon-arrow-line' %}
+                  </button>
+                </div>
+                <div class="s-cart__discount-error s-cart__discount-error--not-valid">
+                  {{ 'sections.cart.discount_is_not_valid' | t }}
+                </div>
+              </form>
+            {% endif %}
+
+            {% assign discount_codes = discount_codes | remove_first: ',' | split: ',' | uniq | join: ',' %}
+            {% assign discount_list = discount_list | remove_first: ',' | split: ',' | uniq | join: ',' %}
+            {% if discount_codes != blank and cart.items.size > 0 %}
+              <div class="s-cart__discounts-applied-container">
+                <div class="s-cart__discounts-percent">
+                  {% assign cart_price_percent = cart.total_price
+                    | times: 100
+                    | divided_by: cart.original_total_price
+                  %}
+                  {% assign discount_percent = 100 | minus: cart_price_percent %}
+                  {{ 'sections.cart.percent_discount' | t: percent: discount_percent }}
+                </div>
+                <ul
+                  class="s-cart__discounts-list js-cart__discounts-list"
+                  data-codes="{{ discount_codes }}"
+                >
+                  {% assign codes = discount_list | split: ',' %}
+                  {% for code in codes %}
+                    {% if discount_codes contains code %}
+                      <li class="s-cart__discount">
+                        <span class="s-cart__discount-text">{{ code | escape }}</span>
+                        <span
+                          class="s-cart__discount-remove js-cart__discount-remove"
+                          data-code="{{ code }}"
+                        >
+                          {%- render 'icon-close' -%}
+                        </span>
+                      </li>
+                    {% else %}
+                      <li class="s-cart__discount js-cart__discount" data-code="{{ code }}">
+                        <span>{{ code | escape }}</span>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="js-cart__summary-container">
+          <div class="s-cart__summary-row">
+            <p class="s-cart__summary-subtitle">
+              {{ 'sections.cart.subtotal' | t }}
+            </p>
+            <p class="s-cart__summary-value js-summary-subtotal">
+              {% if section.settings.enable_trailing_zeros %}
+                {{ subtotal | money }}
+              {% else %}
+                {{ subtotal | money_without_trailing_zeros }}
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="s-cart__summary-row">
+            <p class="s-cart__summary-subtitle">
+              {{ 'sections.cart.standard_delivery' | t }}
+            </p>
+            <p class="s-cart__summary-value js-summary-subtotal">
+              {{ 'sections.cart.shipping_value' | t }}
+            </p>
+          </div>
+
+          {% if total_discount > 0 %}
+            <div class="s-cart__summary-row">
+              <p class="s-cart__summary-subtitle s-cart__summary-subtitle--red">
+                {{ 'sections.cart.discounts' | t }}
+              </p>
+              <p class="s-cart__summary-value s-cart__summary-value--red">
+                {% if section.settings.enable_trailing_zeros %}
+                  {{ total_discount | money | prepend: '-' }}
+                {% else %}
+                  {{ total_discount | money_without_trailing_zeros | prepend: '-' }}
+                {% endif %}
+              </p>
+            </div>
+          {% endif %}
+
+          <div class="s-cart__summary-row s-cart__summary-row--total">
+            <p class="s-cart__summary-subtitle">{{ 'sections.cart.total' | t }}</p>
+            <p class="s-cart__summary-value js-summary-total">
+              {% if section.settings.enable_trailing_zeros %}
+                {{ cart.total_price | money }}
+              {% else %}
+                {{ cart.total_price | money_without_trailing_zeros }}
+              {% endif %}
+            </p>
+          </div>
+        </div>
+        <div class="s-cart__summary-info">
+          {{ 'sections.cart.taxes_value' | t }}
+        </div>
+
+        <a
+          href="{{ shop.url }}{{ routes.root_url }}/checkout"
+          class="s-cart__button-checkout js-cart__button-checkout{% if cart.empty? %} is-disabled{% endif %}"
+        >
+          {% render 'icon-secure' %}
+
+          {{ 'sections.cart.checkout' | t }}
+        </a>
+
+        <div class="s-cart__payment-row">
+          {% for block in section.blocks %}
+            {% if block.settings.svg != blank %}
+              <div class="s-cart__payment-icon">
+                {{ block.settings.svg }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template class="t-cart__ymal-skeleton">
+    <div class="s-cart__ymal-skeleton">
+      {% for i in (1..4) %}
+        <div class="s-cart__ymal-skeleton-item">
+          <div class="skeleton skeleton-image"></div>
+          <div class="skeleton-info">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-price"></div>
+            <div class="skeleton skeleton-description"></div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </template>
+
+  {% liquid
+    assign fallback_collection_empty = false
+    if section.settings.ymal_fallback_collection.products.size == 0
+      assign fallback_collection_empty = true
+    endif
+  %}
+  <template class="t-cart__ymal-fallback" data-is-empty="{{ fallback_collection_empty }}">
+    <swiper-container
+      class="s-cart__slider js-cart__slider"
+      slides-per-view="2"
+      space-between="16"
+      speed="500"
+      loop="true"
+      navigation="true"
+      navigation-prev-el=".s-cart__swiper-button--prev"
+      navigation-next-el=".s-cart__swiper-button--next"
+      breakpoints='{"1080":{"slidesPerView":4}}'
+    >
+      {% if section.settings.ymal_fallback_collection %}
+        {% for product in section.settings.ymal_fallback_collection.products limit: 10 %}
+          <swiper-slide class="s-cart__slide js-cart__slide">
+            {% render 'product-card',
+              product: product,
+              media_type: 'image',
+              display_wishlist: true,
+              display_sold_out_badge: true,
+              display_tag_badge: true,
+              display_discount_badge: true,
+              display_low_stock_badge: true,
+              display_simple_color_swatch: true,
+              display_add_to_cart: true,
+              display_product_type: true
+            %}
+          </swiper-slide>
+        {% endfor %}
+      {% endif %}
+    </swiper-container>
+  </template>
+
+  <template id="t-cart-summary-template">
+    <div class="s-cart__summary-row">
+      <p class="s-cart__summary-subtitle">{{ 'sections.cart.subtotal' | t }}</p>
+      <p class="s-cart__summary-value is-updated">{subtotal}</p>
+    </div>
+
+    <div class="s-cart__summary-row">
+      <p class="s-cart__summary-subtitle">{{ 'sections.cart.standard_delivery' | t }}</p>
+      <p class="s-cart__summary-value is-updated">
+        {{ 'sections.cart.shipping_value' | t }}
+      </p>
+    </div>
+
+    {discountRow}
+
+    <div class="s-cart__summary-row s-cart__summary-row--total">
+      <p class="s-cart__summary-subtitle">{{ 'sections.cart.total' | t }}</p>
+      <p class="s-cart__summary-value is-updated">{total}</p>
+    </div>
+  </template>
+
+  <template id="t-cart-discount-template">
+    <div class="s-cart__summary-row is-updated">
+      <p class="s-cart__summary-subtitle s-cart__summary-subtitle--red">{{ 'sections.cart.discounts' | t }}</p>
+      <p class="s-cart__summary-value s-cart__summary-value--red">-{discount}</p>
+    </div>
+  </template>
+
+  <template id="t-cart-delivery-progress-template">
+    {{ free_shipping_progress_tpl }}
+  </template>
+
+  <template id="t-cart-delivery-complete-template">
+    {{ free_shipping_complete_tpl }}
+  </template>
+</s-cart>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_trailing_zeros",
+      "label": "Enable Trailing Zeros for Total Price",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_max_width",
+      "label": "Enable Max Width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "default": 1200,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_max_width == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 90,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 90,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f6f5f3"
+    },
+    {
+      "type": "paragraph",
+      "content": "●  Cart Items"
+    },
+    {
+      "type": "color",
+      "id": "cart_item_background_color",
+      "label": "Background Color",
+      "default": "#fff"
+    },
+    {
+      "type": "paragraph",
+      "content": "●  Checkout Form"
+    },
+    {
+      "type": "color",
+      "id": "checkout_form_background_color",
+      "label": "Background Color",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Heading Settings (Desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family_desktop",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "heading_font_color_desktop",
+      "label": "Font Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "heading_dot_color_desktop",
+      "label": "Dot Color",
+      "default": "#39210B"
+    },
+    {
+      "type": "header",
+      "content": "Heading Settings (Mobile)"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family_mobile",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "heading_font_color_mobile",
+      "label": "Font Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "heading_dot_color_mobile",
+      "label": "Dot Color",
+      "default": "#39210B"
+    },
+    {
+      "type": "header",
+      "content": "Free Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_free_delivery",
+      "label": "Enable free delivery",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Progress Bar Settings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "text",
+      "default": "{icon} You're Only {money} to Free International Shipping",
+      "id": "free_shipping_text",
+      "label": "Progress Text",
+      "info": "Keep {money}, {icon} and {gift} variables in this format and set up them in settings below, or remove them so they will not appear",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "liquid",
+      "id": "icon_variable",
+      "label": "{icon} Variable That Will Render In Progress Bar",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "richtext",
+      "default": "<p>You received Free International Shipping</p>",
+      "id": "free_shipping_complete_text",
+      "label": "Progress Bar Complete Text",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "text",
+      "id": "delivery_prices",
+      "label": "Delivery prices",
+      "default": "USD:1000,EUR:800",
+      "info": "Use this format: 'Currency_ISO_Code:Free delivery money amount, divide each currency by coma'. Example: 'USD:1000,EUR:800,...'",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "text",
+      "id": "promo_currency_amount",
+      "label": "Promo Currency amount",
+      "default": "USD:50,EUR:50",
+      "info": "Use this format: 'Currency_ISO_Code:Promo Currency amount, divide each currency by coma'. Example: 'USD:1000,EUR:800,...'. Use this field if you want to display a variable that contains a currency amount",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Progress Bar Settings (Desktop)",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Paddings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_padding_top_desktop",
+      "label": "Progress Bar Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 30,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_padding_bottom_desktop",
+      "label": "Progress Bar Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 30,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Background Color",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_background_color_desktop",
+      "label": "Progress Bar Background Color",
+      "default": "#f9f9f9",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Font Settings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "select",
+      "id": "progress_bar_font_family_desktop",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_font_size_desktop",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_font_color_desktop",
+      "label": "Font Color",
+      "default": "#150c06",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Progress Bar Track Settings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_track_color_desktop",
+      "label": "Progress Bar Track Color",
+      "default": "#e0e0e0",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_bgd_color_desktop",
+      "label": "Progress Bar Fill Color",
+      "default": "#1a1a1a",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Progress Bar Settings (Mobile)",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Paddings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_padding_top_mobile",
+      "label": "Progress Bar Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 30,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_padding_bottom_mobile",
+      "label": "Progress Bar Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 30,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Background Color",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_background_color_mobile",
+      "label": "Progress Bar Background Color",
+      "default": "#f9f9f9",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Font Settings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "select",
+      "id": "progress_bar_font_family_mobile",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_font_size_mobile",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 14,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "range",
+      "id": "progress_bar_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_font_color_mobile",
+      "label": "Font Color",
+      "default": "#150c06",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Progress Bar Track Settings",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_track_color_mobile",
+      "label": "Progress Bar Track Color",
+      "default": "#e0e0e0",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_bgd_color_mobile",
+      "label": "Progress Bar Fill Color",
+      "default": "#1a1a1a",
+      "visible_if": "{{ section.settings.enable_free_delivery == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type": "collection",
+      "id": "product_slider",
+      "label": "Collection for static slider"
+    },
+    {
+      "type": "collection",
+      "id": "ymal_fallback_collection",
+      "label": "YMAL Fallback Collection",
+      "info": "Shown when recommendations return empty"
+    },
+    {
+      "type": "header",
+      "content": "Checkout Button Settings (Desktop)"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family_desktop",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_desktop",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_font_color_desktop",
+      "label": "Font Color",
+      "default": "#f6f5f0"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_desktop",
+      "label": "Background Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_desktop",
+      "label": "Border Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "paragraph",
+      "content": "● Hover Settings"
+    },
+    {
+      "type": "color",
+      "id": "button_font_color_hover_desktop",
+      "label": "Font Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_hover_desktop",
+      "label": "Background Color",
+      "default": "#f6f5f0"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_hover_desktop",
+      "label": "Border Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Checkout Button Settings (Mobile)"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family_mobile",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-body)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Font Size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight_mobile",
+      "label": "Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_font_color_mobile",
+      "label": "Font Color",
+      "default": "#f6f5f0"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_mobile",
+      "label": "Background Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_mobile",
+      "label": "Border Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Empty Cart Settings"
+    },
+    {
+      "type": "url",
+      "id": "empty_cart_animation",
+      "label": "Empty cart animation URL (json or lottie)"
+    },
+    {
+      "type": "url",
+      "id": "browse_products_link",
+      "label": "Browse Products Link",
+      "info": "This link will be displayed when the cart is empty"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Payment Icon",
+      "type": "payment-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Title is used only for the block management. Not used in code"
+        },
+        {
+          "type": "html",
+          "id": "svg",
+          "label": "Icon",
+          "info": "Please paste svg icon code here"
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["cart"]
+  },
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
+}
+{% endschema %}

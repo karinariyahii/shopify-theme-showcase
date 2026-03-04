@@ -1,0 +1,158 @@
+{{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-announcement-bar__link {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-announcement-bar__inner {
+    background-color: {{ section.settings.bg_color }};
+  }
+{% endstyle %}
+
+<s-announcement-bar class="s-announcement-bar">
+  <div class="s-announcement-bar__inner">
+    <swiper-container
+      slides-per-view="1"
+      speed="{{ section.settings.autoplay_speed }}"
+      delay="{{ section.settings.autoplay_delay }}"
+      loop="true"
+      mousewheel-control="true"
+      pagination="false"
+      autoplay="{{ section.settings.autoplay }}"
+      class="s-announcement-bar__main-carousel"
+    >
+      {% for block in section.blocks %}
+
+        {% liquid
+          assign icon = block.settings.icon
+          assign text = block.settings.text
+          assign text_link = block.settings.block_link
+        %}
+
+        <swiper-slide class="s-announcement-bar__carousel-cell">
+          <div class="s-announcement-bar__cell-container">
+            {% if icon != blank %}
+              <div class="s-announcement-bar__icon">
+                {% render 'image-lazy', image: icon %}
+              </div>
+            {% endif %}
+  
+            {% if text_link != blank %}
+              <a href="{{ text_link }}" class="s-announcement-bar__link">
+                {{ text }}
+              </a>
+            {% else %}
+              <span class="s-announcement-bar__link">
+                {{ text }}
+              </span>
+            {% endif %}
+          </div>
+        </swiper-slide>
+      {% endfor %}
+    </swiper-container>
+  </div>
+</s-announcement-bar>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "rgba(0, 0, 0, 0.61)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Colour",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "unit": "ms",
+      "max": 5000,
+      "min": 100,
+      "default": 3000,
+      "step": 100
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed",
+      "unit": "ms",
+      "max": 2000,
+      "min": 100,
+      "default": 500,
+      "step": 100,
+      "info": "*how fast slides change"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slide settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label",
+          "default": "Placeholder text"
+        },
+        {
+          "type": "url",
+          "id": "block_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "limit": 1
+}
+{% endschema %}

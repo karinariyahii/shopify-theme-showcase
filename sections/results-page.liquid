@@ -1,0 +1,103 @@
+{{ 'section-results-page.css' | asset_url | stylesheet_tag }}
+
+{% assign faq_categories = metaobjects.faq_groups.values %}
+
+{% capture all_faq_categories %}
+[
+  {% for category in faq_categories %}
+    {
+      "category": {{ category.category_title | json }},
+      "faqs": [
+        {% for faq in category.category_items.value %}
+          {
+            "question": {{ faq.question | json }},
+            "answer": {{ faq.answer |  metafield_text | json }},
+            "url": {{ faq.system.url | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{% endcapture %}
+
+<script src="{{ 'section-results-page.js' | asset_url }}" defer></script>
+
+<s-results-page class="s-results-page">
+  <div class="s-results-page__container">
+    <div class="s-results-page__wrapper">
+      <div class="s-results-page__nav-wrapper">
+        <nav class="s-results-page__nav js-results-page__nav is-hidden">
+          <p class="s-results-page__nav-title">{{ 'sections.results-page.nav_title' | t }}</p>
+
+          <div class="s-results-page__nav-links js-results-page__nav-links"></div>
+        </nav>
+      </div>
+
+      <div class="s-results-page__content">
+        <div class="s-results-page__result-title-wrapper js-results-page__result-title-wrapper"></div>
+        <div class="s-results-page__loader js-results-page__loader">
+          <span class="s-results-page__spinner"></span>
+        </div>
+
+        <div class="s-results-page__results js-results-page__results"></div>
+      </div>
+    </div>
+  </div>
+
+  <template class="t-results-page__nav-link">
+    <button data-category="{category_class}" class="s-results-page__nav-link js-results-page__nav-link s-results-page__nav-link--{category_class}">{{ 'sections.results-page.nav_link' | t }}</button>
+  </template>
+
+  <template class="t-results-page__nav-link--all-sections">
+    <button class="s-results-page__nav-link js-results-page__nav-link is-active">
+      {{- 'sections.results-page.nav_link_all_sections' | t -}}
+    </button>
+  </template>
+
+  <template class="t-results-page__nav-link--no-results">
+    <button class="s-results-page__nav-link is-active">
+      {{- 'sections.results-page.no_results' | t -}}
+    </button>
+  </template>
+
+  <template class="t-results-page__clear-search">
+    <button class="s-results-page__clear-search js-results-page__clear-search">
+      {{- 'sections.results-page.clear_search' | t -}}
+    </button>
+  </template>
+
+  <template class="t-results-page__result-title">
+    <h2 class="s-results-page__title">
+      {{ 'sections.results-page.result_title' | t }}
+    </h2>
+  </template>
+  <template class="t-results-page__result">
+    <a href="{faq_url}" class="s-results-page__result s-results-page__result--{category_class}">
+      <div class="s-results-page__result-wrapper">
+        <p class="s-results-page__result-top">{category_title}: {faq_question}</p>
+        <p class="s-results-page__result-bottom">{faq_sentence}</p>
+      </div>
+      <span class="s-results-page__link-icon">
+        {% render 'icon-arrow-right' %}
+      </span>
+    </a>
+  </template>
+</s-results-page>
+
+<script>
+  window.ALL_FAQ_CATEGORIES = {{ all_faq_categories }};
+</script>
+
+{% schema %}
+{
+  "name": "Results Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Results Page",
+      "category": "Support Hub"
+    }
+  ]
+}
+{% endschema %}

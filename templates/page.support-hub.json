@@ -1,0 +1,461 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "support_search_6gCPbY": {
+      "type": "support-search",
+      "name": "Support Search",
+      "settings": {
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 110,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 32,
+        "search_page": "shopify://pages/search-results",
+        "title": "Support Hub",
+        "title_font_family": "var(--font-heading)",
+        "title_font_size_desktop": 26,
+        "title_font_weight_desktop": 400,
+        "title_max_width_desktop": 0,
+        "title_italic_desktop": false,
+        "title_underline_desktop": false,
+        "title_text_transform_desktop": "none",
+        "title_align_desktop": "center",
+        "title_color_desktop": "#150c06",
+        "title_font_size_mobile": 24,
+        "title_font_weight_mobile": 400,
+        "title_max_width_mobile": 0,
+        "title_italic_mobile": false,
+        "title_underline_mobile": false,
+        "title_text_transform_mobile": "none",
+        "title_align_mobile": "center",
+        "title_color_mobile": "#150c06",
+        "background_color": "#ffffff",
+        "input_font_size_desktop": 14,
+        "input_font_weight_desktop": 400,
+        "input_color_desktop": "#150c06",
+        "input_placeholder_color_desktop": "#150c068a",
+        "ph_opacity_desktop": "0.54",
+        "input_border_color_desktop": "#150c063d",
+        "bc_opacity_desktop": "0.24",
+        "input_border_hover_color_desktop": "#150c068a",
+        "input_border_focus_color_desktop": "#150c06",
+        "input_font_size_mobile": 14,
+        "input_font_weight_mobile": 400,
+        "input_color_mobile": "#150c06",
+        "input_placeholder_color_mobile": "#150c068a",
+        "ph_opacity_mobile": "0.54",
+        "input_border_color_mobile": "#150c063d",
+        "bc_opacity_mobile": "0.24",
+        "button_font_size_desktop": 14,
+        "button_font_weight_desktop": 500,
+        "button_color_desktop": "#f6f5f0",
+        "button_bg_color_desktop": "#150c06",
+        "button_border_color_desktop": "#150c06",
+        "button_hover_color_desktop": "#150c06",
+        "button_hover_bg_color_desktop": "#ffffff",
+        "button_hover_border_color_desktop": "#150c06",
+        "button_font_size_mobile": 14,
+        "button_font_weight_mobile": 500,
+        "button_color_mobile": "#f6f5f0",
+        "button_bg_color_mobile": "#150c06",
+        "button_border_color_mobile": "#150c06",
+        "input_button_gap": 4
+      }
+    },
+    "support_link_blocks_6c7c8r": {
+      "type": "support-link-blocks",
+      "blocks": {
+        "link_block_xLWNCd": {
+          "type": "link_block",
+          "settings": {
+            "block_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewbox=\"0 0 48 48\" fill=\"none\">\n  <g clip-path=\"url(#clip0_2602_30193)\">\n    <path d=\"M24 31.5C28.1421 31.5 31.5 28.1421 31.5 24C31.5 19.8579 28.1421 16.5 24 16.5C19.8579 16.5 16.5 19.8579 16.5 24C16.5 28.1421 19.8579 31.5 24 31.5Z\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M34.5 39C31.6481 40.8956 27.6806 42 24 42C20.4399 42 16.9598 40.9443 13.9997 38.9665C11.0397 36.9886 8.73255 34.1774 7.37018 30.8883C6.0078 27.5992 5.65134 23.98 6.34587 20.4884C7.04041 16.9967 8.75474 13.7894 11.2721 11.2721C13.7894 8.75474 16.9967 7.04041 20.4884 6.34587C23.98 5.65134 27.5992 6.0078 30.8883 7.37018C34.1774 8.73255 36.9886 11.0397 38.9665 13.9997C40.9443 16.9598 42 20.4399 42 24C42 28.1419 40.5 31.5 36.75 31.5C33 31.5 31.5 28.1419 31.5 24V16.5\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n  </g>\n  <defs>\n    <clippath id=\"clip0_2602_30193\">\n      <rect width=\"48\" height=\"48\" fill=\"white\"></rect>\n    </clippath>\n  </defs>\n</svg>",
+            "block_title": "Contact Us",
+            "block_link": "shopify://pages/contact-us-new"
+          }
+        },
+        "link_block_RXinJ3": {
+          "type": "link_block",
+          "settings": {
+            "block_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewbox=\"0 0 48 48\" fill=\"none\">\n  <path d=\"M24 36C25.2426 36 26.25 34.9926 26.25 33.75C26.25 32.5074 25.2426 31.5 24 31.5C22.7574 31.5 21.75 32.5074 21.75 33.75C21.75 34.9926 22.7574 36 24 36Z\" fill=\"#150C06\"></path>\n  <path d=\"M24 27V25.5C27.3131 25.5 30 23.1488 30 20.25C30 17.3512 27.3131 15 24 15C20.6869 15 18 17.3512 18 20.25V21\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n  <path d=\"M24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6C14.0589 6 6 14.0589 6 24C6 33.9411 14.0589 42 24 42Z\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>",
+            "block_title": "FAQs & Policies",
+            "block_link": "shopify://pages/faqs-and-policies"
+          }
+        },
+        "link_block_6npA6A": {
+          "type": "link_block",
+          "settings": {
+            "block_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewbox=\"0 0 48 48\" fill=\"none\">\n  <path d=\"M4.5 10.4998V19.4998M4.5 19.4998H13.5M4.5 19.4998L12.3319 12.3317C14.6252 10.0387 17.5434 8.47246 20.7219 7.82853C23.9003 7.18461 27.198 7.4916 30.203 8.71115C33.208 9.93071 35.7869 12.0087 37.6176 14.6856C39.4483 17.3625 40.4496 20.5195 40.4964 23.7621C40.5431 27.0048 39.6333 30.1894 37.8805 32.9179C36.1277 35.6464 33.6098 37.7979 30.6412 39.1036C27.6726 40.4093 24.3851 40.8112 21.1895 40.2592C17.9938 39.7072 15.0316 38.2257 12.6731 35.9998\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>",
+            "block_title": "Returns",
+            "block_link": "shopify://pages/returns-dhl-pre-paid-label"
+          }
+        },
+        "link_block_i7jQnA": {
+          "type": "link_block",
+          "settings": {
+            "block_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewbox=\"0 0 48 48\" fill=\"none\">\n  <g clip-path=\"url(#clip0_4002_30187)\">\n    <path d=\"M34.5 15H42.4838C42.7827 14.9999 43.0748 15.089 43.3227 15.2561C43.5706 15.4231 43.7629 15.6604 43.875 15.9375L46.5 22.5\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M4.5 27H34.5\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M36 40.5C38.4853 40.5 40.5 38.4853 40.5 36C40.5 33.5147 38.4853 31.5 36 31.5C33.5147 31.5 31.5 33.5147 31.5 36C31.5 38.4853 33.5147 40.5 36 40.5Z\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M15 40.5C17.4853 40.5 19.5 38.4853 19.5 36C19.5 33.5147 17.4853 31.5 15 31.5C12.5147 31.5 10.5 33.5147 10.5 36C10.5 38.4853 12.5147 40.5 15 40.5Z\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M31.5 36H19.5\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M34.5 22.5H46.5V34.5C46.5 34.8978 46.342 35.2794 46.0607 35.5607C45.7794 35.842 45.3978 36 45 36H40.5\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    <path d=\"M10.5 36H6C5.60218 36 5.22064 35.842 4.93934 35.5607C4.65804 35.2794 4.5 34.8978 4.5 34.5V13.5C4.5 13.1022 4.65804 12.7206 4.93934 12.4393C5.22064 12.158 5.60218 12 6 12H34.5V31.7569\" stroke=\"#150C06\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n  </g>\n  <defs>\n    <clippath id=\"clip0_4002_30187\">\n      <rect width=\"48\" height=\"48\" fill=\"white\"></rect>\n    </clippath>\n  </defs>\n</svg>",
+            "block_title": "Track Order",
+            "block_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "link_block_xLWNCd",
+        "link_block_RXinJ3",
+        "link_block_6npA6A",
+        "link_block_i7jQnA"
+      ],
+      "name": "Link Blocks",
+      "settings": {
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "section_background_color": "",
+        "title_font_family": "var(--font-heading)",
+        "title_font_size_desktop": 16,
+        "title_font_weight_desktop": 400,
+        "title_max_width_desktop": 0,
+        "title_italic_desktop": false,
+        "title_underline_desktop": false,
+        "title_text_transform_desktop": "none",
+        "title_align_desktop": "center",
+        "title_color_desktop": "#150c06",
+        "title_font_size_mobile": 16,
+        "title_font_weight_mobile": 400,
+        "title_max_width_mobile": 0,
+        "title_italic_mobile": false,
+        "title_underline_mobile": false,
+        "title_text_transform_mobile": "none",
+        "title_align_mobile": "center",
+        "title_color_mobile": "#150c06",
+        "blocks_background_color": "#ebefe3"
+      }
+    },
+    "popular_faq_B9mT9Y": {
+      "type": "popular-faq",
+      "blocks": {
+        "question_GPbRbn": {
+          "type": "question",
+          "settings": {
+            "question_text": "How do I find a product?",
+            "question_description": "<p>How do I find a product?How do I find a product?</p>"
+          }
+        },
+        "question_KY9Dqd": {
+          "type": "question",
+          "settings": {
+            "question_text": "Where can I buy your products?",
+            "question_description": "<p>You can purchase products directly from our online store. If you wish to find out more about our stockists, please contact us <a href=\"/pages/accessibility-statement\" title=\"ACCESSIBILITY STATEMENT\">here</a>.</p>"
+          }
+        },
+        "question_URPTwJ": {
+          "type": "question",
+          "settings": {
+            "question_text": "Where are your products made?",
+            "question_description": "<p>Where are your products made? Where are your products made?</p>"
+          }
+        },
+        "question_QMB7YL": {
+          "type": "question",
+          "settings": {
+            "question_text": "How do I know if a product is in stock?",
+            "question_description": "<p>How do I know if a product is in stock? How do I know if a product is in stock?</p>"
+          }
+        },
+        "question_6XgNKY": {
+          "type": "question",
+          "settings": {
+            "question_text": "Do you offer a gifting service?",
+            "question_description": "<p>Do you offer a gifting service? Do you offer a gifting service?</p>"
+          }
+        },
+        "question_rYrxCT": {
+          "type": "question",
+          "settings": {
+            "question_text": "How do I know which size to select?",
+            "question_description": "<p>How do I know which size to select? How do I know which size to select?</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_GPbRbn",
+        "question_KY9Dqd",
+        "question_URPTwJ",
+        "question_QMB7YL",
+        "question_6XgNKY",
+        "question_rYrxCT"
+      ],
+      "name": "Popular FAQ",
+      "settings": {
+        "margin_top_desktop": 4,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 20,
+        "bg_color": "#ebefe3",
+        "title_faq": "Popular FAQ",
+        "title_font_family": "var(--font-heading)",
+        "title_font_size_desktop": 26,
+        "title_font_weight_desktop": 400,
+        "title_max_width_desktop": 0,
+        "title_italic_desktop": false,
+        "title_underline_desktop": false,
+        "title_text_transform_desktop": "none",
+        "title_color_desktop": "#150c06",
+        "title_font_size_mobile": 26,
+        "title_font_weight_mobile": 400,
+        "title_max_width_mobile": 0,
+        "title_italic_mobile": false,
+        "title_underline_mobile": false,
+        "title_text_transform_mobile": "none",
+        "title_color_mobile": "#150c06",
+        "button_view_text": "View All",
+        "button_hide_text": "Hide All",
+        "button_font_size_desktop": 14,
+        "button_font_weight_desktop": 400,
+        "button_color_desktop": "#150c06",
+        "button_decoration_color_desktop": "#150c063d",
+        "button_hover_color_desktop": "#150c06",
+        "button_hover_decoration_color_desktop": "#150c06",
+        "button_font_size_mobile": 14,
+        "button_font_weight_mobile": 400,
+        "button_color_mobile": "#150c06",
+        "button_decoration_color_mobile": "#150c063d",
+        "faq_question_font_size_desktop": 16,
+        "faq_question_font_weight_desktop": 400,
+        "faq_question_color_desktop": "#150c06",
+        "faq_question_border_color": "#39210b29",
+        "faq_question_icons_color": "#150c06",
+        "faq_question_font_size_mobile": 16,
+        "faq_question_font_weight_mobile": 400,
+        "faq_question_color_mobile": "#150c06"
+      }
+    },
+    "article_links_MEw9VY": {
+      "type": "article-links",
+      "blocks": {
+        "article_link_GXYgyT": {
+          "type": "article_link",
+          "settings": {
+            "article": "news/in-exploration-of-oscar-niemeyer",
+            "custom_text": "Products: Modern Day Slavery Statement",
+            "custom_url": ""
+          }
+        },
+        "article_link_ARzWUN": {
+          "type": "article_link",
+          "settings": {
+            "article": "",
+            "custom_text": "Products: Fake Represent Items & Websites",
+            "custom_url": "shopify://collections"
+          }
+        },
+        "article_link_EU66rn": {
+          "type": "article_link",
+          "settings": {
+            "article": "",
+            "custom_text": "Shipping & Duties: Christmas Delivery Dates",
+            "custom_url": "shopify://collections"
+          }
+        },
+        "article_link_brAVEY": {
+          "type": "article_link",
+          "settings": {
+            "article": "",
+            "custom_text": "Shipping & Duties: InPost Locker FAQs",
+            "custom_url": "shopify://collections"
+          }
+        },
+        "article_link_YPgyPT": {
+          "type": "article_link",
+          "settings": {
+            "article": "",
+            "custom_text": "Popular FAQs: The Vault",
+            "custom_url": "shopify://collections"
+          }
+        }
+      },
+      "block_order": [
+        "article_link_GXYgyT",
+        "article_link_ARzWUN",
+        "article_link_EU66rn",
+        "article_link_brAVEY",
+        "article_link_YPgyPT"
+      ],
+      "name": "Article Links",
+      "settings": {
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "bg_color": "#ffffff",
+        "section_title": "Latest Articles",
+        "title_font_family": "var(--font-heading)",
+        "title_font_size_desktop": 26,
+        "title_font_weight_desktop": 400,
+        "title_max_width_desktop": 0,
+        "title_italic_desktop": false,
+        "title_underline_desktop": false,
+        "title_text_transform_desktop": "none",
+        "title_color_desktop": "#150c06",
+        "title_font_size_mobile": 26,
+        "title_font_weight_mobile": 400,
+        "title_max_width_mobile": 0,
+        "title_italic_mobile": false,
+        "title_underline_mobile": false,
+        "title_text_transform_mobile": "none",
+        "title_color_mobile": "#150c06",
+        "button_text": "View All",
+        "button_link": "shopify://blogs/news",
+        "button_font_size_desktop": 14,
+        "button_font_weight_desktop": 400,
+        "button_color_desktop": "#150c06",
+        "button_decoration_color_desktop": "#cfd9bd",
+        "button_hover_color_desktop": "#150c06",
+        "button_hover_decoration_color_desktop": "#150c06",
+        "button_font_size_mobile": 14,
+        "button_font_weight_mobile": 400,
+        "button_color_mobile": "#150c06",
+        "button_decoration_color_mobile": "#cfd9bd",
+        "article_font_size_desktop": 16,
+        "article_font_weight_desktop": 400,
+        "article_color_desktop": "#150c06",
+        "article_font_size_mobile": 16,
+        "article_font_weight_mobile": 400,
+        "article_color_mobile": "#150c06"
+      }
+    },
+    "diptyque_3V6TJE": {
+      "type": "diptyque",
+      "blocks": {
+        "image_block_NyYJUR": {
+          "type": "image_block",
+          "settings": {
+            "background_type": "image",
+            "custom_image_aspect_ratio": "754/500",
+            "image": "shopify://shop_images/ChatGPT_Image_3_._2026_._13_57_50.png",
+            "video_desktop_url": "",
+            "video_mobile_url": "",
+            "url": "shopify://collections/refactor-clothing",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0.1,
+            "add_fixed_width": false,
+            "fixed_width": 100,
+            "text_container_padding": 0,
+            "text_container_border_radius": 0,
+            "text_container_background_type": "none",
+            "text_container_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4) 100%)",
+            "text_container_range": 0,
+            "block_inner_padding": 40,
+            "vertical_alignment": "bottom",
+            "horizontal_alignment": "left",
+            "block_inner_padding_mobile": 40,
+            "vertical_alignment_mobile": "middle",
+            "horizontal_alignment_mobile": "center",
+            "text_alignment": "left",
+            "title_font_family": "var(--font-body)",
+            "title": "Refactor Clothing",
+            "title_font_size": 18,
+            "title_font_weight": 400,
+            "title_color": "#ffffff",
+            "title_font_size_mobile": 18,
+            "title_font_weight_mobile": 400,
+            "title_color_mobile": "#ffffff",
+            "button_label": "Shop Now",
+            "button_margin_top": 4,
+            "button_font_size": 14,
+            "button_font_weight": 400,
+            "button_color": "#ffffff",
+            "button_font_size_mobile": 14,
+            "button_font_weight_mobile": 400,
+            "button_color_mobile": "#ffffff"
+          }
+        },
+        "image_block_CBJjjf": {
+          "type": "image_block",
+          "settings": {
+            "background_type": "image",
+            "custom_image_aspect_ratio": "754/500",
+            "image": "shopify://shop_images/ChatGPT_Image_3_._2026_._14_58_01.png",
+            "video_desktop_url": "",
+            "video_mobile_url": "",
+            "url": "shopify://collections/refactor-beauty",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0.2,
+            "add_fixed_width": false,
+            "fixed_width": 100,
+            "text_container_padding": 0,
+            "text_container_border_radius": 0,
+            "text_container_background_type": "none",
+            "text_container_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4) 100%)",
+            "text_container_range": 0,
+            "block_inner_padding": 40,
+            "vertical_alignment": "bottom",
+            "horizontal_alignment": "left",
+            "block_inner_padding_mobile": 40,
+            "vertical_alignment_mobile": "middle",
+            "horizontal_alignment_mobile": "center",
+            "text_alignment": "left",
+            "title_font_family": "var(--font-body)",
+            "title": "Refactor Beauty",
+            "title_font_size": 18,
+            "title_font_weight": 400,
+            "title_color": "#ffffff",
+            "title_font_size_mobile": 18,
+            "title_font_weight_mobile": 400,
+            "title_color_mobile": "#ffffff",
+            "button_label": "Shop Now",
+            "button_margin_top": 4,
+            "button_font_size": 14,
+            "button_font_weight": 400,
+            "button_color": "#ffffff",
+            "button_font_size_mobile": 14,
+            "button_font_weight_mobile": 400,
+            "button_color_mobile": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_NyYJUR",
+        "image_block_CBJjjf"
+      ],
+      "name": "Split Screen",
+      "settings": {
+        "desktop_top_margin": 0,
+        "desktop_bottom_margin": 0,
+        "mobile_top_margin": 0,
+        "mobile_bottom_margin": 0,
+        "images_gap": 4
+      }
+    }
+  },
+  "order": [
+    "support_search_6gCPbY",
+    "support_link_blocks_6c7c8r",
+    "popular_faq_B9mT9Y",
+    "article_links_MEw9VY",
+    "diptyque_3V6TJE"
+  ]
+}

@@ -1,0 +1,40 @@
+{%- if recommendations.performed? -%}
+  {%- if recommendations.products_count > 0 -%}
+    <div class="js-cart__slider-container">
+      <swiper-container
+        class="s-cart__slider js-cart__slider"
+        slides-per-view="2"
+        space-between="16"
+        speed="500"
+        loop="true"
+        navigation="true"
+        navigation-prev-el=".s-cart__swiper-button--prev"
+        navigation-next-el=".s-cart__swiper-button--next"
+        breakpoints='
+          {
+            "768": {
+              "slidesPerView": 4
+            }
+          }
+        '
+      >
+        {% for product in recommendations.products limit: 10 %}
+          <swiper-slide class="s-cart__slide js-cart__slide">
+            {% render 'product-card',
+              product: product,
+              media_type: 'image',
+              display_wishlist: true,
+              display_sold_out_badge: true,
+              display_tag_badge: true,
+              display_discount_badge: true,
+              display_low_stock_badge: true,
+              display_simple_color_swatch: true,
+              display_add_to_cart: true,
+              display_product_type: true
+            %}
+          </swiper-slide>
+        {% endfor %}
+      </swiper-container>
+    </div>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,148 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "empty-section",
+      "disabled": true,
+      "settings": {}
+    },
+    "care_content_zjzADk": {
+      "type": "care-content",
+      "blocks": {
+        "faq_custom_pCJqyg": {
+          "type": "faq-custom",
+          "settings": {
+            "highlight": "#ffff00",
+            "highlight_text": "#717171",
+            "faq_title_font_size_desktop": 14,
+            "faq_title_line_height_desktop": 114,
+            "faq_title_letter_spacing_desktop": 0.1,
+            "faq_title_font_weight_desktop": 400,
+            "faq_title_color_desktop": "#000000",
+            "faq_title_font_size_mobile": 14,
+            "faq_title_line_height_mobile": 114,
+            "faq_title_letter_spacing_mobile": 0.1,
+            "faq_title_font_weight_mobile": 400,
+            "faq_title_color_mobile": "#000000",
+            "faq_question_font_size_desktop": 13,
+            "faq_question_line_height_desktop": 157,
+            "faq_question_letter_spacing_desktop": 0.1,
+            "faq_question_font_weight_desktop": 300,
+            "faq_question_color_desktop": "#000000",
+            "faq_question_font_size_mobile": 13,
+            "faq_question_line_height_mobile": 157,
+            "faq_question_letter_spacing_mobile": 0.1,
+            "faq_question_font_weight_mobile": 300,
+            "faq_question_color_mobile": "#000000",
+            "faq_answer_font_size_desktop": 14,
+            "faq_answer_line_height_desktop": 157,
+            "faq_answer_letter_spacing_desktop": 0.1,
+            "faq_answer_font_weight_desktop": 300,
+            "faq_answer_color_desktop": "#717171",
+            "faq_answer_font_size_mobile": 14,
+            "faq_answer_line_height_mobile": 157,
+            "faq_answer_letter_spacing_mobile": 0.1,
+            "faq_answer_font_weight_mobile": 300,
+            "faq_answer_color_mobile": "#717171"
+          }
+        },
+        "menu_custom_y3YLVp": {
+          "type": "menu-custom",
+          "settings": {
+            "breadcrumbs_font_size_desktop": 14,
+            "breadcrumbs_line_height_desktop": 114,
+            "breadcrumbs_letter_spacing_desktop": 0.1,
+            "breadcrumbs_font_weight_desktop": 400,
+            "breadcrumbs_color_desktop": "#000000",
+            "breadcrumbs_font_size_mobile": 14,
+            "breadcrumbs_line_height_mobile": 114,
+            "breadcrumbs_letter_spacing_mobile": 0.1,
+            "breadcrumbs_font_weight_mobile": 400,
+            "breadcrumbs_color_mobile": "#000000",
+            "menu_link_font_size_desktop": 16,
+            "menu_link_line_height_desktop": 200,
+            "menu_link_letter_spacing_desktop": 0.1,
+            "menu_link_font_weight_desktop": 400,
+            "menu_link_color_desktop": "#000000",
+            "menu_link_hover_color_desktop": "#000000",
+            "menu_link_active_color_desktop": "#000000",
+            "menu_link_font_size_mobile": 16,
+            "menu_link_line_height_mobile": 188,
+            "menu_link_letter_spacing_mobile": 0.1,
+            "menu_link_font_weight_mobile": 400,
+            "menu_link_color_mobile": "#ebebeb",
+            "menu_link_hover_color_mobile": "#ffffff",
+            "menu_link_active_color_mobile": "#ffffff"
+          }
+        },
+        "contact_us_custom_dTDXKL": {
+          "type": "contact-us-custom",
+          "settings": {
+            "message_max_length": 600,
+            "contact_title_font_size_desktop": 14,
+            "contact_title_color": "#000000",
+            "contact_title_font_size_mobile": 14,
+            "contact_title_color_mobile": "#000000",
+            "contact_text_font_size_desktop": 14,
+            "contact_text_color": "#000000",
+            "contact_text_line_height_desktop": 220,
+            "contact_text_font_size_mobile": 14,
+            "contact_text_color_mobile": "#000000",
+            "contact_text_line_height_mobile": 220,
+            "input_text_color_desktop": "#0b0a0a",
+            "input_border_color_desktop": "#c5bebe",
+            "input_border_focus_color_desktop": "#0b0a0a",
+            "input_border_hover_color_desktop": "#0b0a0a",
+            "input_text_color_mobile": "#0b0a0a",
+            "input_border_color_mobile": "#c5bebe",
+            "input_border_focus_color_mobile": "#0b0a0a",
+            "input_border_hover_color_mobile": "#0b0a0a",
+            "label_color_desktop": "#8b7e7d",
+            "label_focus_color_desktop": "#0b0a0a",
+            "label_color_mobile": "#8b7e7d",
+            "label_focus_color_mobile": "#0b0a0a",
+            "error_color": "#d71313",
+            "counter_color": "#6a6a6a",
+            "submit_font_size_desktop": 14,
+            "submit_bg_desktop": "#000000",
+            "submit_text_desktop": "#ffffff",
+            "submit_bg_hover_desktop": "#3e3e3e",
+            "submit_bg_disabled_desktop": "#a7aeb4",
+            "submit_font_size_mobile": 14,
+            "submit_bg_mobile": "#000000",
+            "submit_text_mobile": "#ffffff",
+            "submit_bg_hover_mobile": "#3e3e3e",
+            "submit_bg_disabled_mobile": "#a7aeb4"
+          }
+        }
+      },
+      "block_order": [
+        "faq_custom_pCJqyg",
+        "menu_custom_y3YLVp",
+        "contact_us_custom_dTDXKL"
+      ],
+      "custom_css": [],
+      "name": "Care Content",
+      "settings": {
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "menu": "care-page-menu",
+        "show_info": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "care_content_zjzADk"
+  ]
+}

@@ -1,0 +1,377 @@
+{{ 'section-mega-menu.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'section-mega-menu.js' | asset_url }}" defer></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    background: transparent;
+    overflow-x: hidden;
+    position: fixed;
+    left: 0;
+    z-index: 12;
+    transition: background 400ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .s-mega-menu__overlay {
+    transition: opacity {{ section.settings.transition_time }}ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .s-mega-menu__modal {
+    transition: left {{ section.settings.transition_time }}ms ease, max-width 300ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .s-mega-menu__image-text-wrapper {
+    padding: {{ section.settings.text_padding | append: 'px' }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mega-menu__image-text-wrapper {
+    align-items: {{ section.settings.text_alignment }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mega-menu__image-wrapper::after {
+    background: linear-gradient(180deg, #0000 60%, rgb(0 0 0 / {{ section.settings.gradient-opacity }}%));
+  }
+{% endstyle %}
+
+{% liquid
+  assign styling_blocks = section.blocks | where: 'type', 'link-style'
+  assign image_blocks = section.blocks | where: 'type', 'image-block'
+%}
+
+<s-mega-menu style="display: none;" class="s-mega-menu">
+  <template class="t-mega-menu">
+    <div class="s-mega-menu__overlay js-mega-menu__overlay"></div>
+
+    <div
+      class="
+        s-mega-menu__modal js-mega-menu__modal
+        {% if image_blocks.size > 0 %}s-mega-menu__modal--single-grid{% endif %}
+         {% if image_blocks.size > 2 %}s-mega-menu__modal--double-grid{% endif %}
+      "
+    >
+      <div class="s-mega-menu__content-wrapper">
+        <div class="s-mega-menu__main-content">
+          <nav class="s-mega-menu__menu-nav">
+            <div class="s-mega-menu__container">
+              <div class="s-mega-menu__header">
+                <button class="s-mega-menu__button-close js-mega-menu__button-close">
+                  {% render 'icon-close-big' %}
+                </button>
+              </div>
+
+              <ul class="s-mega-menu__menu-list">
+                {% for link in section.settings.menu.links %}
+                  {% for block in styling_blocks %}
+                    {% liquid
+                      assign styling_block = blank
+                      assign block_title = block.settings.title | handleize
+                      assign link_title = link.title | handleize
+
+                      if block_title == link_title
+                        assign styling_block = block
+                        break
+                      endif
+                    %}
+                  {% endfor %}
+
+                  {% if link.links != blank %}
+                    <li class="s-mega-menu__menu-item">
+                      <span
+                        class="s-mega-menu__link-title js-mega-menu__open-expanded"
+                        {% if styling_block != blank %}
+                          style="color: {{ styling_block.settings.color }}; padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                        {% endif %}
+                        data-parent="{{ link.handle }}"
+                      >
+                        <span>
+                          {{ link.title }}
+                        </span>
+
+                        {% render 'icon-arrow-menu' %}
+                      </span>
+                    </li>
+
+                    {% comment %} When menu item does not have child links {% endcomment %}
+                  {% else %}
+                    <li class="s-mega-menu__menu-item">
+                      <a
+                        href="{{ link.url }}"
+                        class="s-mega-menu__link-title"
+                        {% if styling_block != blank %}
+                          style="color: {{ styling_block.settings.color }}; padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                        {% endif %}
+                      >
+                        <span>
+                          {{ link.title }}
+                        </span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </nav>
+
+          <div class="s-mega-menu__all-expanded-menus js-mega-menu__all-expanded-menus">
+            {% for link in section.settings.menu.links %}
+              {% if link.links != blank %}
+                <div
+                  data-parent="{{ link.handle }}"
+                  class="s-mega-menu__menu-expanded js-mega-menu__menu-expanded"
+                >
+                  <div class="s-mega-menu__expanded-content ">
+                    <ul>
+                      {% for child_link in link.links %}
+                        {% for block in styling_blocks %}
+                          {% liquid
+                            assign styling_block = blank
+                            assign block_title = block.settings.title | handleize
+                            assign link_title = child_link.title | handleize
+
+                            if block_title == link_title
+                              assign styling_block = block
+                              break
+                            endif
+                          %}
+                        {% endfor %}
+                        <li class="s-mega-menu__menu-third-wrapper js-mega-menu__menu-third-wrapper">
+                          <div 
+                            {% if styling_block != blank %}
+                              style="padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }};"
+                            {% endif %}
+                            class="s-mega-menu__open-third js-mega-menu__open-third"
+                          >
+                            <a
+                              class="s-mega-menu__link-title js-mega-menu__third-link-title"
+                              href="{{child_link.url}}"
+                              {% if styling_block != blank %}
+                                style="color: {{ styling_block.settings.color }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                              {% endif %}
+                            >
+                              <span>
+                                {{ child_link.title }}
+                              </span>
+                            </a>
+                            {% if child_link.links != blank %}
+                              <div class="s-mega-menu__menu-third-opener">
+                                {% render 'icon-plus' %}
+                                {% render 'icon-minus' %}
+                              </div>
+                            {% endif %}
+                          </div>
+                          {% if child_link.links != blank %}
+                            <div class="s-mega-menu__menu-third">
+                              <div>
+                                <ul>
+                                  {% for grandchild_link in child_link.links %}
+                                    <li>
+                                      <a href="{{grandchild_link.url}}">
+                                        <span>
+                                          {{ grandchild_link.title }}
+                                        </span>
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if image_blocks.size > 0 %}
+            <div
+              class="
+                s-mega-menu__main-images js-mega-menu__main-images
+                {% case image_blocks.size %}
+                  {% when 1 %} s-mega-menu__main-images--single-grid
+                  {% when 2 %} s-mega-menu__main-images--double-grid
+                  {% when 3 %} s-mega-menu__main-images--triple-grid
+                  {% when 4 %} s-mega-menu__main-images--quaternary-grid
+                {% endcase %}
+              "
+            >
+              {% for block in image_blocks %}
+                {% liquid
+                  assign image = block.settings.image
+                  assign title = block.settings.title
+                  assign subtitle = block.settings.subtitle
+                  assign link = block.settings.link_url
+                %}
+
+                <div class="s-mega-menu__image-wrapper">
+                  {% if link != blank and image != blank %}
+                    <a href="{{ link }}">
+                      {% render 'image-lazy', image: image, class: 's-mega-menu__image' %}
+                    </a>
+                  {% elsif image != blank %}
+                    {% render 'image-lazy', image: image, class: 's-mega-menu__image' %}
+                  {% endif %}
+
+                  <div class="s-mega-menu__text-wrapper">
+                    {% if title != blank %}
+                      <span class="s-mega-menu__image-title">
+                        {{ title }}
+                      </span>
+                    {% endif %}
+
+                    {% if link != blank and subtitle != blank %}
+                      <a href="{{ link }}" class="s-mega-menu__image-link">
+                        {{ subtitle }}
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </template>
+</s-mega-menu>
+
+{% schema %}
+{
+  "name": "Desktop Menu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "transition_time",
+      "label": "Transition Time",
+      "min": 200,
+      "max": 1500,
+      "step": 100,
+      "unit": "ms",
+      "default": 400,
+      "info": "Time to open/close the mega menu drawer"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu"
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "gradient-opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Gradient Opacity",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Link Style",
+      "type": "link-style",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Title",
+          "info": "This link will be styled"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#150C06"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_bold_text",
+          "label": "Enable bold text",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 10,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "name": "Image Block",
+      "type": "image-block",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended size: 320x504"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subitle"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": ["aside", "header"]
+  },
+  "presets": [{ "name": "Desktop Menu" }]
+}
+{% endschema %}

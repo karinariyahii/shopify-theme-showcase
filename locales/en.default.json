@@ -1,0 +1,257 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "refresh_page": "Choosing a selection results in a full page refresh.",
+    "link_messages": {
+      "new_window": "Opens in a new window.",
+      "external": "Opens external website."
+    }
+  },
+  "components": {
+    "care_contact_us_form": {
+      "comment": "We're here to help. You can get in touch with our Customer Service team below for assistance with any questions you might have.",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "phone": "Phone number",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Submit",
+      "post_success": "Thanks for contacting us. Our customer support team will aim to reply to all questions within 48 hours of receipt.",
+      "message_error": "Your message cannot be blank",
+      "subject_error": "Please select one of the available subjects"
+    },
+    "product-card": {
+      "badge_discount": "Discount -{{discount}}%",
+      "badge_low_stock": "Only {{stock}} left",
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold out",
+      "quick_buy": "Quick buy",
+      "notify_me": "Notify me",
+      "pre_order": "Pre-order"
+    },
+    "country-selector": {
+      "all_countries": "All Countries",
+      "form-submit": "SAVE COUNTRY",
+      "popular": "Most Popular",
+      "country_selector_button": "{{ country }} / {{ currency_name }} {{ currency_symbol }}",
+      "search_results": "Search Results",
+      "input_placeholder": "Type to Search",
+      "clear": "Clear",
+      "no_results_title": "No results found",
+      "no_results_button": "Clear search"
+    },
+    "notify_me": {
+      "title_part_1": "Notify Me When",
+      "title_part_2": "This product is in stock",
+      "subtitle_part_1": "Get notified",
+      "subtitle_part_2": "when it's back in stock.",
+      "email": "Email Address",
+      "enter_email": "Enter your Email Address",
+      "confirm": "Confirm"
+    }
+  },
+  "sections": {
+    "header": {
+      "shop": "Shop",
+      "search": "Search"
+    },
+    "footer": {
+      "email_input_placeholder": "Enter your email address",
+      "email_empty_error": "Email is required.",
+      "email_invalid_error": "Invalid email address.",
+      "form_accept": "By subscribing, you accept our Privacy Policy",
+      "back_to_top": "Back to Top"
+    },
+    "mobile_menu": {
+      "header_title": "Menu",
+      "back": "Back",
+      "account": "My Account",
+      "wishlist": "Wishlist"
+    },
+    "contact_form": {
+      "post_success": "Your message has been sent successfully.",
+      "placeholders": {
+        "full_name": "Full Name",
+        "email": "Email Address",
+        "subject": "Subject (Optional)",
+        "order_number": "Order Number (Optional)",
+        "message": "Message",
+        "send": "Send Message"
+      },
+      "errors": {
+        "full_name": "Name must contain only letters",
+        "email": "Enter a valid email address like example@example.com",
+        "message": "Incorrect message",
+        "message_chars": "Message must be {{charCount}} characters or less",
+        "form": "Couldn’t send your message, please try again"
+      }
+    },
+    "care_content": {
+      "care": "Customer Care",
+      "find": "CAN'T FIND YOUR ANSWER OR NEED HELP?",
+      "support": "SPEAK TO LIVE SUPPORT",
+      "contact_us_title": "Contact Us",
+      "contact": "Contact",
+      "address": "Address"
+    },
+    "care_contact": {
+      "subtitle": "We're here to help. You can get in touch with our Customer Service team below for assistance with any questions you might have.",
+      "form": {
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "country": "Country",
+        "subject": "Subject",
+        "message": "Message",
+        "send": "Submit",
+        "post_success": "Thanks for contacting us. Our customer support team will aim to reply to all questions within 48 hours of receipt."
+      },
+      "info": {
+        "email_title": "Email address",
+        "email": "customerservice@refactorplus.com",
+        "uk_row_telephone_title": "",
+        "uk_row_telephone": "",
+        "us_telephone_title": "Contact Number",
+        "us_telephone": "+44 30 4984 4722",
+        "opening_hours_title": "Opening hours",
+        "opening_hours": "We aim to reply within 1-2 working days",
+        "address_title": "Head office address",
+        "address_html": "Unit 303 R+ Studios<br>242 Acklam Road<br>W10 5JJ<br>Refactor +",
+        "email_exist_error": "This email address is already associated with an account."
+      }
+    },
+    "search": {
+      "input_placeholder": "Search",
+      "search_suggestions": "Search suggestions:",
+      "trending_products": "Trending products",
+      "trending_categories": "Trending Categories",
+      "products_count": "{{count}} Products",
+      "view_all": "View All",
+      "products": "Products",
+      "categories": "Categories",
+      "search_category_title": "{product_title} in {{collection_title}}",
+      "no_results": "No results for '{query}'",
+      "no_results_sub": "We are sorry! We couldn't find results for '{query}'. But don't give up - check the spelling or try less specific search"
+    },
+    "newsletter_popup": {
+      "email": "Email address",
+      "email_error": "Please note: use a valid email such as name@mail.com",
+      "empty_error": "Email can't be empty",
+      "close_mobile_button": "No Thanks",
+      "success_message": "Thank you for subscribing!",
+      "already_registered": "Thank you for subscribing, your email address was registered with us already.",
+      "email_placeholder": "Email address",
+      "button_label": "Subscribe"
+    },
+    "cookies_banner": {
+      "accept": "Accept & Continue",
+      "choose_preferences": "Choose Preferences",
+      "preferences_popup": {
+        "title": "Cookie preferences",
+        "accept_all": "Accept all",
+        "decline_all": "Decline all",
+        "save_my_choices": "Save my choices",
+        "required_label": "Required",
+        "required_text": "These cookies are necessary for the site to function properly, including capabilities like logging in and adding items to the cart.",
+        "personalization_label": "Personalization",
+        "personalization_text": "These cookies store details about your actions to personalize your next visit to the website.",
+        "marketing_label": "Marketing",
+        "marketing_text": "These cookies are used to optimize marketing communications and show you ads on other sites.",
+        "analytics_label": "Analytics",
+        "analytics_text": "These cookies help us understand how you interact with the site. We use this data to identify areas to improve."
+      }
+    },
+    "blogs": {
+      "all_posts": "All Posts"
+    },
+    "scroll_sticky": {
+      "shop_now": "Shop Now",
+      "discover_more": "Discover more"
+    },
+    "country_selector_modal": {
+      "title": "Country & Currency"
+    },
+    "support_search": {
+      "search_placeholder": "Type Your Question...",
+      "search_button": "Search"
+    },
+    "support-hub-header": {
+      "search_placeholder": "Search..."
+    },
+    "contact-us": {
+      "post_success": "Your message has been sent successfully.",
+      "placeholders": {
+        "full_name": "Full Name",
+        "email": "Email Address",
+        "subject": "Subject",
+        "order_number": "Order Number (Optional)",
+        "message": "Message",
+        "send": "Send Message"
+      },
+      "errors": {
+        "full_name": "Incorrect name",
+        "email": "Incorrect email",
+        "message": "Incorrect message",
+        "subject": "Incorrect subject",
+        "form": "Couldn’t send your message, please try again"
+      }
+    },
+    "faq_page": {
+      "category_suffix": "{{category_name}} Section"
+    },
+    "results-page": {
+      "nav_title": "Section",
+      "nav_link": "{category_name} ({count})",
+      "nav_link_all_sections": "All Sections ({count})",
+      "result_title": "{count} Results for {search_query}",
+      "no_results": "No Results (0)",
+      "clear_search": "Clear Search"
+    },
+    "cart": {
+      "cart": "Cart",
+      "title_color_join_html": "{{ title }} in {{ color }}",
+      "empty_text": "Your cart is currently empty.",
+      "browse_products": "Browse Products",
+      "add_wishlist": "To Favourites",
+      "remove_wishlist": "Remove from Favourites",
+      "remove": "Remove",
+      "qty": "Qty:",
+      "slider_title": "You May Also Like",
+      "subtotal": "Sub Total",
+      "checkout": "secure checkout",
+      "open_discount_form": "Apply Discount Code",
+      "discount_placeholder": "Enter Discount Code",
+      "discount_is_not_valid": "Invalid discount code",
+      "percent_discount": "You Saved: {{ percent }}%",
+      "standard_delivery": "Standard delivery",
+      "shipping_value": "*Calculated at checkout",
+      "discounts": "Discounts",
+      "total": "Total",
+      "taxes_value": "Taxes: Calculated at checkout",
+      "remove_all": "Remove All",
+      "view_cart": "view cart"
+    },
+    "retail_stores": {
+      "back": "Back to Locations",
+      "email_us": "Email Us",
+      "get_directions": "Get Directions",
+      "view_store": "View Store"
+    },
+    "image_with_signup": {
+      "email_input_placeholder": "Email address",
+      "email_success_message": "Thanks for subscribing!",
+      "subscribe": "Subscribe"
+    },
+  }
+}

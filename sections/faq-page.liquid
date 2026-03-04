@@ -1,0 +1,351 @@
+{{ 'section-faq-page.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-faq-page__title {
+    font-size: {{ section.settings.page_title_font_size_mobile | append: 'px' }};
+    font-weight: {{ section.settings.page_title_font_weight_mobile }};
+    font-style: {{ section.settings.page_title_italic_mobile | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+    text-transform: {{ section.settings.page_title_text_transform_mobile }};
+    color: {{ section.settings.page_title_color_mobile }};
+    font-family: {{ section.settings.page_title_font_family }};
+  }
+
+  #shopify-section-{{ section.id }} .s-faq-page__answer * {
+    font-size: {{ section.settings.answer_font_size_mobile | append: 'px' }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .s-faq-page__nav-title {
+      font-size: {{ section.settings.title_font_size | append: 'px' }};
+      font-weight: {{ section.settings.title_font_weight }};
+      font-style: {{ section.settings.title_italic | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.title_text_transform }};
+      color: {{ section.settings.title_color }};
+    }
+
+    #shopify-section-{{ section.id }} .s-faq-page__nav-link {
+      font-size: {{ section.settings.link_font_size | append: 'px' }};
+      font-weight: {{ section.settings.link_font_weight }};
+      font-style: {{ section.settings.link_italic | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.link_text_transform }};
+      color: {{ section.settings.link_color }};
+    }
+
+    #shopify-section-{{ section.id }} .s-faq-page__title {
+      font-size: {{ section.settings.page_title_font_size | append: 'px' }};
+      font-weight: {{ section.settings.page_title_font_weight }};
+      font-style: {{ section.settings.page_title_italic | replace: 'true', 'italic' | replace: 'false', 'normal' }};
+      text-transform: {{ section.settings.page_title_text_transform }};
+      color: {{ section.settings.page_title_color }};
+    }
+
+    #shopify-section-{{ section.id }} .s-faq-page__answer * {
+      font-size: {{ section.settings.answer_font_size | append: 'px' }};
+    }
+  }
+{% endstyle %}
+
+<s-faq-page class="s-faq-page">
+  {% assign faq_categories = metaobjects.faq_groups.values %}
+
+  {% assign current_category = null %}
+
+  {% for category in faq_categories %}
+    {% assign faqs_list = category.category_items.value %}
+
+    {% for faq in faqs_list %}
+      {% if faq.system.id == metaobject.system.id %}
+        {% assign current_category = category %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if current_category %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="s-faq-page__container">
+    <div class="s-faq-page__wrapper">
+      <div class="s-faq-page__nav-wrapper">
+        <nav class="s-faq-page__nav">
+          <p class="s-faq-page__nav-title">
+            {{ 'sections.faq_page.category_suffix' | t: category_name: current_category.category_title }}
+          </p>
+          {% for faq in current_category.category_items.value %}
+            <a
+              href="{{ faq.system.url }}"
+              class="s-faq-page__nav-link{% if faq.question == metaobject.question %} is-active{% endif %}"
+            >
+              {{ faq.question }}
+            </a>
+          {% endfor %}
+        </nav>
+      </div>
+      <div class="s-faq-page__content">
+        <h1 class="s-faq-page__title">
+          {{ metaobject.question }}
+        </h1>
+
+        <div class="s-faq-page__answer">
+          {{ metaobject.answer | metafield_tag }}
+        </div>
+      </div>
+    </div>
+  </div>
+</s-faq-page>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Side Bar Settings (Only Desktop)"
+    },
+
+    {
+      "type": "header",
+      "content": "Category Settings"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "title_italic",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Link Settings"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "link_italic",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "link_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Title Settings"
+    },
+    {
+      "type": "select",
+      "id": "page_title_font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "var(--font-heading)",
+          "label": "Heading"
+        },
+        {
+          "value": "var(--font-body)",
+          "label": "Body"
+        }
+      ],
+      "default": "var(--font-heading)"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Title Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "page_title_font_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "page_title_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "page_title_italic",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "page_title_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "page_title_color",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Title Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "page_title_font_size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "page_title_font_weight_mobile",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "checkbox",
+      "id": "page_title_italic_mobile",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "page_title_text_transform_mobile",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "page_title_color_mobile",
+      "label": "Color",
+      "default": "#150c06"
+    },
+    {
+      "type": "header",
+      "content": "Answer Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Answer Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Page",
+      "category": "Support Hub"
+    }
+  ]
+}
+{% endschema %}

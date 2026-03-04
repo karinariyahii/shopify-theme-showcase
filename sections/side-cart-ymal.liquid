@@ -1,0 +1,51 @@
+{%- if recommendations.performed? -%}
+  {%- if recommendations.products_count > 0 -%}
+    <div class="js-side-cart__slider-container">
+      <swiper-container
+        class="s-side-cart__slider s-side-cart__slider--mobile js-side-cart__slider"
+        slides-per-view="2"
+        space-between="16"
+        speed="500"
+        loop="false"
+        rewind="true"
+        navigation="true"
+        navigation-prev-el=".s-side-cart__swiper-button--prev"
+        navigation-next-el=".s-side-cart__swiper-button--next"
+      >
+        {% for product in recommendations.products limit: 10 %}
+          <swiper-slide class="s-side-cart__slide js-side-cart__slide">
+            {% render 'product-card',
+              product: product,
+              media_type: 'image',
+              display_wishlist: true,
+              display_sold_out_badge: true,
+              display_tag_badge: true,
+              display_discount_badge: true,
+              display_low_stock_badge: true,
+              display_simple_color_swatch: true,
+              display_add_to_cart: true,
+              display_product_type: true
+            %}
+          </swiper-slide>
+        {% endfor %}
+      </swiper-container>
+
+      <div class="s-side-cart__slider s-side-cart__slider--desktop">
+        {% for product in recommendations.products limit: 10 %}
+          {% render 'product-card',
+            product: product,
+            media_type: 'image',
+            display_wishlist: true,
+            display_sold_out_badge: true,
+            display_tag_badge: true,
+            display_discount_badge: true,
+            display_low_stock_badge: true,
+            display_simple_color_swatch: true,
+            display_add_to_cart: true,
+            display_product_type: true
+          %}
+        {% endfor %}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

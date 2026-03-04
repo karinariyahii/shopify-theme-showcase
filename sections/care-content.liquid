@@ -1,0 +1,1481 @@
+{{ 'section-care-content.css' | asset_url | stylesheet_tag }}
+{{ 'component-care-content-menu.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ "section-care-content.js" | asset_url }}" defer></script>
+
+{% liquid
+  assign has_banner = false
+  assign is_faq_page = false
+  assign is_contact_us = false
+  assign block_faq_settings = ''
+  assign block_menu_settings = ''
+  assign block_contact_settings = ''
+
+  if page.metafields.custom.page_banner_d.value != blank
+    assign has_banner = true
+
+    assign banner_desktop = page.metafields.custom.page_banner_d.value
+    assign banner_mobile = page.metafields.custom.page_banner_m.value
+
+    if banner_mobile == blank
+      assign banner_mobile = banner_desktop
+    endif
+  endif
+
+  if page.metafields.custom.faq_content.value != blank
+    assign is_faq_page = true
+
+    assign faq_content = page.metafields.custom.faq_content.value
+  endif
+
+  if page.metafields.custom.is_contact_us_page.value == true
+    assign is_contact_us = true
+    assign subject_list = settings.contact_subject_list | split: ', '
+  endif
+
+  for block in section.blocks
+    if block.type == 'faq-custom'
+      assign block_faq_settings = block
+    endif
+
+    if block.type == 'menu-custom'
+      assign block_menu_settings = block
+    endif
+
+    if block.type == 'contact-us-custom'
+      assign block_contact_settings = block
+    endif
+  endfor
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .s-care-content {
+    padding-bottom: {{ section.settings.margin_bottom_mobile}}px;
+
+    {% unless has_banner %}
+      padding-top: {{ section.settings.margin_top_mobile}}px;
+    {% endunless %}
+  }
+
+  #shopify-section-{{ section.id }} .highlight {
+    font-weight: bold;
+
+    {%  if block_faq_settings != blank %}
+      background-color: {{ block_faq_settings.settings.highlight }};
+      color: {{ block_faq_settings.settings.highlight_text }};
+    {% endif %}
+  }
+
+  {% if block_faq_settings != blank %}
+    #shopify-section-{{ section.id }} .s-care-content__faq-title {
+      font-size: {{ block_faq_settings.settings.faq_title_font_size_mobile }}px;
+      line-height: {{ block_faq_settings.settings.faq_title_line_height_mobile }}%;
+      letter-spacing: {{ block_faq_settings.settings.faq_title_letter_spacing_mobile }}em;
+      font-weight: {{ block_faq_settings.settings.faq_title_font_weight_mobile }};
+      color: {{ block_faq_settings.settings.faq_title_color_mobile }};
+    }
+
+    #shopify-section-{{ section.id }} .s-care-content__faq-question {
+      font-size: {{ block_faq_settings.settings.faq_question_font_size_mobile }}px;
+      line-height: {{ block_faq_settings.settings.faq_question_line_height_mobile }}%;
+      letter-spacing: {{ block_faq_settings.settings.faq_question_letter_spacing_mobile }}em;
+      font-weight: {{ block_faq_settings.settings.faq_question_font_weight_mobile }};
+      color: {{ block_faq_settings.settings.faq_question_color_mobile }};
+    }
+
+    #shopify-section-{{ section.id }} .s-care-content__faq-answer {
+      font-size: {{ block_faq_settings.settings.faq_answer_font_size_mobile }}px;
+      line-height: {{ block_faq_settings.settings.faq_answer_line_height_mobile }}%;
+      letter-spacing: {{ block_faq_settings.settings.faq_answer_letter_spacing_mobile }}em;
+      font-weight: {{ block_faq_settings.settings.faq_answer_font_weight_mobile }};
+      color: {{ block_faq_settings.settings.faq_answer_color_mobile }};
+    }
+  {% endif %}
+
+  {% if block_menu_settings != blank %}
+    #shopify-section-{{ section.id }} .s-care-content__breadcrumbs {
+      font-size: {{ block_menu_settings.settings.breadcrumbs_font_size_mobile }}px;
+      line-height: {{ block_menu_settings.settings.breadcrumbs_line_height_mobile }}%;
+      letter-spacing: {{ block_menu_settings.settings.breadcrumbs_letter_spacing_mobile }}em;
+      font-weight: {{ block_menu_settings.settings.breadcrumbs_font_weight_mobile }};
+      color: {{ block_menu_settings.settings.breadcrumbs_color_mobile }};
+    }
+
+    #shopify-section-{{ section.id }} .c-care-content-menu__list-item {
+      font-size: {{ block_menu_settings.settings.menu_link_font_size_mobile }}px;
+      line-height: {{ block_menu_settings.settings.menu_link_line_height_mobile }}%;
+      letter-spacing: {{ block_menu_settings.settings.menu_link_letter_spacing_mobile }}em;
+      font-weight: {{ block_menu_settings.settings.menu_link_font_weight_mobile }};
+      color: {{ block_menu_settings.settings.menu_link_color_mobile }};
+    }
+
+    #shopify-section-{{ section.id }} .c-care-content-menu__list-item a:hover {
+      color: {{ block_menu_settings.settings.menu_link_hover_color_mobile }};
+    }
+
+    #shopify-section-{{ section.id }} .c-care-content-menu__list-item.is-active a {
+      color: {{ block_menu_settings.settings.menu_link_active_color_mobile }};
+    }
+  {% endif %}
+
+  {% if block_contact_settings != blank %}
+      #shopify-section-{{ section.id }} .s-care-content__contact-title {
+        font-size: {{ block_contact_settings.settings.contact_title_font_size_mobile }}px;
+        color: {{ block_contact_settings.settings.contact_title_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .s-care-content__contact-text {
+        font-size: {{ block_contact_settings.settings.contact_text_font_size_mobile }}px;
+        color: {{ block_contact_settings.settings.contact_text_color_mobile }};
+        line-height: {{ block_contact_settings.settings.contact_text_line_height_mobile }}%;
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea {
+        color: {{ block_contact_settings.settings.input_text_color_mobile }};
+        border-color: {{ block_contact_settings.settings.input_border_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input:hover,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:hover {
+        border-color: {{ block_contact_settings.settings.input_border_hover_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input:focus,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:focus {
+        border-color: {{ block_contact_settings.settings.input_border_focus_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__label {
+        color: {{ block_contact_settings.settings.label_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input:focus + .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:focus + .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.filled .c-contact-us__label {
+        color: {{ block_contact_settings.settings.label_focus_color_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__submit {
+        font-size: {{ block_contact_settings.settings.submit_font_size_mobile }}px;
+        background-color: {{ block_contact_settings.settings.submit_bg_mobile }};
+        color: {{ block_contact_settings.settings.submit_text_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__submit:hover {
+        background-color: {{ block_contact_settings.settings.submit_bg_hover_mobile }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__submit.is-disabled {
+        background-color: {{ block_contact_settings.settings.submit_bg_disabled_mobile }};
+      }
+
+
+      #shopify-section-{{ section.id }} .c-contact-us__input-error,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea-error,
+      #shopify-section-{{ section.id }} .c-contact-us__form-error,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea-length-error {
+        color: {{ block_contact_settings.settings.error_color }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__input,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__textarea {
+        border-color: {{ block_contact_settings.settings.error_color }};
+        color: {{ block_contact_settings.settings.error_color }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__textarea-counter {
+        color: {{ block_contact_settings.settings.counter_color }};
+      }
+  {% endif %}
+
+  @media screen and (min-width: 900px) {
+    #shopify-section-{{ section.id }} .s-care-content {
+      padding-top: {{ section.settings.margin_top_desktop }}px;
+      padding-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+
+    {% if block_faq_settings != blank %}
+      #shopify-section-{{ section.id }} .s-care-content__faq-title {
+        font-size: {{ block_faq_settings.settings.faq_title_font_size_desktop }}px;
+        line-height: {{ block_faq_settings.settings.faq_title_line_height_desktop }}%;
+        letter-spacing: {{ block_faq_settings.settings.faq_title_letter_spacing_desktop }}em;
+        font-weight: {{ block_faq_settings.settings.faq_title_font_weight_desktop }};
+        color: {{ block_faq_settings.settings.faq_title_color_desktop }};
+      }
+
+      #shopify-section-{{ section.id }} .s-care-content__faq-question {
+        font-size: {{ block_faq_settings.settings.faq_question_font_size_desktop }}px;
+        line-height: {{ block_faq_settings.settings.faq_question_line_height_desktop }}%;
+        letter-spacing: {{ block_faq_settings.settings.faq_question_letter_spacing_desktop }}em;
+        font-weight: {{ block_faq_settings.settings.faq_question_font_weight_desktop }};
+        color: {{ block_faq_settings.settings.faq_question_color_desktop }};
+      }
+
+      #shopify-section-{{ section.id }} .s-care-content__faq-answer {
+        font-size: {{ block_faq_settings.settings.faq_answer_font_size_desktop }}px;
+        line-height: {{ block_faq_settings.settings.faq_answer_line_height_desktop }}%;
+        letter-spacing: {{ block_faq_settings.settings.faq_answer_letter_spacing_desktop }}em;
+        font-weight: {{ block_faq_settings.settings.faq_answer_font_weight_desktop }};
+        color: {{ block_faq_settings.settings.faq_answer_color_desktop }};
+      }
+    {% endif %}
+
+
+    {% if block_menu_settings != blank  %}
+      #shopify-section-{{ section.id }} .s-care-content__breadcrumbs {
+        font-size: {{ block_menu_settings.settings.breadcrumbs_font_size_desktop }}px;
+        line-height: {{ block_menu_settings.settings.breadcrumbs_line_height_desktop }}%;
+        letter-spacing: {{ block_menu_settings.settings.breadcrumbs_letter_spacing_desktop }}em;
+        font-weight: {{ block_menu_settings.settings.breadcrumbs_font_weight_desktop }};
+        color: {{ block_menu_settings.settings.breadcrumbs_color_desktop }};
+      }
+
+      #shopify-section-{{ section.id }} .c-care-content-menu__list-item {
+        font-size: {{ block_menu_settings.settings.menu_link_font_size_desktop }}px;
+        line-height: {{ block_menu_settings.settings.menu_link_line_height_desktop }}%;
+        letter-spacing: {{ block_menu_settings.settings.menu_link_letter_spacing_desktop }}em;
+        font-weight: {{ block_menu_settings.settings.menu_link_font_weight_desktop }};
+        color: {{ block_menu_settings.settings.menu_link_color_desktop }};
+        transition: color 0.3s ease;
+      }
+
+      #shopify-section-{{ section.id }} .c-care-content-menu__list-item a:hover {
+        color: {{ block_menu_settings.settings.menu_link_hover_color_desktop }};
+      }
+
+      #shopify-section-{{ section.id }} .c-care-content-menu__list-item.is-active a {
+        color: {{ block_menu_settings.settings.menu_link_active_color_desktop }};
+      }
+    {% endif %}
+
+    {% if block_contact_settings != blank %}
+      #shopify-section-{{ section.id }} .s-care-content__contact-title {
+        font-size: {{ block_contact_settings.settings.contact_title_font_size_desktop }}px;
+        color: {{ block_contact_settings.settings.contact_title_color }};
+      }
+      #shopify-section-{{ section.id }} .s-care-content__contact-text {
+        font-size: {{ block_contact_settings.settings.contact_text_font_size_desktop }}px;
+        color: {{ block_contact_settings.settings.contact_text_color }};
+        line-height: {{ block_contact_settings.settings.contact_text_line_height_desktop }}%;
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea {
+        color: {{ block_contact_settings.settings.input_text_color_desktop }};
+        border-color: {{ block_contact_settings.settings.input_border_color_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__input:hover,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:hover {
+        border-color: {{ block_contact_settings.settings.input_border_hover_color_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__input:focus,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:focus {
+        border-color: {{ block_contact_settings.settings.input_border_focus_color_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__label {
+        color: {{ block_contact_settings.settings.label_color_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__input:focus + .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__textarea:focus + .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.filled .c-contact-us__label {
+        color: {{ block_contact_settings.settings.label_focus_color_desktop }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__input,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__label,
+      #shopify-section-{{ section.id }} .c-contact-us__input-wrapper.is-error .c-contact-us__textarea {
+        border-color: {{ block_contact_settings.settings.error_color }};
+        color: {{ block_contact_settings.settings.error_color }};
+      }
+
+      #shopify-section-{{ section.id }} .c-contact-us__submit {
+        font-size: {{ block_contact_settings.settings.submit_font_size_desktop }}px;
+        background-color: {{ block_contact_settings.settings.submit_bg_desktop }};
+        color: {{ block_contact_settings.settings.submit_text_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__submit:hover {
+        background-color: {{ block_contact_settings.settings.submit_bg_hover_desktop }};
+      }
+      #shopify-section-{{ section.id }} .c-contact-us__submit.is-disabled {
+        background-color: {{ block_contact_settings.settings.submit_bg_disabled_desktop }};
+      }
+    {% endif %}
+  }
+{% endstyle %}
+
+{% if is_contact_us %}
+  {{ 'component-contact-us.css' | asset_url | stylesheet_tag }}
+  <script src="{{ "component-contact-us.js" | asset_url }}" defer></script>
+{% endif %}
+
+<s-care-content
+  class="s-care-content"
+  data-has-faq="{{ is_faq_page }}"
+>
+  {% if has_banner %}
+    <div class="s-care-content__banner-wrapper">
+      {% render 'image-lazy', image: banner_mobile, class: 's-care-content__banner-mobile' %}
+      {% render 'image-lazy', image: banner_desktop, class: 's-care-content__banner-desktop' %}
+    </div>
+  {% endif %}
+
+  <div class="s-care-content__inner">
+    <div class="s-care-content__navigation-wrapper">
+      <div class="s-care-content__breadcrumbs">{{ 'sections.care_content.care' | t }} / {{ page.title }}</div>
+
+      {% render 'care-content-menu', menu: section.settings.menu %}
+    </div>
+
+    <div class="s-care-content__main-wrapper">
+      <div class="s-care-content__main-content">
+        <h1 class="s-care-content__title">
+          {% if is_contact_us %}
+            {{ 'sections.care_content.contact_us_title' | t }}
+          {% else %}
+            {{ page.title }}
+          {% endif %}
+        </h1>
+
+        <div class="s-care-content__page-content">
+          {% if is_faq_page %}
+            <div class="s-care-content__search-container js-care-content__search-container">
+              <label for="search" class="s-care-content__search-wrapper">
+                <span class="s-care-content__search-icon">
+                  {% render 'icon-search-care' %}
+                </span>
+
+                <input
+                  type="text"
+                  id="search"
+                  name="search"
+                  class="s-care-content__search-input js-care-content__search-input"
+                >
+              </label>
+
+              <span class="s-care-content__remove-icon js-care-content__remove-icon">
+                {% render 'icon-plus-gray' %}
+              </span>
+            </div>
+
+            {% for category in faq_content %}
+              <ul class="s-care-content__faq-wrapper js-care-content__faq-wrapper">
+                <li class="s-care-content__faq-category">
+                  <h2 class="s-care-content__faq-title">
+                    {{ category.category_title }}
+                  </h2>
+
+                  <ul class="s-care-content__faq-list">
+                    {% for faq in category.category_items.value %}
+                      <li class="s-care-content__faq-item js-care-content__faq-item">
+                        <div class="s-care-content__faq-question-wrapper">
+                          <h3 class="s-care-content__faq-question js-care-content__faq-question">
+                            {{ faq.question.value }}
+                          </h3>
+                          <div>
+                            <span class="s-care-content__faq-icon">
+                              {% render 'icon-plus-gray' %}
+                            </span>
+                            <span class="s-care-content__faq-icon">
+                              {% render 'icon-minus-gray' %}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="s-care-content__faq-answer">
+                          <span class="s-care-content__faq-answer-span js-care-content__faq-answer">
+                            {{ faq.answer | metafield_tag }}
+                          </span>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              </ul>
+            {% endfor %}
+          {% elsif is_contact_us %}
+            {% render 'contact-us',
+              subject_list: subject_list,
+              message_max_length: block_contact_settings.settings.message_max_length
+            %}
+          {% else %}
+            {{ page.content }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if is_contact_us %}
+      <div class="s-care-content__contact-right">
+        <div class="s-care-content__contact-content">
+          <h6 class="s-care-content__contact-title">
+            {{ 'sections.care_content.contact' | t }}
+          </h6>
+          <p class="s-care-content__contact-text">
+            {{ 'sections.care_contact.info.email' | t }}
+          </p>
+          <p class="s-care-content__contact-text">
+            {{ 'sections.care_contact.info.uk_row_telephone' | t }}
+          </p>
+          <p class="s-care-content__contact-text">
+            {{ 'sections.care_contact.info.us_telephone' | t }}
+          </p>
+          <p class="s-care-content__contact-text">
+            {{ 'sections.care_contact.info.opening_hours' | t }}
+          </p>
+        </div>
+
+        <div class="s-care-content__contact-text">
+          <h6 class="s-care-content__contact-title">
+            {{ 'sections.care_content.address' | t }}
+          </h6>
+          <p class="s-care-content__contact-text">
+            {{ 'sections.care_contact.info.address_html' | t }}
+          </p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</s-care-content>
+
+{% schema %}
+{
+  "name": "Care content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Banner",
+      "info": "You can add section banner via metafiled for the page"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section margin top (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Section margin bottom (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Section margin top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Section margin bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_info",
+      "label": "Show Info About Section"
+    },
+    {
+      "type": "header",
+      "content": "How it Works",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section dynamically renders content based on the page type and attached metafields. It supports three main modes:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "1. Regular Page:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Displays the standard page.content from the page editor.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "2. FAQ Page:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Renders structured FAQ categories and questions when the metafield custom.faq_content is attached to the page. Each category contains a list of question-answer pairs with expandable answers and search functionality.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "3. Contact Us Page:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Activates a contact form and sidebar info when custom.is_contact_us_page is set to true. Uses settings.contact_subject_list for dropdown options.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Required Metafields (Page → Metafields):",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "• custom.page_banner_d - (Image) — Desktop banner image (optional).",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "• custom.page_banner_m (Image) — Mobile banner image (falls back to desktop if empty).",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "• custom.faq_content (List of FAQ Groups) — Structured FAQ data.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "• custom.is_contact_us_page (Boolean) — Enables Contact Us layout.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Menu:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Select a navigation menu via the Menu setting to display in the sidebar.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Styling:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Padding is controlled via margin settings. Highlight color applies to matched search terms in FAQ answers.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Note:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "The section automatically detects content type via metafields — no template changes needed.",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Customize:",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "For custom settings, you can add blocks with custom parameters",
+      "visible_if": "{{ section.settings.show_info == true }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq-custom",
+      "name": "FAQ Custom Settings",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Search Settings"
+        },
+        {
+          "type": "color",
+          "id": "highlight",
+          "label": "Highlight Colour",
+          "default": "#ff0"
+        },
+        {
+          "type": "color",
+          "id": "highlight_text",
+          "label": "Highlight Text Colour",
+          "default": "#717171"
+        },
+        {
+          "type": "header",
+          "content": "FAQ Category Title Settings Desktop"
+        },
+        {
+          "type": "range",
+          "id": "faq_title_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "faq_title_line_height_desktop",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 114
+        },
+        {
+          "type": "range",
+          "id": "faq_title_letter_spacing_desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_title_font_weight_desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "faq_title_color_desktop",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "FAQ Category Title Settings Mobile"
+        },
+        {
+          "type": "range",
+          "id": "faq_title_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "faq_title_line_height_mobile",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 114
+        },
+        {
+          "type": "range",
+          "id": "faq_title_letter_spacing_mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_title_font_weight_mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "faq_title_color_mobile",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "FAQ Question Settings Desktop"
+        },
+        {
+          "type": "range",
+          "id": "faq_question_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "faq_question_line_height_desktop",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 157
+        },
+        {
+          "type": "range",
+          "id": "faq_question_letter_spacing_desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_question_font_weight_desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 300
+        },
+        {
+          "type": "color",
+          "id": "faq_question_color_desktop",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "FAQ Question Settings Mobile"
+        },
+        {
+          "type": "range",
+          "id": "faq_question_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "faq_question_line_height_mobile",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 157
+        },
+        {
+          "type": "range",
+          "id": "faq_question_letter_spacing_mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_question_font_weight_mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 300
+        },
+        {
+          "type": "color",
+          "id": "faq_question_color_mobile",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "FAQ Answer Settings Desktop"
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_line_height_desktop",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 157
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_letter_spacing_desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_font_weight_desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 300
+        },
+        {
+          "type": "color",
+          "id": "faq_answer_color_desktop",
+          "label": "Color",
+          "default": "#717171"
+        },
+
+        {
+          "type": "header",
+          "content": "FAQ Answer Settings Mobile"
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_line_height_mobile",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 157
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_letter_spacing_mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "faq_answer_font_weight_mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 300
+        },
+        {
+          "type": "color",
+          "id": "faq_answer_color_mobile",
+          "label": "Color",
+          "default": "#717171"
+        }
+      ]
+    },
+    {
+      "type": "menu-custom",
+      "name": "Menu Custom Settings",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Breadcrumbs Settings Desktop"
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_line_height_desktop",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 114
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_letter_spacing_desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_font_weight_desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "breadcrumbs_color_desktop",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "Breadcrumbs Settings Mobile"
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_line_height_mobile",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 114
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_letter_spacing_mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "breadcrumbs_font_weight_mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "breadcrumbs_color_mobile",
+          "label": "Color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "header",
+          "content": "Menu Item Link Settings Desktop"
+        },
+        {
+          "type": "range",
+          "id": "menu_link_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "menu_link_line_height_desktop",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 200
+        },
+        {
+          "type": "range",
+          "id": "menu_link_letter_spacing_desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "menu_link_font_weight_desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "menu_link_color_desktop",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "menu_link_hover_color_desktop",
+          "label": "Hover Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "menu_link_active_color_desktop",
+          "label": "Active Color",
+          "default": "#000"
+        },
+        {
+          "type": "header",
+          "content": "Menu Item Link Settings Mobile"
+        },
+        {
+          "type": "range",
+          "id": "menu_link_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "menu_link_line_height_mobile",
+          "min": 100,
+          "max": 200,
+          "step": 1,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 188
+        },
+        {
+          "type": "range",
+          "id": "menu_link_letter_spacing_mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "unit": "em",
+          "label": "Letter Spacing",
+          "default": 0.1
+        },
+        {
+          "type": "range",
+          "id": "menu_link_font_weight_mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "label": "Font Weight",
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "menu_link_color_mobile",
+          "label": "Color",
+          "default": "#ebebeb"
+        },
+        {
+          "type": "color",
+          "id": "menu_link_hover_color_mobile",
+          "label": "Hover Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "menu_link_active_color_mobile",
+          "label": "Active Color",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "contact-us-custom",
+      "name": "Contact Us Settings",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "message_max_length",
+          "label": "Message Max Length",
+          "min": 200,
+          "max": 2000,
+          "step": 200,
+          "default": 600
+        },
+        {
+          "type": "header",
+          "content": "Contact Info Title Desktop"
+        },
+        {
+          "type": "range",
+          "id": "contact_title_font_size_desktop",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Title Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "contact_title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Contact Info Title Mobile"
+        },
+        {
+          "type": "range",
+          "id": "contact_title_font_size_mobile",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Title Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "contact_title_color_mobile",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Contact Info Text Desktop"
+        },
+        {
+          "type": "range",
+          "id": "contact_text_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Text Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "contact_text_color",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "contact_text_line_height_desktop",
+          "min": 100,
+          "max": 300,
+          "step": 2,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 220
+        },
+        {
+          "type": "header",
+          "content": "Contact Info Text Mobile"
+        },
+        {
+          "type": "range",
+          "id": "contact_text_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Text Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "contact_text_color_mobile",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "contact_text_line_height_mobile",
+          "min": 100,
+          "max": 300,
+          "step": 2,
+          "unit": "%",
+          "label": "Line Height",
+          "default": 220
+        },
+        {
+          "type": "header",
+          "content": "Input Desktop"
+        },
+        {
+          "type": "color",
+          "id": "input_text_color_desktop",
+          "label": "Input Text Color",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "color",
+          "id": "input_border_color_desktop",
+          "label": "Input Border Color",
+          "default": "#c5bebe"
+        },
+        {
+          "type": "color",
+          "id": "input_border_focus_color_desktop",
+          "label": "Input Border Focus",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "color",
+          "id": "input_border_hover_color_desktop",
+          "label": "Input Border Hover",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "header",
+          "content": "Input Mobile"
+        },
+        {
+          "type": "color",
+          "id": "input_text_color_mobile",
+          "label": "Input Text Color",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "color",
+          "id": "input_border_color_mobile",
+          "label": "Input Border Color",
+          "default": "#c5bebe"
+        },
+        {
+          "type": "color",
+          "id": "input_border_focus_color_mobile",
+          "label": "Input Border Focus",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "color",
+          "id": "input_border_hover_color_mobile",
+          "label": "Input Border Hover",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "header",
+          "content": "Input Label Desktop"
+        },
+        {
+          "type": "color",
+          "id": "label_color_desktop",
+          "label": "Label Color",
+          "default": "#8b7e7d"
+        },
+        {
+          "type": "color",
+          "id": "label_focus_color_desktop",
+          "label": "Label Focus Color",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "header",
+          "content": "Input Label Mobile"
+        },
+        {
+          "type": "color",
+          "id": "label_color_mobile",
+          "label": "Label Color",
+          "default": "#8b7e7d"
+        },
+        {
+          "type": "color",
+          "id": "label_focus_color_mobile",
+          "label": "Label Focus Color",
+          "default": "#0b0a0a"
+        },
+        {
+          "type": "header",
+          "content": "Error & Counter"
+        },
+        {
+          "type": "color",
+          "id": "error_color",
+          "label": "Error Text Color",
+          "default": "#d71313"
+        },
+        {
+          "type": "color",
+          "id": "counter_color",
+          "label": "Textarea Counter Color",
+          "default": "#6a6a6a"
+        },
+
+        {
+          "type": "header",
+          "content": "Submit Button Desktop"
+        },
+        {
+          "type": "range",
+          "id": "submit_font_size_desktop",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_desktop",
+          "label": "Button Background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "submit_text_desktop",
+          "label": "Button Text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_hover_desktop",
+          "label": "Button Background Hover",
+          "default": "#3e3e3e"
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_disabled_desktop",
+          "label": "Button Background Disabled",
+          "default": "#a7aeb4"
+        },
+
+        {
+          "type": "header",
+          "content": "Submit Button Mobile"
+        },
+        {
+          "type": "range",
+          "id": "submit_font_size_mobile",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Font Size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_mobile",
+          "label": "Button Background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "submit_text_mobile",
+          "label": "Button Text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_hover_mobile",
+          "label": "Button Background Hover",
+          "default": "#3e3e3e"
+        },
+        {
+          "type": "color",
+          "id": "submit_bg_disabled_mobile",
+          "label": "Button Background Disabled",
+          "default": "#a7aeb4"
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": { "templates": ["page"] },
+  "presets": [
+    {
+      "name": "Care Content",
+      "blocks": [
+        {
+          "type": "faq-custom"
+        },
+        {
+          "type": "menu-custom"
+        },
+        {
+          "type": "contact-us-custom"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

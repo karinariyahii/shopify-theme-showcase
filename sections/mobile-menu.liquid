@@ -1,0 +1,467 @@
+{{ 'section-mobile-menu.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-mobile-menu.js' | asset_url }}" defer></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    background: transparent;
+    overflow-x: hidden;
+    position: fixed;
+    left: 0;
+    z-index: 12;
+    transition: background 400ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu__modal {
+    background: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu__secondary-links {
+    background: {{ section.settings.bg_color }};
+  }
+  
+  #shopify-section-{{ section.id }} .s-mobile-menu__menu-expanded {
+    background: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__menu-third-wrapper * {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__close-expanded * {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__close-expanded svg path {
+    stroke: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__link-title {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__menu-third-wrapper * {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__close svg path {
+    fill: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__link-title svg path {
+    stroke: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .s-mobile-menu .s-mobile-menu__open-third svg path {
+    stroke: {{ section.settings.text_color }};
+    fill: {{ section.settings.text_color }};
+  }
+{% endstyle %}
+
+{% liquid
+  assign styling_blocks = section.blocks | where: 'type', 'link-style'
+  assign first_level_blocks = section.blocks | where: 'type', 'first-level'
+  assign second_level_blocks = section.blocks | where: 'type', 'second-level'
+%}
+
+<mobile-menu style="display: none;" class="s-mobile-menu">
+  
+  <template class="t-mobile-menu">
+    <div class="s-mobile-menu__overlay js-mobile-menu__overlay"></div>
+  
+    <div class="s-mobile-menu__modal js-mobile-menu__modal">
+      <div class="s-mobile-menu__header">
+        <span class="s-mobile-menu__link-title"> {{ 'sections.mobile_menu.header_title' | t }} </span>
+        <button class="s-mobile-menu__close js-mobile-menu__close">
+          {% render 'icon-close-big' %}
+        </button>
+      </div>
+  
+      <nav class="s-mobile-menu__menu-nav">
+        <ul class="s-mobile-menu__menu-list s-mobile-menu__menu-list--main">
+          {% for link in section.settings.menu.links %}
+            {% for block in styling_blocks %}
+              {% liquid
+                assign styling_block = blank
+                assign block_title = block.settings.title | handleize
+                assign link_title = link.title | handleize
+  
+                if block_title == link_title
+                  assign styling_block = block
+                  break
+                endif
+              %}
+            {% endfor %}
+  
+            {% if link.links != blank %}
+              <li class="s-mobile-menu__menu-item">
+                <span
+                  class="s-mobile-menu__link-title js-mobile-menu__open-expanded"
+                  {% if styling_block != blank %}
+                    style="color: {{ styling_block.settings.color }}; padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.show_underline %}text-decoration: underline; text-decoration-color: #150C0629;{% endif %} {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                  {% endif %}
+                >
+                  {{ link.title }}
+  
+                  {% if section.settings.show_expanded_icon %}
+                    {% render 'icon-arrow-menu' %}
+                  {% endif %}
+                </span>
+  
+                <div class="s-mobile-menu__menu-expanded">
+                  <div class="s-mobile-menu__header s-mobile-menu__header--expanded">
+                    <button class="s-mobile-menu__close-expanded js-mobile-menu__close-expanded">
+                      {% render 'icon-arrow-menu' %}
+  
+                      <span>{{ 'sections.mobile_menu.back' | t }}</span>
+                    </button>
+  
+                    <button class="s-mobile-menu__close js-mobile-menu__close">
+                      {% render 'icon-close-big' %}
+                    </button>
+                  </div>
+  
+                  <div class="s-mobile-menu__expanded-content">
+                    <ul class="s-mobile-menu__menu-list">
+                      {% for child_link in link.links %}
+                        {% for block in styling_blocks %}
+                          {% liquid
+                            assign styling_block = blank
+                            assign block_title = block.settings.title | handleize
+                            assign link_title = child_link.title | handleize
+  
+                            if block_title == link_title
+                              assign styling_block = block
+                              break
+                            endif
+                          %}
+                        {% endfor %}
+                        <li class="s-mobile-menu__menu-third-wrapper js-mobile-menu__menu-third-wrapper">
+                          <div
+                            {% if styling_block != blank %}
+                              style="padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }};"
+                            {% endif %}
+                            class="s-mobile-menu__open-third js-mobile-menu__open-third"
+                          >
+                            <a
+                            class="s-mobile-menu__link-title js-mobile-menu__third-link-title"
+                            href="{{child_link.url}}"
+                            {% if styling_block != blank %}
+                              style="color: {{ styling_block.settings.color }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.show_underline %}text-decoration: underline; text-decoration-color: #150C0629;{% endif %} {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                            {% endif %}
+                          >
+                            {{ child_link.title }}
+                          </a>
+                          {% if child_link.links != blank %}
+                            <div class="s-mobile-menu__menu-third-opener">
+                              {% render 'icon-plus' %}
+                              {% render 'icon-minus' %}
+                            </div>
+                          {% endif %}
+                          </div>
+                          {% if child_link.links != blank %}
+                            <div class="s-mobile-menu__menu-third">
+                              <div>
+                                <ul>
+                                  {% for grandchild_link in child_link.links %}
+                                    <li>
+                                      <a href="{{grandchild_link.url}}">
+                                        <span>
+                                          {{ grandchild_link.title }}
+                                        </span>
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                    <div class="s-mobile-menu__promo">
+                      <div class="s-mobile-menu__promo-second">
+                        {% for block in second_level_blocks %}
+                          {% assign parent_title = block.settings.parent | handleize %}
+                          {% assign link_title = link.title | handleize %}
+                          {% if parent_title == link_title %}
+                            {% liquid
+                              assign block_link = block.settings.promo_image_link | default: routes.root_url
+                              assign title = block.settings.promo_image_title
+                              assign subtitle = block.settings.promo_image_link_text
+                              assign block_image = block.settings.promo_image
+                            %}
+                            <a
+                              href="{{ block_link }}"
+                              class="s-mobile-menu__promo-second-block js-mobile-menu__promo-second-block"
+                              data-parent="{{ block.settings.parent | handleize }}"
+                            >
+                              {% render 'image-lazy', image: block_image %}
+                              <div class="s-mobile-menu__promo-text">
+                                <span class="s-mobile-menu__promo-title">{{ title }}</span>
+                                <span class="s-mobile-menu__promo-subtitle">
+                                  {{ subtitle }}
+                                  {% render 'icon-arrow-menu' -%}
+                                </span>
+                              </div>
+                            </a>
+                            {% break %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+            {% comment %} When menu item does not have child links {% endcomment %}
+            {% else %}
+              <li class="s-mobile-menu__menu-item">
+                <a
+                  href="{{ link.url }}"
+                  class="s-mobile-menu__link-title"
+                  {% if styling_block != blank %}
+                    style="color: {{ styling_block.settings.color }}; padding-top: {{ styling_block.settings.padding_top | append: 'px' }}; padding-bottom: {{ styling_block.settings.padding_bottom | append: 'px' }}; font-size: {{ styling_block.settings.font_size | append: 'px' }}; {% if styling_block.settings.show_underline %}text-decoration: underline; text-decoration-color: #150C0629;{% endif %} {% if styling_block.settings.enable_bold_text %}font-weight: 700;{% endif %}"
+                  {% endif %}
+                >
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <div class="s-mobile-menu__promo">
+          <ul class="s-mobile-menu__promo-first" scrollbar="true" navigation="false" space-between="10">
+            {% for block in first_level_blocks %}
+              {% liquid
+                assign block_link = block.settings.promo_image_link | default: routes.root_url
+                assign title = block.settings.promo_image_title
+                assign subtitle = block.settings.promo_image_link_text
+                assign block_image = block.settings.promo_image
+              %}
+              <li class="s-mobile-menu__promo-first-block">
+                <a href="{{ block_link }}" class="s-mobile-menu__promo-first-link">
+                  {% render 'image-lazy', image: block_image %}
+                  <div class="s-mobile-menu__promo-text">
+                    <span class="s-mobile-menu__promo-title">{{ title }}</span>
+                    <span class="s-mobile-menu__promo-subtitle">
+                      {{ subtitle }}
+                      {% render 'icon-arrow-menu' -%}
+                    </span>
+                  </div>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </nav>
+
+      <ul class="s-mobile-menu__secondary-links">
+        
+        {% if section.settings.wishlist_url != blank %}
+          <li class="s-mobile-menu__links-item">
+            <a href="{{ section.settings.wishlist_url }}" class="s-mobile-menu__links-link-secondary">
+              {% render 'icon-wishlist' %}
+              <span>{{ 'sections.mobile_menu.wishlist' | t }}</span>
+            </a>
+          </li>
+        {% endif %}
+        
+        {% if localization.available_countries.size > 1 %}
+          <li class="s-mobile-menu__links-item">
+            <button type="button" class="s-mobile-menu__links-link-secondary js-mobile-menu__country-selector-button">
+              <img
+                src="{{ localization.country.iso_code | downcase | append: '.svg' | asset_url }}"
+                alt="{{ localization.country.name }}"
+                class="s-mobile-menu__country-icon"
+                width="24"
+                height="16"
+                loading="lazy"
+              >
+              <span>{{ localization.country.name }} / {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
+            </button>
+          </li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </template>
+</mobile-menu>
+
+{% schema %}
+{
+  "name": "Mobile Menu",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Mobile Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_expanded_icon",
+      "label": "Show Expanded Links Icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Secondary Links"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_account_link",
+      "label": "Enable account link",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist url"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Link Style",
+      "type": "link-style",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Title",
+          "info": "This link will be styled",
+          "default": "Sale"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#150C06"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_underline",
+          "label": "Underline",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_bold_text",
+          "label": "Enable bold text",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 10,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 28,
+          "info": "Padding is applied only for first-level links"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "name": "First level block",
+      "type": "first-level",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "Promo image",
+          "info": "Size Recommended 518x706"
+        },
+        {
+          "type": "text",
+          "id": "promo_image_title",
+          "label": "Promo image title"
+        },
+        {
+          "type": "text",
+          "id": "promo_image_link_text",
+          "label": "Promo image link text"
+        },
+        {
+          "type": "url",
+          "id": "promo_image_link",
+          "label": "Promo image Link"
+        }
+      ]
+    },
+    {
+      "name": "Second level block",
+      "type": "second-level",
+      "settings": [
+        {
+          "type": "text",
+          "id": "parent",
+          "label": "Link title",
+          "info": "The mega menu will appear below this parent link"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "Promo image",
+          "info": "Size Recommended 900x1196"
+        },
+        {
+          "type": "text",
+          "id": "promo_image_title",
+          "label": "Promo image title"
+        },
+        {
+          "type": "text",
+          "id": "promo_image_link_text",
+          "label": "Promo image link text"
+        },
+        {
+          "type": "url",
+          "id": "promo_image_link",
+          "label": "Promo image Link"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Mobile Menu" }],
+  "enabled_on": {
+    "groups": ["aside", "header"]
+  },
+  "limit": 1
+}
+{% endschema %}

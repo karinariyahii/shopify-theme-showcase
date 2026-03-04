@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "empty-section",
+      "disabled": true,
+      "settings": {}
+    },
+    "support_hub_header_KnQVFi": {
+      "type": "support-hub-header",
+      "blocks": {
+        "breadcrumb_pfbz4U": {
+          "type": "breadcrumb",
+          "settings": {
+            "label": "Support Hub",
+            "link": "shopify://pages/support-hub"
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumb_pfbz4U"
+      ],
+      "name": "Support Hub Header",
+      "settings": {
+        "margin_top_desktop": 82,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 82,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 14,
+        "padding_bottom_desktop": 14,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14,
+        "background_color": "#e0e0e0",
+        "search_page": "shopify://pages/search-results",
+        "link_font_size_desktop": 16,
+        "link_font_size_mobile": 14,
+        "active_link_font_size_desktop": 16,
+        "active_link_font_size_mobile": 14
+      }
+    },
+    "results_page_mL6LJ8": {
+      "type": "results-page",
+      "name": "Results Page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "support_hub_header_KnQVFi",
+    "results_page_mL6LJ8"
+  ]
+}
