@@ -1,3 +1,7 @@
+This repository contains selected Shopify theme development work created by our team. Review our code quality, structure, and implementation approach.
+
+All examples are branding-free and prepared for review purposes only. The focus is on clean Liquid architecture, scalable section structure, reusable components, and maintainable frontend logic.
+
 # Development
 Gulp processes source files from `dev/src` to `assets` folder.
 
