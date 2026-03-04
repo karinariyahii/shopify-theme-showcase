@@ -1,0 +1,50 @@
+{% comment %}
+  Standard Content Menu
+
+  Accepts:
+    {Object} - menu (required) - Ex: section.settings.menu
+
+  Styles: component-care-content-menu.css
+{% endcomment %}
+
+<div class="c-care-content-menu">
+  <nav class="c-care-content-menu__nav c-care-content-menu__nav--desktop">
+    <ul class="c-care-content-menu__list">
+      {% for link in menu.links -%}
+        {% liquid
+          assign page_underline = false
+          assign page_title = page.metafields.custom.custom_title | handleize | default: page.title | handleize
+          assign page_link = link.title | handleize
+
+          if page_title == page_link
+            assign page_underline = true
+          endif
+        %}
+        <li class="c-care-content-menu__list-item {% if page_underline %}is-active{% endif %}">
+          {{ link.title | link_to: link.url }}
+        </li>
+      {%- endfor %}
+    </ul>
+  </nav>
+
+  <nav class="c-care-content-menu__nav c-care-content-menu__nav--mobile">
+    <ul class="c-care-content-menu__list">
+
+      {% for link in menu.links %}
+        {% liquid
+          assign page_title = page.metafields.custom.custom_title | handleize | default: page.title | handleize
+          assign page_link = link.title | handleize
+        %}
+        {% if page_title == page_link %}
+          <li class="c-care-content-menu__list-item is-active">
+            {{ link.title | link_to: link.url }}
+          </li>
+          {% else %}
+          <li class="c-care-content-menu__list-item">
+            {{ link.title | link_to: link.url }}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>

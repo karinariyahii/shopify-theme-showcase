@@ -1,0 +1,379 @@
+{% comment %}
+  Product Card
+
+  Accepts:
+    {Object} - product (required)
+{% endcomment %}
+
+
+{% liquid
+  if product.metafields.custom.product_card_title != blank
+    assign product_title = product.metafields.custom.product_card_title
+  else
+    assign product_title = product.title
+  endif
+
+  assign variant = product.selected_or_first_available_variant
+
+  assign media_type = media_type | default: 'image'
+  assign pagination_type = pagination_type | default: 'progressbar'
+  assign display_wishlist = display_wishlist | default: false
+
+  assign display_sold_out_badge = display_sold_out_badge | default: false
+  assign display_tag_badge = display_tag_badge | default: false
+  assign display_discount_badge = display_discount_badge | default: false
+  assign display_low_stock_badge = display_low_stock_badge | default: false
+  assign display_simple_color_swatch = display_simple_color_swatch | default: false
+  assign display_add_to_cart = display_add_to_cart | default: false
+  assign display_product_type = display_product_type | default: false
+
+  assign show_video_in_card = settings.product_card_show_video
+  assign featured_media = product.featured_media | default: product.media.first
+  assign main_image = product.featured_image | default: product.images.first
+  assign second_image = product.images[1]
+  assign media_count = product.media | size
+%}
+
+{% liquid
+  assign featured_mp4 = ''
+  assign featured_webm = ''
+
+  if featured_media and featured_media.media_type == 'video'
+    for source in featured_media.sources
+      if source.mime_type == 'video/mp4' and featured_mp4 == ''
+        assign featured_mp4 = source.url
+      endif
+      if source.mime_type == 'video/webm' and featured_webm == ''
+        assign featured_webm = source.url
+      endif
+    endfor
+  endif
+%}
+
+{%- capture main_media_markup -%}
+  {% if featured_media != blank and show_video_in_card and featured_media.media_type == 'video' %}
+    {% render 'lazy-video',
+      baseClass: 'c-product-card',
+      videoMobileWebm: featured_webm,
+      videoDesktopWebm: featured_webm,
+      videoMobileMP4: featured_mp4,
+      videoDesktopMP4: featured_mp4,
+      previewImageMobile: featured_media.preview_image,
+      previewImageDesktop: featured_media.preview_image,
+      autoplay: true,
+      muted: true,
+      loop: true,
+      controls: false,
+      preload: 'metadata',
+      useCustomControls: false
+    %}
+  {% elsif main_image != blank %}
+    {% render 'image-lazy', image: main_image, class: 'c-product-card__image' %}
+  {% else %}
+    <div class="c-product-card__placeholder"></div>
+  {% endif %}
+{%- endcapture -%}
+
+{%- capture slider_markup -%}
+  <a href="{{ product.url }}" class="c-product-card__image-hover">
+    {{ main_media_markup }}
+  </a>
+
+  <div class="c-product-card__images-slider js-product-card__images-slider">
+    <button
+      class="c-product-card__slider-button c-product-card__slider-button--prev js-product-card__slider-button--prev-{{ product.id }}"
+    >
+      {% render 'icon-arrow-reversed' %}
+    </button>
+    <button
+      class="c-product-card__slider-button c-product-card__slider-button--next  js-product-card__slider-button--next-{{ product.id }}"
+    >
+      {% render 'icon-arrow' %}
+    </button>
+    <swiper-container
+      slides-per-view="1"
+      pagination="true"
+      pagination-type="{{ pagination_type }}"
+      speed="500"
+      loop="false"
+      grab-cursor="true"
+      navigation-prev-el=".js-product-card__slider-button--prev-{{ product.id }}"
+      navigation-next-el=".js-product-card__slider-button--next-{{ product.id }}"
+      class="c-product-card__swiper c-product-card__swiper--{{ pagination_type }} js-product-card__swiper"
+    >
+      {% for media in product.media %}
+        {% liquid
+          assign m_mp4 = ''
+          assign m_webm = ''
+
+          if media and media.media_type == 'video'
+            for source in media.sources
+              if source.mime_type == 'video/mp4' and m_mp4 == ''
+                assign m_mp4 = source.url
+              endif
+              if source.mime_type == 'video/webm' and m_webm == ''
+                assign m_webm = source.url
+              endif
+            endfor
+          endif
+        %}
+
+        <swiper-slide class="c-product-card__slide js-product-card-hover__image-slide" lazy="true">
+          <a href="{{ product.url }}" class="c-product-card__image-slide {% if forloop.index > 1 %}c-product-card__image-slide--lazy{% endif %} js-product-card__image-slide">
+            {% if media.media_type == 'image' %}
+              {% render 'image-lazy', image: media %}
+            {% elsif show_video_in_card and media.media_type == 'video' %}
+              {% render 'lazy-video',
+                baseClass: 'c-product-card',
+                videoMobileWebm: m_webm,
+                videoDesktopWebm: m_webm,
+                videoMobileMP4: m_mp4,
+                videoDesktopMP4: m_mp4,
+                previewImageMobile: media.preview_image,
+                previewImageDesktop: media.preview_image,
+                autoplay: true,
+                muted: true,
+                loop: true,
+                controls: false,
+                preload: 'metadata',
+                useCustomControls: false
+              %}
+            {% endif %}
+          </a>
+        </swiper-slide>
+      {% endfor %}
+    </swiper-container>
+  </div>
+{%- endcapture -%}
+
+{%- capture hover_markup -%}
+  <a href="{{ product.url }}" class="c-product-card__image-hover">
+    {{ main_media_markup }}
+  </a>
+
+  {% if second_image != blank %}
+    <div class="c-product-card__image-wrapper">
+      {% render 'image-lazy', image: second_image, class: 'c-product-card__image' %}
+    </div>
+  {% endif %}
+{%- endcapture -%}
+
+{%- capture image_markup -%}
+  <a href="{{ product.url }}" class="c-product-card__image-main">
+    {{ main_media_markup }}
+  </a>
+{%- endcapture -%}
+
+<c-product-card
+  class="c-product-card"
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ variant.id }}"
+  data-media-type="{{ media_type }}"
+>
+  <div class="c-product-card__inner">
+    <div class="c-product-card__media">
+      {% comment %} Badges {% endcomment %}
+      <div class="c-product-card__badges">
+        {%- comment -%} Discount badge {%- endcomment -%}
+        {% if display_discount_badge %}
+           {% if variant.compare_at_price and variant.compare_at_price > variant.price %}
+             {% assign discount = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round %}
+             <span class="c-product-card__badge c-product-card__badge--discount">
+              {{ 'components.product-card.badge_discount' | t: discount: discount }}
+             </span>
+           {% endif %}
+         {% endif %}
+
+         {%- comment -%} Low stock badge {%- endcomment -%}
+         {% if display_low_stock_badge %}
+          {% if variant.inventory_quantity <= 2 and variant.available %}
+            <span class="c-product-card__badge c-product-card__badge--low-stock">
+              {{ 'components.product-card.badge_low_stock' | t: stock: variant.inventory_quantity }}
+            </span>
+          {% endif %}
+        {% endif %}
+
+        {%- comment -%} Sold out badge {%- endcomment -%}
+        {% if display_sold_out_badge %}
+          {% unless variant.available %}
+            <span class="c-product-card__badge c-product-card__badge--sold-out">
+              {{ "components.product-card.sold_out" | t }}
+            </span>
+          {% endunless %}
+        {% endif %}
+
+        {%- comment -%} Custom badges from tags {%- endcomment -%}
+        {% if display_tag_badge %}
+          {% for tag in product.tags %}
+            {% if tag contains 'badge:::' %}
+              {% assign badge_text = tag | split: ':::' | last %}
+              <span class="c-product-card__badge">
+                {{ badge_text }}
+              </span>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% comment %} Wishlist {% endcomment %}
+      {% if display_wishlist %}
+        <button class="c-product-card__wishlist js-product-card__wishlist" type="button">
+          {% render 'icon-wishlist' %}
+        </button>
+      {% endif %}
+
+      {% comment %} Slider, Image, Hover Image {% endcomment %}
+      {% if media_type == 'slider' %}
+        {% if media_count >= 2 %}
+          {{ slider_markup }}
+        {% elsif media_count == 1 %}
+          {{ image_markup }}
+        {% endif %}
+      {% elsif media_type == 'hover' and second_image != blank %}
+        {{ hover_markup }}
+      {% else %}
+        {{ image_markup }}
+      {% endif %}
+    </div>
+    <div class="c-product-card__info">
+      <div class="c-product-card__info--top">
+      <a class="c-product-card__title" href="{{ product.url }}">
+        {{ product_title }}
+      </a>
+
+      <div class="c-product-card__row">
+        {% comment %} Price {% endcomment %}
+        <div class="c-product-card__price-container">
+          {%- assign variant = product.selected_or_first_available_variant -%}
+  
+          {%- if variant.compare_at_price and variant.compare_at_price > variant.price -%}
+            <div class="c-product-card__price-wrapper c-product-card__price-wrapper--sale">
+              <span class="c-product-card__price c-product-card__price--discount">
+                {{ variant.price | money_without_trailing_zeros }}
+              </span>
+              <span class="c-product-card__compare-at-price">
+                {{ variant.compare_at_price | money_without_trailing_zeros }}
+              </span>
+            </div>
+          {%- else -%}
+            <div class="c-product-card__price-wrapper">
+              <span class="c-product-card__price">
+                {{ variant.price | money_without_trailing_zeros }}
+              </span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {% comment %} Add to Cart {% endcomment %}
+        {% if display_add_to_cart %}
+          {% assign quantity_in_cart = cart | item_count_for_variant: variant.id %}
+          {% assign max_inventory_left = variant.inventory_quantity | minus: quantity_in_cart %}
+  
+          {% if variant.available and max_inventory_left > 0 %}
+            {% assign available = 'true' %}
+          {% else %}
+            {% assign available = 'false' %}
+          {% endif %}
+  
+          <button
+            type="button"
+            class="c-product-card__add-to-cart js-product-card__add-to-cart {% if available == 'false' %}c-product-card__add-to-cart--sold-out{% endif %}"
+            data-available="{{ available }}"
+            data-property-max-inventory="{{ max_inventory_left }}"
+            data-sold-out-text="{{ 'components.product-card.sold_out' | t }}"
+            data-add-to-cart="{{ 'components.product-card.add_to_cart' | t }}"
+            {% if available == 'false' %}disabled{% endif %}
+          >
+            <span class="c-product-card__add-to-cart-icon">
+              {% render 'icon-cart-product' %}
+            </span>
+            <span class="c-product-card__add-to-cart-text js-product-card__add-to-cart-text">
+              {% if available == 'false' %}
+                {{ 'components.product-card.sold_out' | t }}
+              {% else %}
+                {{ 'components.product-card.add_to_cart' | t }}
+              {% endif %}
+            </span>
+            <span class="c-product-card__add-to-cart-loader"></span>
+          </button>
+        {% endif %}
+      </div>
+
+      {% comment %} Short Description {% endcomment %}
+      {% if product.metafields.custom.product_card_description != blank %}
+        <a class="c-product-card__description" href="{{ product.url }}">
+          {{ product.metafields.custom.product_card_description }}
+        </a>
+      {% endif %}
+      </div>
+      {% if display_simple_color_swatch or display_product_type %}
+        <div class="c-product-card__row">
+          {% comment %} Color Swatches {% endcomment %}
+          {% if display_simple_color_swatch %}
+            {% assign color_option_index = nil %}
+  
+            {% for option in product.options_with_values %}
+              {% assign option_name_downcase = option.name | downcase %}
+              {% if option_name_downcase contains 'color' %}
+                {% assign color_option_index = forloop.index0 %}
+              {% endif %}
+            {% endfor %}
+  
+            {% if color_option_index != nil %}
+              {% assign current_color = product.selected_or_first_available_variant.options[color_option_index] | downcase %}
+              <div class="c-product-card__swatches">
+                {% assign seen_colors = '' %}
+  
+                {% for variant in product.variants %}
+                  {% assign color_name = variant.options[color_option_index] %}
+                  {% assign color_key = color_name | downcase %}
+  
+                  {% unless seen_colors contains color_name %}
+                    {% assign seen_colors = seen_colors | append: color_name | append: ',' %}
+  
+                    {% if color_key == current_color %}
+                      {% assign active_class = ' c-product-card__swatch--active' %}
+                    {% else %}
+                      {% assign active_class = '' %}
+                    {% endif %}
+  
+                    {% assign swatch_color = color_name %}
+                    {% for metaobject in shop.metaobjects['shopify--color-pattern'].values %}
+                      {% if metaobject.label == color_name or metaobject.color == color_name %}
+                        {% assign swatch_color = metaobject.color %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+  
+                    <a 
+                      href="{{ variant.url | within: collection }}"
+                      class="c-product-card__swatch{{ active_class }}"
+                      title="{{ color_name }}"
+                      style="background-color: {{ swatch_color }};"
+                    ></a>
+                  {% endunless %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endif %}
+          
+          {% comment %} Product Type {% endcomment %}
+          {% if display_product_type and product.type != blank %}
+            {% assign type_handle = product.type | handleize %}
+            {% assign type_collection = collections[type_handle] %}
+  
+            {% if type_collection != blank %}
+              <a href="{{ type_collection.url }}" class="c-product-card__type">
+                {{ product.type }}
+              </a>
+            {% else %}
+              <span class="c-product-card__type">
+                {{ product.type }}
+              </span>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</c-product-card>

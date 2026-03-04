@@ -1,0 +1,63 @@
+<style>
+	{% comment %} Shopify fonts {% endcomment %}
+
+	{% liquid
+		if settings.font_heading == 'shopify'
+			echo settings.font_heading_shopify | font_face
+
+			for font in settings.font_heading_shopify.variants
+				unless font == settings.font_heading_shopify
+					echo font | font_face: font_display: 'swap'
+				endunless
+			endfor
+		endif
+
+		if settings.font_body == 'shopify'
+			echo settings.font_body_shopify | font_face
+
+			for font in settings.font_body_shopify.variants
+				unless font == settings.font_body_shopify
+					echo font | font_face: font_display: 'swap'
+				endunless
+			endfor
+		endif
+	 %}
+
+	{% comment %} Custom fonts {% endcomment %}
+
+    {% if settings.font_heading == 'example-font' or settings.font_body == 'example-font' %}
+	    @font-face {
+	        font-family: 'Example Font';
+	        src: url({{ 'ExampleFont.ttf' | asset_url }}) format('truetype')
+                url({{ 'ExampleFont.otf' | asset_url }}) format('opentype')
+                url({{ 'ExampleFont.woff2' | asset_url }}) format('woff2')
+                url({{ 'ExampleFont.woff' | asset_url }}) format('woff');
+	        font-weight: 400;
+	        font-style: normal;
+	        font-display: swap; {% comment %} Remove this for the main font weight/style {% endcomment %}
+	    }
+    {% endif %}
+
+	{% comment %} CSS variables {% endcomment %}
+
+    :root {
+        --color-background: {{ settings.color_background }};
+        --color-text: {{ settings.color_text }};
+        --color-heading: {{ settings.color_heading }};
+        --color-link: {{ settings.color_link }};
+
+		{% case settings.font_heading %}
+			{% when 'shopify' %}
+		        --font-heading: {{ settings.font_heading_shopify.family }}, {{ settings.font_heading_shopify.fallback_families }};
+			{% when 'example-font' %}
+		        --font-heading: 'Example Font', sans-serif;
+		{% endcase %}
+
+		{% case settings.font_body %}
+			{% when 'shopify' %}
+		        --font-body: {{ settings.font_body_shopify.family }}, {{ settings.font_body_shopify.fallback_families }};
+			{% when 'example-font' %}
+		        --font-body: 'Example Font', sans-serif;
+		{% endcase %}
+    }
+</style>

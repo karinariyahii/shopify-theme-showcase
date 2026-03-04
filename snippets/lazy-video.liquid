@@ -1,0 +1,74 @@
+{% comment %}
+  Lazy Video Component
+
+Accepts:
+  {string}  baseClass             - Base CSS class for the component (for example 's-hero-banner')
+  {string}  [videoMobileWebm]     - URL for mobile WebM video
+  {string}  [videoTabletWebm]     - URL for tablet WebM video
+  {string}  [videoDesktopWebm]    - URL for desktop WebM video
+  {string}  [videoMobileMP4]      - URL for mobile MP4 video
+  {string}  [videoTabletMP4]      - URL for tablet MP4 video
+  {string}  [videoDesktopMP4]     - URL for desktop MP4 video
+  {object}  [previewImageMobile]  - Poster image object for mobile
+  {object}  [previewImageDesktop] - Poster image object for desktop
+  {boolean} [autoplay]            - Should the video autoplay
+  {boolean} [muted]               - Should the video be muted
+  {boolean} [loop]                - Should the video loop
+  {boolean} [controls]            - Show native video controls
+  {string}  [preload]             - Video preload attribute
+  {boolean} [useCustomControls]   - Use custom play/pause buttons
+
+Files:
+  lazy-video.js
+{% endcomment %}
+
+<c-lazy-video
+  class="c-lazy-video {{ baseClass }}__video-wrapper"
+  data-mobile-webm="{{ videoMobileWebm | default: '' }}"
+  data-tablet-webm="{{ videoTabletWebm | default: videoDesktopWebm }}"
+  data-desktop-webm="{{ videoDesktopWebm | default: '' }}"
+  data-mobile-mp4="{{ videoMobileMP4 | default: '' }}"
+  data-tablet-mp4="{{ videoTabletMP4 | default: videoDesktopMP4 }}"
+  data-desktop-mp4="{{ videoDesktopMP4 | default: '' }}"
+  data-muted="{% if muted %}true{% else %}false{% endif %}"
+  data-loop="{% if loop %}true{% else %}false{% endif %}"
+  data-controls="{% if controls %}true{% else %}false{% endif %}"
+  data-autoplay="{% if autoplay %}true{% else %}false{% endif %}"
+  data-preload="{{ preload | default: 'none' }}"
+  data-use-custom-controls="{% if useCustomControls %}true{% else %}false{% endif %}"
+>
+  {% if previewImageDesktop %}
+    {% assign desktop_preview_image = 'c-lazy-video__poster c-lazy-video__poster--desktop'%}
+
+    {% render 'image-lazy', image: previewImageDesktop, class: desktop_preview_image %}
+  {% endif %}
+
+  {% if previewImageMobile %}
+    {% assign mobile_preview_image = 'c-lazy-video__poster c-lazy-video__poster--mobile' %}
+
+    {% render 'image-lazy', image: previewImageMobile, class: mobile_preview_image%}
+  {% endif %}
+
+  <video class="c-lazy-video__video {{ baseClass }}__video"></video>
+
+  {% if useCustomControls %}
+    <button class="c-lazy-video__custom-controls {{ baseClass }}__custom-controls" type="button" data-state="play">
+
+      <div class="c-lazy-video__button c-lazy-video__button--play {{ baseClass }}__video-button {{ baseClass }}__video-button--play">
+        {% if settings.play_button_svg != blank %}
+          {{ settings.play_button_svg }}
+        {% else %}
+          {% render 'icon-play' %}
+        {% endif %}
+      </div>
+
+      <div class="c-lazy-video__button c-lazy-video__button--pause {{ baseClass }}__video-button {{ baseClass }}__video-button--pause">
+        {% if settings.pause_button_svg != blank %}
+          {{ settings.pause_button_svg }}
+        {% else %}
+          {% render 'icon-pause' %}
+        {% endif %}
+      </div>
+    </button>
+  {% endif %}
+</c-lazy-video>

@@ -1,0 +1,160 @@
+{% comment %}
+  Contact Us Form New
+
+  Accepts:
+    {Object} - subject_list (required) - an array of strings
+    {Number} - message_max_length
+
+  Styles: component-care-contact-us-form.css
+  Scripts: component-care-contact-us-form.js
+{% endcomment %}
+
+{% liquid
+  assign max_message = message_max_length | default: 600 
+%}
+
+<c-contact-us class="c-contact-us">
+  <div class="c-contact-us__wrapper">
+    <div class="c-contact-us__container">
+      {% form 'contact', class: 's-contact-us__form js-contact-us__form', novalidate: 'novalidate' %}
+        <div class="c-contact-us__content">
+          {% comment %} Full Name {% endcomment %}
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--fullname js-contact-us__input-wrapper">
+            <input
+              id="fullname"
+              class="c-contact-us__input js-contact-us__input"
+              name="contact[full_name]"
+              type="text"
+              value="
+                {%- if customer -%}
+                  {{- customer.name -}}
+                {%- endif -%}
+              "
+            >
+            <label class="c-contact-us__label" for="fullname">
+              {{- 'sections.contact_form.placeholders.full_name' | t -}}
+            </label>
+
+            <p class="c-contact-us__input-error js-contact-us__input-error">
+              {{ 'sections.contact_form.errors.full_name' | t }}
+            </p>
+          </div>
+
+          {% comment %} Email {% endcomment %}
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--email js-contact-us__input-wrapper">
+            <input
+              id="email"
+              class="c-contact-us__input js-contact-us__input"
+              autocapitalize="off"
+              autocomplete="off"
+              name="contact[email]"
+              spellcheck="false"
+              type="email"
+              value="
+                {%- if form.email -%}
+                  {{- form.email -}}
+                {%- elsif customer -%}
+                  {{- customer.email -}}
+                {%- endif -%}
+              "
+            >
+            <label class="c-contact-us__label" for="email">
+              {{- 'sections.contact_form.placeholders.email' | t -}}
+            </label>
+            <p class="c-contact-us__input-error">{{ 'sections.contact_form.errors.email' | t }}</p>
+          </div>
+
+          {% comment %} Subject {% endcomment %}
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--subject js-contact-us__input-wrapper">
+            <select
+              class="c-contact-us__input js-contact-us__input"
+              name="contact[subject]"
+            >
+              {% for subject in subject_list %}
+                <option
+                  {% if forloop.first %}
+                    selected
+                  {% endif %}
+                >
+                  {{ subject }}
+                </option>
+              {% endfor %}
+            </select>
+
+            <label class="c-contact-us__label" for="subject">
+              {{- 'sections.contact_form.placeholders.subject' | t -}}
+            </label>
+          </div>
+
+          {% comment %} Order Number {% endcomment %}
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--order-number js-contact-us__input-wrapper">
+            <input
+              id="order_number"
+              class="c-contact-us__input js-contact-us__input"
+              name="contact[order_number]"
+              type="text"
+              value="{% if form.order_number %}{{ form.order_number }}{% endif %}"
+            >
+
+            <label class="c-contact-us__label" for="order_number">
+              {{- 'sections.contact_form.placeholders.order_number' | t -}}
+            </label>
+          </div>
+
+          {% comment %} Message {% endcomment %}
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--message js-contact-us__input-wrapper">
+            <textarea
+              id="message"
+              class="c-contact-us__textarea js-contact-us__textarea"
+              name="contact[body]"
+              rows="3"
+              data-max-length="{{ max_message }}"
+            >
+              {%- if form.body -%}
+                {{- form.body -}}
+              {%- endif -%}
+            </textarea>
+
+            <label class="c-contact-us__label" for="message">
+              {{- 'sections.contact_form.placeholders.message' | t -}}
+            </label>
+
+            <div class="c-contact-us__textarea-wrapper">
+              <p class="c-contact-us__textarea-error js-contact-us__textarea-error">
+                {{ 'sections.contact_form.errors.message' | t }}
+              </p>
+              <p class="c-contact-us__textarea-length-error js-contact-us__textarea-length-error">
+                {{ 'sections.contact_form.errors.message_chars' | t: charCount: max_message }}
+              </p>
+              <p class="c-contact-us__textarea-counter js-contact-us__textarea-counter">
+                <span class="js-contact-us__textarea-counter-current">0</span
+                ><span class="js-contact-us__textarea-counter-max">
+                  {{ max_message | prepend: ' / ' }}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="c-contact-us__input-wrapper c-contact-us__input-wrapper--submit js-contact-us__input-wrapper">
+            <button
+              type="submit"
+              class="c-contact-us__submit js-contact-us__submit"
+            >
+              {{ 'sections.contact_form.placeholders.send' | t }}
+            </button>
+
+            <p class="c-contact-us__form-error js-contact-us__form-error">
+              {{ 'sections.contact_form.errors.form' | t }}
+            </p>
+
+            {% if form.posted_successfully? %}
+              <p class="c-contact-us__form-success">
+                {{ 'sections.contact_form.post_success' | t }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</c-contact-us>

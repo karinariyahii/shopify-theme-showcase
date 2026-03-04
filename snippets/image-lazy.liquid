@@ -1,0 +1,40 @@
+{% comment %}
+Accepts:
+	{object} image
+	{string} [class]
+	{string} [alt=image.alt]
+	{string} [style]
+	{float} [aspect_ratio=image.aspect_ratio]
+{% endcomment %}
+
+{% assign img_src = image | img_url: 'master' %}
+{% assign img_alt = alt | default: image.alt %}
+{% assign img_class = class | default: '' %}
+{% assign img_style = style | default: '' %}
+{% assign img_aspect_ratio = aspect_ratio | default: image.aspect_ratio %}
+
+{% capture img_srcset -%}
+	{% liquid
+		capture img_tag
+			render 'image', image: image
+		endcapture
+		echo img_tag | split: 'srcset="' | last | split: '"' | first
+	%}
+{%- endcapture %}
+
+{% capture img_placeholder -%}
+	data:image/svg+xml;utf8,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='{{ image.width }}'%20height='{{ image.height }}'></svg>
+{%- endcapture %}
+
+<img src="{{ img_placeholder }}"
+     data-src="{{ img_src }}"
+     data-sizes="auto"
+     data-aspectratio="{{ img_aspect_ratio }}"
+     data-srcset="{{ img_srcset }}"
+     class="lazyload {{ img_class }}"
+     style="{{ img_style }}"
+     alt="{{ img_alt }}">
+
+<noscript>
+	{{ img_tag }}
+</noscript>

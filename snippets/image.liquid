@@ -1,0 +1,94 @@
+{% comment %}
+Accepts:
+	{object} image - image shopify object
+
+	{number} [max_width=image.width] - image displayed max width in pixels
+	{number} [max_height] - image displayed max height in pixels, max width will be recalculated to match the max height
+
+	{string} [class] - additional CSS classes
+	{string} [alt=image.alt] - image alt
+	{string} [style] - additional CSS styles
+	{string} [sizes] - custom value for the "sizes" HTML attribute
+
+	{boolean} [lazy=true] - enable browser built-in lazy loading
+	{boolean} [preload=false] - preload image, useful for critical images along with lazy=false
+
+	{boolean} [ratio_wrap=true] - adds a wrap to the image with aspect ratio percentage, useful for CLS score
+	{float} [aspect_ratio] - fixed aspect ratio to fit the image into it
+{% endcomment %}
+
+{% comment %} aspect ratio {% endcomment %}
+{% assign img_ratio_wrap = ratio_wrap | default: true, allow_false: true %}
+{% liquid
+	assign default_aspect_ratio = 1 | divided_by: image.aspect_ratio
+	assign img_aspect_ratio = aspect_ratio | default: default_aspect_ratio
+	assign aspect_ratio_percentage = img_aspect_ratio | times: 100 | round: 2
+%}
+
+{% comment %} CSS class {% endcomment %}
+{% assign img_class = class %}
+
+{% comment %} height {% endcomment %}
+{% liquid
+	if max_height != blank
+		assign img_height = max_height
+	elsif max_width != blank
+		assign img_height = max_width | times: img_aspect_ratio
+	endif
+%}
+
+{% comment %} width {% endcomment %}
+{% liquid
+	if img_height != blank
+		if max_width != blank
+			assign img_width_by_height = img_height | times: image.aspect_ratio | at_least: max_width | ceil
+		else
+			assign img_width_by_height = img_height | times: image.aspect_ratio | ceil
+		endif
+		assign img_width = img_width_by_height | at_most: image.width
+	else
+		assign img_width = max_width | default: image.width | at_most: image.width
+	endif
+%}
+
+{% comment %} sizes HTML attribute {% endcomment %}
+{% capture default_sizes -%}
+	(max-width: {{ img_width | append: 'px' }}) 100vw, {{ img_width | append: 'px' }}
+{%- endcapture %}
+{% assign img_sizes = sizes | default: default_sizes %}
+
+{% comment %} browser built-in lazy loading {% endcomment %}
+{% liquid capture img_loading
+	if lazy == false
+		echo 'eager'
+	else
+		echo 'lazy'
+	endif
+endcapture %}
+
+{% comment %} preload image {% endcomment %}
+{% assign img_preload = preload | default: false %}
+
+{% comment %} alt HTML attribute {% endcomment %}
+{% assign img_alt = alt | default: image.alt %}
+
+{% comment %} CSS styles {% endcomment %}
+{% assign img_style = style %}
+
+{% comment %} generate srcset HTML attribute {% endcomment %}
+{% liquid capture img_widths
+	echo '320, 375, 425, 576, 768, 992, 1024, 1280, 1440, 1680, 1920, 2560, 3440, ' | append: image.width
+	if img_width != blank and img_width != image.width
+		echo img_width | prepend: ', '
+	endif
+endcapture %}
+
+
+
+{% if img_ratio_wrap -%}
+	<div class="image-ratio" style="--aspect-ratio-percentage: {{ aspect_ratio_percentage }}%">
+		{{ image | image_url: width: image.width | image_tag: widths: img_widths, sizes: img_sizes, width: nil, class: img_class, alt: img_alt, loading: img_loading, preload: img_preload, style: img_style }}
+	</div>
+{%- else -%}
+	{{ image | image_url: width: image.width | image_tag: widths: img_widths, sizes: img_sizes, width: nil, class: img_class, alt: img_alt, loading: img_loading, preload: img_preload, style: img_style }}
+{%- endif %}

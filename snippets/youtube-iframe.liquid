@@ -1,0 +1,41 @@
+{% comment %}
+Accepts:
+	{object} video - youtube video object from customize
+	{string} [width=100%] - video width
+	{string} [height=100%] - video height
+	{string} [class] - html class
+	{string} [style] - css styles
+	{0|1} [autoplay=0] - autoplay for video
+	{'red'|'white'} [color=red] - color of the play button
+	{0|1} [controls=1] - show controls
+	{0|1} [loop=0] - loop video
+	{0|1} [playsinline=0] - display youtube video inline on IOS devices
+	{0|1} [rel=0] - show recommendation videos after this one
+	{number} [start=0] - play video at the given number of seconds from the start of the video
+	{0|1} [modestbranding=0] - show YouTube logo
+{% endcomment %}
+
+{% assign video_id = video.id | default: '_9VUPq3SxOc' %}
+{% assign video_width = width | default: '100%' %}
+{% assign video_height = height | default: '100%' %}
+{% assign video_autoplay = autoplay | default: 0 %}
+{% assign video_color = color | default: 'red' %}
+{% assign video_controls = controls | default: 1 %}
+{% assign video_loop = loop | default: 0 %}
+{% assign video_playsinline = playsinline | default: 0 %}
+{% assign video_rel = rel | default: 0 %}
+{% assign video_start = start | default: 0 %}
+{% assign video_modestbranding = modestbranding | default: 1 %}
+
+{% capture video_src -%}
+	https://www.youtube.com/embed/{{ video.id }}?autoplay={{ video_autoplay }}&color={{ video_color }}&controls={{ video_controls }}&loop={{ video_loop }}&playsinline={{ video_playsinline }}&rel={{ video_rel }}&start={{ video_start }}&modestbranding={{ video_modestbranding }}
+{%- endcapture %}
+
+<iframe src="{{ video_src }}"
+        class="{{ class }}"
+        style="{{ style }}"
+        width="{{ video_width }}"
+        height="{{ video_height }}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>

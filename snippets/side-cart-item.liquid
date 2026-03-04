@@ -1,0 +1,241 @@
+{% comment %}
+  Cart Item
+
+   Accepts:
+     {Object} - item (required) - cart item object
+     {String} - parent_colour_tag (optional) - tag to identify parent color
+{% endcomment %}
+
+<div
+  class="s-side-cart__item js-side-cart__item"
+  data-key="{{ item.key }}"
+  data-variant="{{ item.variant_id }}"
+  data-epi="{{ item.variant_id }}"
+  data-empi="{{ item.product_id }}"
+  data-du="https://{{ shop.domain }}{{ item.url }}"
+  data-qty="{{ item.quantity }}"
+  data-price="{{ item.variant.price }}"
+  data-compare-price="{{ item.variant.compare_at_price | default: 0 }}"
+  data-in-wishlist="false"
+>
+  <div class="s-side-cart__loader"></div>
+  <div class="s-side-cart__item-loader">
+    <span class="s-side-cart__item-spinner"></span>
+  </div>
+  <div class="s-side-cart__item-inner js-side-cart__item-inner">
+    <a href="{{ item.url }}" class="s-side-cart__item-image">
+      {% render 'image-lazy', image: item.image %}
+    </a>
+
+    <div class="s-side-cart__item-content">
+      <div class="s-side-cart__item-head">
+        <div class="s-side-cart__item-head-top">
+          <a class="s-side-cart__item-title" href="{{ item.url }}">
+            {{ item.product.title }}
+          </a>
+          <div class="s-side-cart__item-prices">
+            {% assign price_trailing_zeros = item.final_line_price | money %}
+            {% assign price_without_trailing_zeros = item.final_line_price | money_without_trailing_zeros %}
+
+            <span
+              class="s-side-cart__item-price {% if item.product.compare_at_price > item.product.price %} is-discount{% endif %}"
+            >
+              {% if section.settings.enable_trailing_zeros %}
+                {{ price_trailing_zeros }}
+              {% else %}
+                {{ price_without_trailing_zeros }}
+              {% endif %}
+            </span>
+
+            {% if item.product.compare_at_price > item.product.price %}
+              {% assign compare_at_price_trailing_zeros = item.product.compare_at_price
+                | times: item.quantity
+                | money
+              %}
+              {% assign compare_at_price_without_trailing_zeros = item.product.compare_at_price
+                | times: item.quantity
+                | money_without_trailing_zeros
+              %}
+
+              <span class="s-side-cart__item-price s-side-cart__item-price--discount">
+                {% if section.settings.enable_trailing_zeros %}
+                  {{ compare_at_price_trailing_zeros }}
+                {% else %}
+                  {{ compare_at_price_without_trailing_zeros }}
+                {% endif %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="s-side-cart__item-edit-wrapper">
+        {% unless item.product.has_only_default_variant %}
+          {% for option in item.product.options %}
+            {% assign option_index = forloop.index0 %}
+            {% assign option_name = option | downcase %}
+
+            <div class="s-side-cart__selector-wrapper">
+              <button
+                class="s-side-cart__toggle js-side-cart__toggle"
+              >
+                <h5 class="s-side-cart__selected-title">
+                  <span class="s-side-cart__option-name"> {{ option_name }}: </span>
+                  <span class="s-side-cart__option-value">
+                    {{ item.variant.options[option_index] | prepend: ' ' }}
+                  </span>
+                  {%- render 'icon-arrow-dropdown' -%}
+                </h5>
+              </button>
+
+              <ul class="s-side-cart__options">
+                {% assign color_option_index = null %}
+                {% for opt in item.product.options %}
+                  {% assign opt_downcase = opt | downcase | strip %}
+                  {% if opt_downcase contains 'color' or opt_downcase contains 'colour' %}
+                    {% assign color_option_index = forloop.index0 %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                {% assign current_color = item.variant.options[color_option_index] | default: '' | strip %}
+
+                {% assign option_name_down = option_name | downcase | strip %}
+
+                {% if option_name_down contains 'color' or option_name_down contains 'colour' %}
+                  {% assign unique_colors = '' %}
+
+                  {% for variant in item.product.variants %}
+                    {% if variant.available %}
+                      {% assign this_color = variant.options[color_option_index] | strip %}
+
+                      {% unless unique_colors contains this_color %}
+                        {% assign unique_colors = unique_colors | append: '|' | append: this_color %}
+                        {% assign is_selected = false %}
+
+                        {% if this_color == current_color %}
+                          {% assign is_selected = true %}
+                        {% endif %}
+
+                        <li
+                          class="s-side-cart__option js-side-cart__option {% if is_selected %}s-side-cart__option--selected{% endif %}"
+                          data-variant-id="{{ variant.id }}"
+                        >
+                          {{ this_color }}
+                          {% if is_selected %}
+                            {%- render 'icon-check' -%}
+                          {% endif %}
+                        </li>
+                      {% endunless %}
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  {% assign uniq_values = '' %}
+                  {% for variant in item.product.variants %}
+                    {% if variant.available %}
+                      {% assign this_variant_color = variant.options[color_option_index] | strip %}
+
+                      {% if this_variant_color == current_color %}
+                        {% assign value = variant.options[option_index] | strip %}
+                        {% unless uniq_values contains value %}
+                          {% assign uniq_values = uniq_values | append: '|' | append: value %}
+                          <li
+                            class="s-side-cart__option js-side-cart__option {% if value == item.variant.options[option_index] %}s-side-cart__option--selected{% endif %}"
+                            data-value="{{ value | handleize }}"
+                            data-variant-id="{{ variant.id }}"
+                            data-key="{{ item.key }}"
+                            data-product-id="{{ item.product_id }}"
+                            data-handle="{{ item.product.handle }}"
+                          >
+                            {{ value }}
+                            {% if value == item.variant.options[option_index] %}
+                              {%- render 'icon-check' -%}
+                            {% endif %}
+                          </li>
+                        {% endunless %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        <div class="s-side-cart__item-qty-wrapper">
+          <span class="s-side-cart__option-name">
+            {{ 'sections.cart.qty' | t }}
+          </span>
+
+          <div class="s-side-cart__item-quantity js-side-cart__item-quantity s-side-cart__item-input-wrapper">
+            <div class="s-side-cart__form-qty-wrapper">
+              <button
+                type="button"
+                class="s-side-cart__form-qty-button {% if item.quantity == 1 %}s-side-cart__form-qty-button--disabled{% endif %} js-side-cart__form-qty-button--minus"
+              >
+                {% render 'icon-qty-minus' %}
+              </button>
+
+              {% liquid
+                assign width_num = 2
+                if item.variant.inventory_quantity > 99
+                  assign width_num = 4
+                elsif item.variant.inventory_quantity > 9
+                  assign width_num = 3
+                endif
+              %}
+              <input
+                class="s-side-cart__form-qty-input js-side-cart__form-qty-input"
+                type="number"
+                name="quantity"
+                min="1"
+                step="1"
+                max="{{ item.variant.inventory_quantity }}"
+                value="{{ item.quantity }}"
+                style="width: {{width_num}}ch"
+              >
+              <button
+                type="button"
+                class="s-side-cart__form-qty-button js-side-cart__form-qty-button--plus {% if item.variant.inventory_quantity <= 1 or item.quantity >= item.variant.inventory_quantity -%} s-side-cart__form-qty-button--disabled {% endif %}"
+              >
+                {% render 'icon-qty-plus' %}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="s-side-cart__item-buttons js-side-cart__item-buttons"
+      >
+        <button
+          class="s-side-cart__wishlist-btn s-side-cart__wishlist-btn--add is-active js-side-cart__wishlist-add"
+          data-variant-id="{{ item.variant_id }}"
+          data-product-id="{{ item.product_id }}"
+        >
+          {{ 'sections.cart.add_wishlist' | t }}
+
+          <span class="s-side-cart__wishlist-loader" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="s-side-cart__wishlist-btn s-side-cart__wishlist-btn--remove js-side-cart__wishlist-remove"
+          data-variant-id="{{ item.variant_id }}"
+          data-product-id="{{ item.product_id }}"
+        >
+          {{ 'sections.cart.remove_wishlist' | t }}
+
+          <span class="s-side-cart__wishlist-loader" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="s-side-cart__remove-btn js-side-cart__cart-remove"
+        >
+          {{ 'sections.cart.remove' | t }}
+
+          {% render 'icon-delete' %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
